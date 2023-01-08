@@ -9,8 +9,8 @@ module.exports = {
   ],
   theme: {
     screens: {
-      sm: "480px",
-      md: "768px",
+      sm: "640px",
+      md: "960px",
       lg: "1312px",
     },
     colors: {
@@ -64,10 +64,10 @@ module.exports = {
           },
         },
         ".bleed-right": {
-          "@media (min-width: 0px) and (max-width: 768px)": {
+          "@media (min-width: 0px) and (max-width: 960px)": {
             marginRight: "-1rem",
           },
-          "@media (min-width: 768px) and (max-width: 1312px)": {
+          "@media (min-width: 960px) and (max-width: 1312px)": {
             marginRight: "-2.5rem",
           },
         },

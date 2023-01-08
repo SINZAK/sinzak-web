@@ -1,20 +1,29 @@
+import Link from "next/link";
 import React from "react";
 
-interface LayoutProps {}
+interface LayoutProps {
+  rawHeader: React.ReactNode;
+}
 
-const LayoutWrapper = ({ children }: React.PropsWithChildren<LayoutProps>) => {
+const LayoutWrapper = ({
+  children,
+  rawHeader,
+}: React.PropsWithChildren<LayoutProps>) => {
   return (
     <>
       <div className="min-h-screen">
+        {rawHeader && (
+          <div className="md:hidden sticky top-0 z-50">{rawHeader}</div>
+        )}
         <header className="sticky top-0 md:flex justify-center hidden z-50 bg-white">
           <div className="container flex justify-between h-16 items-center">
             <span className="flex items-center">
               <img alt="logo" src="/assets/logo-type.svg" className="h-7" />
               <span className="w-16" />
               <span className="text-lg font-bold space-x-8">
-                <span>홈</span>
-                <span>마켓</span>
-                <span>의뢰</span>
+                <Link href="/">홈</Link>
+                <Link href="/market">마켓</Link>
+                <Link href="/">의뢰</Link>
               </span>
             </span>
             <span>
