@@ -7,44 +7,44 @@ export default function Page() {
   return (
     <>
       <div className="md:block hidden h-12" />
-      <div className="container flex flex-col space-y-7">
-        <div className="md:flex hidden space-x-7 items-center">
-          <span className="flex-[0_0_16rem] text-3xl font-bold">마켓</span>
-          <span className="flex-1 flex justify-end space-x-4">
-            <span>판매중 작품만 보기</span>
-            <span>신작추천순</span>
-          </span>
-        </div>
-        <div className="md:hidden space-y-3 items-center">
+      <div className="container flex flex-col">
+        <div className="md:hidden space-y-3 pt-3 pb-7">
           <Flicking
             bound
             align="prev"
             className="bleed-right"
             cameraClass="[&>*]:mr-3"
           >
-            <div className="border-gray-600 border text-gray-600 rounded-full px-4 py-1 text-lg font-bold">
+            <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
               ✓ 전체
             </div>
-            <div className="border-red border text-red rounded-full px-4 py-1 text-lg font-bold">
+            <div className="border-red border text-red rounded-full px-3 py-1 font-bold">
               ✓ 회화일반
             </div>
-            <div className="border-gray-600 border text-gray-600 rounded-full px-4 py-1 text-lg font-bold">
+            <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
               ✓ 동양화
             </div>
-            <div className="border-gray-600 border text-gray-600 rounded-full px-4 py-1 text-lg font-bold">
+            <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
               ✓ 조소
             </div>
-            <div className="border-gray-600 border text-gray-600 rounded-full px-4 py-1 text-lg font-bold">
+            <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
               ✓ 판화
             </div>
-            <div className="border-gray-600 border text-gray-600 rounded-full px-4 py-1 text-lg font-bold">
+            <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
               ✓ 공예
             </div>
-            <div className="border-gray-600 border text-gray-600 rounded-full px-4 py-1 text-lg font-bold">
+            <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
               ✓ 기타
             </div>
           </Flicking>
           <span className="flex justify-between">
+            <span>판매중 작품만 보기</span>
+            <span>신작추천순</span>
+          </span>
+        </div>
+        <div className="md:flex hidden space-x-7 items-center pb-7">
+          <span className="flex-[0_0_16rem] text-3xl font-bold">마켓</span>
+          <span className="flex-1 flex justify-end space-x-4">
             <span>판매중 작품만 보기</span>
             <span>신작추천순</span>
           </span>
@@ -56,25 +56,25 @@ export default function Page() {
             </div>
             <div className="h-8" />
             <div className="flex flex-col items-start space-y-3">
-              <div className="border-gray-600 border text-gray-600 rounded-full px-4 py-1 text-lg font-bold">
+              <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
                 ✓ 전체
               </div>
-              <div className="border-red border text-red rounded-full px-4 py-1 text-lg font-bold">
+              <div className="border-red border text-red rounded-full px-3 py-1 font-bold">
                 ✓ 회화일반
               </div>
-              <div className="border-gray-600 border text-gray-600 rounded-full px-4 py-1 text-lg font-bold">
+              <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
                 ✓ 동양화
               </div>
-              <div className="border-gray-600 border text-gray-600 rounded-full px-4 py-1 text-lg font-bold">
+              <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
                 ✓ 조소
               </div>
-              <div className="border-gray-600 border text-gray-600 rounded-full px-4 py-1 text-lg font-bold">
+              <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
                 ✓ 판화
               </div>
-              <div className="border-gray-600 border text-gray-600 rounded-full px-4 py-1 text-lg font-bold">
+              <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
                 ✓ 공예
               </div>
-              <div className="border-gray-600 border text-gray-600 rounded-full px-4 py-1 text-lg font-bold">
+              <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
                 ✓ 기타
               </div>
             </div>

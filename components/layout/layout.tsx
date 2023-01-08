@@ -12,6 +12,13 @@ const LayoutWrapper = ({
   return (
     <>
       <div className="min-h-screen">
+        <div className="md:hidden fixed bottom-0 h-14 bg-white flex justify-between items-center w-full px-7 z-50">
+          <Link href="/">홈</Link>
+          <Link href="/market">마켓</Link>
+          <Link href="/">의뢰</Link>
+          <Link href="/">채팅</Link>
+          <Link href="/">프로필</Link>
+        </div>
         {rawHeader && (
           <div className="md:hidden sticky top-0 z-50">{rawHeader}</div>
         )}
