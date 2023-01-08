@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@egjs/react-flicking": "^4.10.5",
     "@next/font": "13.1.1",
     "@types/node": "18.11.18",
     "@types/react": "18.0.26",
     "@types/react-dom": "18.0.10",
     "autoprefixer": "^10.4.13",
+    "class-variance-authority": "^0.4.0",
     "eslint": "8.31.0",
     "eslint-config-next": "13.1.1",
     "next": "13.1.1",

@@ -24,6 +24,79 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cfcs/core@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "@cfcs/core@npm:0.0.4"
+  dependencies:
+    "@egjs/component": ^3.0.2
+  checksum: 12f8b330945052802a01a3cf0e54d0452f1d39114a3d05e9dd7123f5e23be30774f760a99ab8991540a1138fe2e858fc3673ccb20c357dd831adc6f5e8f86328
+  languageName: node
+  linkType: hard
+
+"@egjs/agent@npm:^2.2.1":
+  version: 2.4.3
+  resolution: "@egjs/agent@npm:2.4.3"
+  checksum: 4f2654ba7a877bb9cd1019c86fa245efb3a4c5e07a24e0e2a0bf1724ee457d25a57960a39b26c5fcd1fb71e80d2e6e3ad53eba6ab1a6f2099568f050fb28ee29
+  languageName: node
+  linkType: hard
+
+"@egjs/axes@npm:^3.8.3":
+  version: 3.8.3
+  resolution: "@egjs/axes@npm:3.8.3"
+  dependencies:
+    "@cfcs/core": ^0.0.4
+    "@egjs/agent": ^2.2.1
+    "@egjs/component": ^3.0.1
+  checksum: 30a8a9fef3d975a680e0aa68d5475fd81e171e2fb0a63358252b8fc22062518f8ea526cd5eac5fa50d967891b5a2b3c8a2c07c10deced528c68f0bf4aa8acaeb
+  languageName: node
+  linkType: hard
+
+"@egjs/component@npm:^3.0.1, @egjs/component@npm:^3.0.2":
+  version: 3.0.4
+  resolution: "@egjs/component@npm:3.0.4"
+  checksum: d41371ee868015021bf4148d6229ba17c8ad8be9246b2138bea6d2d03aaff789caef88e2593e2e03f065609e53ebcba00bde3fa2649fad4a3832f7c01eb17a64
+  languageName: node
+  linkType: hard
+
+"@egjs/flicking@npm:~4.10.4":
+  version: 4.10.4
+  resolution: "@egjs/flicking@npm:4.10.4"
+  dependencies:
+    "@egjs/axes": ^3.8.3
+    "@egjs/component": ^3.0.1
+    "@egjs/imready": ^1.3.1
+    "@egjs/list-differ": ^1.0.0
+  checksum: 8bfdd9fb36fd54ef37069a8c9d11ad0c00dd790ff4da79a102ac01a61e64d248c53bc9c6828fc37da7e2c13f8ef17db8df112d87d479c0e0e03a88a35264291f
+  languageName: node
+  linkType: hard
+
+"@egjs/imready@npm:^1.3.1":
+  version: 1.3.1
+  resolution: "@egjs/imready@npm:1.3.1"
+  dependencies:
+    "@egjs/component": ^3.0.1
+  checksum: e0b125867a53d4942dee55a642dfebaae394b9d5db6382b18f3a9f6b988dc34cf57ef6ac4a9d4857c09d4b67b19ff587e3ec3366362cc696bfde50d1b203b56a
+  languageName: node
+  linkType: hard
+
+"@egjs/list-differ@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@egjs/list-differ@npm:1.0.0"
+  checksum: d1827d134ddab12a024358367cb8a3b70d2ba0f286e5beb6ce2a6bbd021594f26b02c38b2d8b3d1dfd76bd7d1fcda54de3b40decaa9b4fc939230f6e7d531d0c
+  languageName: node
+  linkType: hard
+
+"@egjs/react-flicking@npm:^4.10.5":
+  version: 4.10.5
+  resolution: "@egjs/react-flicking@npm:4.10.5"
+  dependencies:
+    "@egjs/component": ^3.0.2
+    "@egjs/flicking": ~4.10.4
+    "@egjs/list-differ": ^1.0.0
+  checksum: a4dc2cbe31ac440711cfb328545934c234e11f9dd8791c4865f3c110528b901c06b784507a14c1fb7c6bc64c5afb1df81fae3ff5680716310bb48656efaa8b40
+  languageName: node
+  linkType: hard
+
 "@eslint/eslintrc@npm:^1.4.1":
   version: 1.4.1
   resolution: "@eslint/eslintrc@npm:1.4.1"
@@ -791,6 +864,18 @@ __metadata:
   version: 2.0.0
   resolution: "chownr@npm:2.0.0"
   checksum: c57cf9dd0791e2f18a5ee9c1a299ae6e801ff58fee96dc8bfd0dcb4738a6ce58dd252a3605b1c93c6418fe4f9d5093b28ffbf4d66648cb2a9c67eaef9679be2f
+  languageName: node
+  linkType: hard
+
+"class-variance-authority@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "class-variance-authority@npm:0.4.0"
+  peerDependencies:
+    typescript: ">= 4.5.5 < 5"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 86037e5baa231a0c36a6dc2f260f6c18daa66bdccb6f4c1baee7112abd3dd2a11f412cfb3a0377b65357cc41ec6cb2f9cc70e9f64275109703fd6839ed50a450
   languageName: node
   linkType: hard
 
@@ -3262,11 +3347,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "sinzak-web@workspace:."
   dependencies:
+    "@egjs/react-flicking": ^4.10.5
     "@next/font": 13.1.1
     "@types/node": 18.11.18
     "@types/react": 18.0.26
     "@types/react-dom": 18.0.10
     autoprefixer: ^10.4.13
+    class-variance-authority: ^0.4.0
     eslint: 8.31.0
     eslint-config-next: 13.1.1
     next: 13.1.1

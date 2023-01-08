@@ -1,11 +1,32 @@
-import "../styles/globals.css";
-import type { AppProps } from "next/app";
-import { globalFont } from "lib/services/font";
+import React from "react";
 
-export default function App({ Component, pageProps }: AppProps) {
+import "../styles/globals.css";
+import { globalFont } from "@lib/services/font";
+import { CustomAppProps } from "@types";
+
+if (typeof document === "undefined") {
+  React.useLayoutEffect = React.useEffect;
+}
+
+if (!String.prototype.replaceAll) {
+  String.prototype.replaceAll = function (str, newStr) {
+    if (
+      Object.prototype.toString.call(str).toLowerCase() === "[object regexp]"
+    ) {
+      // @ts-ignore
+      return this.replace(str, newStr);
+    }
+    // @ts-ignore
+    return this.replace(new RegExp(str, "g"), newStr);
+  };
+}
+
+export default function App({ Component, pageProps }: CustomAppProps) {
+  const getLayout =
+    Component.getLayout || ((page: React.ReactElement) => <>{page}</>);
   return (
     <main className={`${globalFont.variable} font-sans`}>
-      <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
     </main>
   );
 }

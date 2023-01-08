@@ -2,6 +2,7 @@ const { fontFamily } = require("tailwindcss/defaultTheme");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  mode: "jit",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
@@ -13,11 +14,12 @@ module.exports = {
       lg: "1312px",
     },
     colors: {
+      white: "#ffffff",
+      black: "#212121",
       red: {
         DEFAULT: "#ff4040",
         500: "#ff9f9f",
       },
-      black: "#212121",
       purple: "#4040ff",
       gray: {
         800: "#666666",
@@ -28,10 +30,48 @@ module.exports = {
       },
     },
     extend: {
+      aspectRatio: {
+        "4/3": "4 / 3",
+      },
       fontFamily: {
         sans: ["var(--font-pretendard)", ...fontFamily.sans],
       },
+      width: {
+        lg: "1232px",
+      },
     },
   },
-  plugins: [],
+  corePlugins: {
+    container: false,
+  },
+  plugins: [
+    function ({ addComponents, theme }) {
+      addComponents({
+        ".container": {
+          width: "100%",
+          maxWidth: "100%",
+          marginLeft: "auto",
+          marginRight: "auto",
+          paddingLeft: "1rem",
+          paddingRight: "1rem",
+          "@screen sm": {},
+          "@screen md": {
+            paddingLeft: "2.5rem",
+            paddingRight: "2.5rem",
+          },
+          "@screen lg": {
+            maxWidth: theme("screens.lg"),
+          },
+        },
+        ".bleed-right": {
+          "@media (min-width: 0px) and (max-width: 768px)": {
+            marginRight: "-1rem",
+          },
+          "@media (min-width: 768px) and (max-width: 1312px)": {
+            marginRight: "-2.5rem",
+          },
+        },
+      });
+    },
+  ],
 };
