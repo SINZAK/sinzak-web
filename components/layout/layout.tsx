@@ -33,10 +33,19 @@ const LayoutWrapper = ({
                 <Link href="/">의뢰</Link>
               </span>
             </span>
-            <span>
-              <span>아이콘</span>
-              <span>아이콘</span>
-              <span>아이콘</span>
+            <span className="flex space-x-4">
+              <span className="inline-block w-8 h-8 bg-gray-200 whitespace-nowrap">
+                채팅
+              </span>
+              <span className="inline-block w-8 h-8 bg-gray-200 whitespace-nowrap">
+                알림
+              </span>
+              <Link
+                href="/auth/signin"
+                className="inline-block w-8 h-8 bg-gray-200 whitespace-nowrap"
+              >
+                로그인
+              </Link>
             </span>
           </div>
         </header>

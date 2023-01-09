@@ -60,9 +60,9 @@ export default function Page() {
               </p>
             </div>
           </div>
-          <div className="border-red border text-red rounded-full px-3 py-1 font-medium">
+          <button className="border-red border text-red rounded-full px-3 py-1 font-medium">
             팔로우
-          </div>
+          </button>
         </div>
         <hr className="my-7" />
         <div>
