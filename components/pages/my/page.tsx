@@ -23,7 +23,7 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <div className="container mt-7">
+      <div className="container mt-12">
         <div className="flex">
           <div className="md:block flex-[0_0_16rem] h-screen hidden mr-7 pr-3.5 text-lg font-bold">
             <div className="flex flex-col space-y-3">
