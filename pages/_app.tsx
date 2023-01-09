@@ -25,7 +25,7 @@ export default function App({ Component, pageProps }: CustomAppProps) {
   const getLayout =
     Component.getLayout || ((page: React.ReactElement) => <>{page}</>);
   return (
-    <main className={`${globalFont.variable} font-sans`}>
+    <main id="main" className={`${globalFont.variable} font-sans`}>
       {getLayout(<Component {...pageProps} />)}
     </main>
   );

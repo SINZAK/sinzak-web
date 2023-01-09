@@ -1,7 +1,7 @@
 export default function Page() {
   return (
     <>
-      <div className="fixed w-full h-full sm:bg-[url(/assets/login-splash-bg.jpg)]"></div>
+      <div className="fixed w-full h-full sm:bg-[url(/assets/login-splash-bg.jpg)] bg-cover"></div>
       <div className="relative bg-white bg-opacity-25 w-full h-screen flex justify-center items-center">
         <div className="bg-white w-full max-w-md min-h-[80vh] sm:min-h-[480px] px-7 sm:px-14 py-14 rounded-xl sm:shadow-xl justify-between flex flex-col">
           <div className="w-full">

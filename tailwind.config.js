@@ -63,6 +63,20 @@ module.exports = {
             maxWidth: theme("screens.lg"),
           },
         },
+        ".bleed": {
+          "@media (min-width: 0px) and (max-width: 960px)": {
+            marginLeft: "-1rem",
+            marginRight: "-1rem",
+            paddingLeft: "1rem",
+            paddingRight: "1rem",
+          },
+          "@media (min-width: 960px) and (max-width: 1312px)": {
+            marginLeft: "-2.5rem",
+            marginRight: "-2.5rem",
+            paddingLeft: "2.5rem",
+            paddingRight: "2.5rem",
+          },
+        },
         ".bleed-right": {
           "@media (min-width: 0px) and (max-width: 960px)": {
             marginRight: "-1rem",

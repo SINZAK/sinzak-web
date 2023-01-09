@@ -2,6 +2,7 @@ import { ProductElement } from "@components/elements/product/ProductElement";
 import { createLayout } from "@components/layout/layout";
 import Flicking from "@egjs/react-flicking";
 import "@egjs/react-flicking/dist/flicking.css";
+import { ChevronLeftIcon, ChevronRightICon } from "@lib/icons";
 import Link from "next/link";
 
 const FeaturedCarousel = () => {
@@ -11,34 +12,24 @@ const FeaturedCarousel = () => {
         <span className="text-xl md:text-2xl font-bold">최신 작품</span>
         <span className="flex space-x-4 text-sm md:text-base font-medium items-center">
           <Link href="/">
-            <span className="text-gray-600">더보기</span>
+            <span className="text-gray-800">더보기</span>
           </Link>
-          <span className="hidden md:inline-flex text-xl font-bold space-x-3">
+          <span className="hidden md:flex items-center font-bold space-x-3">
             <button>
-              <img
-                alt="left"
-                src="/assets/icons/chevron-left.svg"
-                className="h-6"
-              />
+              <ChevronLeftIcon className="fill-gray-800" />
             </button>
             <button>
-              <img
-                alt="right"
-                src="/assets/icons/chevron-right.svg"
-                className="h-6"
-              />
+              <ChevronRightICon className="fill-gray-800" />
             </button>
           </span>
         </span>
       </div>
-      <Flicking
-        className="bleed-right"
-        circular={true}
-        circularFallback="bound"
-        align="prev"
-      >
+      <Flicking className="bleed" bound align="prev">
         {Array.from({ length: 10 }).map((_, i) => (
-          <ProductElement className="mr-3 lg:mr-7 w-48 md:w-56" key={i} />
+          <ProductElement
+            className="mr-3 lg:mr-7 w-3/5 sm:w-48 md:w-56"
+            key={i}
+          />
         ))}
       </Flicking>
     </div>
@@ -86,7 +77,7 @@ export default function Page() {
           <Flicking
             bound
             align="prev"
-            className="bleed-right"
+            className="bleed"
             cameraClass="space-x-3 lg:space-x-7"
           >
             {Array.from({ length: 6 }).map((_, i) => (
