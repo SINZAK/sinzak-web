@@ -25,7 +25,9 @@ const LayoutWrapper = ({
         <header className="sticky top-0 md:flex justify-center hidden z-50 bg-white">
           <div className="container flex justify-between h-16 items-center">
             <span className="flex items-center">
-              <img alt="logo" src="/assets/logo-type.svg" className="h-7" />
+              <Link href="/">
+                <img alt="logo" src="/assets/logo-type.svg" className="h-7" />
+              </Link>
               <span className="w-16" />
               <span className="text-lg font-bold space-x-8">
                 <Link href="/">홈</Link>
@@ -45,6 +47,12 @@ const LayoutWrapper = ({
                 className="inline-block w-8 h-8 bg-gray-200 whitespace-nowrap"
               >
                 로그인
+              </Link>
+              <Link
+                href="/my"
+                className="inline-block w-8 h-8 bg-gray-200 whitespace-nowrap"
+              >
+                마이
               </Link>
             </span>
           </div>
