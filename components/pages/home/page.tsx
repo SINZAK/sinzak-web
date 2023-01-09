@@ -38,7 +38,7 @@ const FeaturedCarousel = () => {
         align="prev"
       >
         {Array.from({ length: 10 }).map((_, i) => (
-          <ProductElement className="mr-3 lg:mr-7 w-56" key={i} />
+          <ProductElement className="mr-3 lg:mr-7 w-48 md:w-56" key={i} />
         ))}
       </Flicking>
     </div>
@@ -68,8 +68,8 @@ export default function Page() {
         </Flicking>
       </div>
       <div className="container flex-col flex">
-        <div className="h-16" />
-        <div className="space-y-16">
+        <div className="h-12 md:h-16" />
+        <div className="space-y-12 md:space-y-16">
           <FeaturedCarousel />
           <FeaturedCarousel />
           <FeaturedCarousel />
