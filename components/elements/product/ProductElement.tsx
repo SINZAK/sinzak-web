@@ -1,12 +1,17 @@
 import React from "react";
 import { cx } from "class-variance-authority";
+import Link from "next/link";
 
 export const ProductElement = React.forwardRef<
-  HTMLDivElement,
+  HTMLAnchorElement,
   { className?: string }
 >(({ className }, ref) => {
   return (
-    <div ref={ref} className={cx(className, "flex flex-col")}>
+    <Link
+      href="/market/item"
+      ref={ref}
+      className={cx(className, "flex flex-col")}
+    >
       <div className="aspect-4/3 bg-gray-200 rounded-lg"></div>
       <div className="mt-4">
         <p className="font-medium text-lg leading-tight">상품명</p>
@@ -17,7 +22,7 @@ export const ProductElement = React.forwardRef<
           <span className="text-gray-600">10시간 전</span>
         </p>
       </div>
-    </div>
+    </Link>
   );
 });
 ProductElement.displayName = "ProductElement";
