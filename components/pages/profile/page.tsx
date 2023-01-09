@@ -31,8 +31,6 @@ export default function Page() {
           <Link href="/">의뢰해요</Link>
           <Link href="/">판매 작품</Link>
           <Link href="/">작업해요</Link>
-          <Link href="/">설정</Link>
-          <Link href="/">로그아웃</Link>
         </div>
       </div>
       <div className="bg-gray-100 py-7 hidden md:block">
@@ -61,6 +59,9 @@ export default function Page() {
               <Link href="/">의뢰해요</Link>
               <Link href="/">판매 작품</Link>
               <Link href="/">작업해요</Link>
+              <div className="h-3" />
+              <Link href="/">설정</Link>
+              <Link href="/">로그아웃</Link>
             </div>
           </div>
           <div className="flex-1 flex flex-col"></div>
