@@ -15,12 +15,53 @@ const options = [
   { id: "high", name: "높은가격순" },
 ];
 
+const MarketFilter = () => {
+  return (
+    <>
+      <span className="inline-flex items-center font-medium text-gray-800">
+        <CheckBox>판매중 작품만 보기</CheckBox>
+      </span>
+      <Listbox defaultValue={options[0]}>
+        {({ open }) => (
+          <>
+            {open && (
+              <div className="fixed w-full h-full top-0 left-0 bg-black opacity-50 z-50 md:hidden" />
+            )}
+            <div className="relative font-medium text-gray-800">
+              <Listbox.Button className="relative block">
+                {({ value }) => (
+                  <span className="flex items-center">
+                    <AlignIcon />
+                    <span className="ml-1">{value.name}</span>
+                  </span>
+                )}
+              </Listbox.Button>
+              <Listbox.Options className="z-50">
+                <div className="z-50 fixed max-w-lg text-lg md:text-base max-md:bottom-0 max-md:w-full md:absolute mt-2 right-0 max-md:right-1/2 max-md:translate-x-1/2 px-4 py-4 md:py-2 ring-gray-100 ring-1 min-w-[8rem] rounded-t-3xl md:rounded-xl bg-white max-md:divide-y md:space-y-2 shadow-md cursor-pointer">
+                  {options.map((option) => (
+                    <Listbox.Option
+                      className="hover:text-black max-md:py-2"
+                      key={option.id}
+                      value={option}
+                    >
+                      {option.name}
+                    </Listbox.Option>
+                  ))}
+                </div>
+              </Listbox.Options>
+            </div>
+          </>
+        )}
+      </Listbox>
+    </>
+  );
+};
 export default function Page() {
   return (
     <>
       <div className="md:block hidden h-12" />
       <div className="container flex flex-col">
-        <div className="md:hidden space-y-3 pt-3 pb-7">
+        <div className="md:hidden space-y-4 pt-3 pb-4">
           <Flicking
             bound
             moveType="freeScroll"
@@ -50,54 +91,19 @@ export default function Page() {
               ✓ 기타
             </div>
           </Flicking>
-          <span className="flex justify-between">
-            <span>판매중 작품만 보기</span>
-            <span>신작추천순</span>
+          <span className="flex justify-between text-sm">
+            <MarketFilter />
           </span>
         </div>
         <div className="md:flex hidden space-x-7 items-center pb-7">
           <span className="flex-[0_0_16rem] text-3xl font-bold">마켓</span>
-          <span className="flex-1 flex justify-end space-x-4 font-medium text-gray-800 items-center">
-            <span className="inline-flex items-center">
-              <CheckBox>판매중 작품만 보기</CheckBox>
-            </span>
-            <Listbox defaultValue={options[0]}>
-              <div className="relative">
-                <Listbox.Button className="relative block">
-                  {({ value }) => (
-                    <span className="flex items-center">
-                      <AlignIcon />
-                      <span className="ml-1">{value.name}</span>
-                    </span>
-                  )}
-                </Listbox.Button>
-                <Listbox.Options className="absolute mt-2 right-0 px-4 py-2 ring-gray-100 ring-1 min-w-[8rem] rounded-xl bg-white space-y-2 shadow-md cursor-pointer">
-                  {options.map((option) => (
-                    <Listbox.Option
-                      className="hover:text-black"
-                      key={option.id}
-                      value={option}
-                    >
-                      {option.name}
-                    </Listbox.Option>
-                  ))}
-                </Listbox.Options>
-              </div>
-            </Listbox>
-            {/* <span>
-              <Select placeholder="신작추천순">
-                <SelectItem value="recommend">신작추천순</SelectItem>
-                <SelectItem value="popular">인기순</SelectItem>
-                <SelectItem value="recent">최신순</SelectItem>
-                <SelectItem value="low">낮은가격순</SelectItem>
-                <SelectItem value="high">높은가격순</SelectItem>
-              </Select>
-            </span> */}
+          <span className="flex-1 flex justify-end space-x-4 items-center">
+            <MarketFilter />
           </span>
         </div>
         <div className="flex">
           <div className="md:block flex-[0_0_16rem] h-screen hidden mr-7 pr-3.5">
-            <div className="bg-gray-100 rounded-xl px-4 py-3 text-lg">
+            <div className="bg-gray-100 rounded-xl px-4 py-2 text-lg text-gray-800">
               작품 통합 검색
             </div>
             <div className="h-8" />

@@ -11,6 +11,7 @@
   "dependencies": {
     "@egjs/react-flicking": "^4.10.5",
     "@headlessui/react": "^1.7.7",
+    "@headlessui/tailwindcss": "^0.1.2",
     "@next/font": "13.1.1",
     "@radix-ui/react-checkbox": "^1.0.1",
     "@radix-ui/react-scroll-area": "^1.0.2",

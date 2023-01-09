@@ -45,6 +45,7 @@ module.exports = {
     container: false,
   },
   plugins: [
+    require("@headlessui/tailwindcss"),
     function ({ addComponents, theme }) {
       addComponents({
         ".container": {
