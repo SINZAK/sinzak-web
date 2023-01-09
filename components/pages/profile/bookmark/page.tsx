@@ -47,7 +47,7 @@ export default function Page() {
                   className="flex-[1_1_40%] sm:flex-[1_1_240px]"
                   key={i}
                 />
-              ))}{" "}
+              ))}
               {Array.from({ length: 2 }).map((_, i) => (
                 <div className="flex-[1_1_40%] sm:flex-[1_1_240px]" key={i} />
               ))}
@@ -62,9 +62,14 @@ export default function Page() {
 Page.getLayout = createLayout({
   rawHeader: (
     <>
-      <div className="h-11 flex container items-center justify-between bg-white relative">
-        <span>뒤로</span>
-        <span>메뉴</span>
+      <div className="h-12 flex container items-center justify-between bg-white relative">
+        <span className="font-bold absolute w-full flex top-0 left-0 h-full items-center justify-center">
+          스크랩 목록
+        </span>
+        <span>
+          <img src="/assets/icons/back.svg" className="h-6" />
+        </span>
+        <span></span>
       </div>
     </>
   ),

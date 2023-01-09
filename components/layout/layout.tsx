@@ -2,23 +2,55 @@ import Link from "next/link";
 import React from "react";
 
 interface LayoutProps {
-  rawHeader: React.ReactNode;
+  rawHeader?: React.ReactNode;
+  mobileNav?: boolean | React.ReactNode;
 }
 
 const LayoutWrapper = ({
   children,
   rawHeader,
+  mobileNav,
 }: React.PropsWithChildren<LayoutProps>) => {
   return (
     <>
       <div className="min-h-screen">
-        <div className="md:hidden fixed bottom-0 h-14 bg-white flex justify-between items-center w-full px-7 z-50">
-          <Link href="/">홈</Link>
-          <Link href="/market">마켓</Link>
-          <Link href="/">의뢰</Link>
-          <Link href="/">채팅</Link>
-          <Link href="/">프로필</Link>
-        </div>
+        {mobileNav &&
+          (typeof mobileNav !== "boolean" ? (
+            <div className="md:hidden fixed bottom-0 bg-white w-full z-50">
+              {mobileNav}
+            </div>
+          ) : (
+            <div className="h-16 md:hidden fixed bottom-0 bg-white flex justify-between items-center w-full px-7 z-50 text-xs">
+              <Link href="/" className="flex flex-col items-center">
+                <img alt="chat" src="/assets/icons/home.svg" className="h-8" />
+                <p className="leading-tight">홈</p>
+              </Link>
+              <Link href="/market" className="flex flex-col items-center">
+                <img
+                  alt="chat"
+                  src="/assets/icons/market.svg"
+                  className="h-8"
+                />
+                <p className="leading-tight">마켓</p>
+              </Link>
+              <Link href="/" className="flex flex-col items-center">
+                <img alt="chat" src="/assets/icons/task.svg" className="h-8" />
+                <p className="leading-tight">의뢰</p>
+              </Link>
+              <Link href="/auth/signin" className="flex flex-col items-center">
+                <img alt="chat" src="/assets/icons/chat.svg" className="h-8" />
+                <p className="leading-tight">채팅</p>
+              </Link>
+              <Link href="/profile" className="flex flex-col items-center">
+                <img
+                  alt="chat"
+                  src="/assets/icons/profile.svg"
+                  className="h-8"
+                />
+                <p className="leading-tight">프로필</p>
+              </Link>
+            </div>
+          ))}
         {rawHeader && (
           <div className="md:hidden sticky top-0 z-50">{rawHeader}</div>
         )}
@@ -35,24 +67,25 @@ const LayoutWrapper = ({
                 <Link href="/">의뢰</Link>
               </span>
             </span>
-            <span className="flex space-x-4">
-              <span className="inline-block w-8 h-8 bg-gray-200 whitespace-nowrap">
-                채팅
-              </span>
-              <span className="inline-block w-8 h-8 bg-gray-200 whitespace-nowrap">
-                알림
-              </span>
-              <Link
-                href="/auth/signin"
-                className="inline-block w-8 h-8 bg-gray-200 whitespace-nowrap"
-              >
-                로그인
+            <span className="flex space-x-4 items-center">
+              <Link href="/profile">
+                <img alt="chat" src="/assets/icons/chat.svg" className="h-8" />
+              </Link>
+              <Link href="/profile">
+                <img alt="noti" src="/assets/icons/noti.svg" className="h-8" />
+              </Link>
+              <Link href="/profile">
+                <img
+                  alt="profile"
+                  src="/assets/icons/profile.svg"
+                  className="h-8"
+                />
               </Link>
               <Link
-                href="/my"
-                className="inline-block w-8 h-8 bg-gray-200 whitespace-nowrap"
+                href="/auth/signin"
+                className="bg-red h-8 px-4 text-white flex justify-center items-center rounded-full font-bold"
               >
-                마이
+                로그인
               </Link>
             </span>
           </div>

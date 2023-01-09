@@ -96,14 +96,17 @@ export default function Page() {
   );
 }
 Page.getLayout = createLayout({
+  mobileNav: true,
   rawHeader: (
     <>
-      <div className="h-11 flex container items-center justify-between bg-white relative">
+      <div className="h-12 flex container items-center justify-between bg-white relative">
         <span className="font-bold absolute w-full flex top-0 left-0 h-full items-center justify-center">
           마켓
         </span>
         <span></span>
-        <span>검색</span>
+        <span>
+          <img src="/assets/icons/search.svg" className="h-6" />
+        </span>
       </div>
     </>
   ),
