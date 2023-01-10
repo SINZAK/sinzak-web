@@ -20,35 +20,52 @@ const LayoutWrapper = ({
               {mobileNav}
             </div>
           ) : (
-            <div className="h-16 md:hidden fixed bottom-0 bg-white flex justify-between items-center w-full px-7 z-50 text-xs">
-              <Link href="/" className="flex flex-col items-center">
-                <img alt="chat" src="/assets/icons/home.svg" className="h-8" />
-                <p className="leading-tight">홈</p>
-              </Link>
-              <Link href="/market" className="flex flex-col items-center">
-                <img
-                  alt="chat"
-                  src="/assets/icons/market.svg"
-                  className="h-8"
-                />
-                <p className="leading-tight">마켓</p>
-              </Link>
-              <Link href="/" className="flex flex-col items-center">
-                <img alt="chat" src="/assets/icons/task.svg" className="h-8" />
-                <p className="leading-tight">의뢰</p>
-              </Link>
-              <Link href="/auth/signin" className="flex flex-col items-center">
-                <img alt="chat" src="/assets/icons/chat.svg" className="h-8" />
-                <p className="leading-tight">채팅</p>
-              </Link>
-              <Link href="/profile" className="flex flex-col items-center">
-                <img
-                  alt="chat"
-                  src="/assets/icons/profile.svg"
-                  className="h-8"
-                />
-                <p className="leading-tight">프로필</p>
-              </Link>
+            <div className="h-16 md:hidden fixed bottom-0 bg-white w-full z-50 flex justify-center">
+              <div className="max-w-xl w-full px-2 text-xs grid grid-cols-5 items-center h-full">
+                <Link href="/" className="flex flex-col items-center">
+                  <img
+                    alt="chat"
+                    src="/assets/icons/home.svg"
+                    className="h-8"
+                  />
+                  <p className="leading-tight">홈</p>
+                </Link>
+                <Link href="/market" className="flex flex-col items-center">
+                  <img
+                    alt="chat"
+                    src="/assets/icons/market.svg"
+                    className="h-8"
+                  />
+                  <p className="leading-tight">마켓</p>
+                </Link>
+                <Link href="/" className="flex flex-col items-center">
+                  <img
+                    alt="chat"
+                    src="/assets/icons/task.svg"
+                    className="h-8"
+                  />
+                  <p className="leading-tight">의뢰</p>
+                </Link>
+                <Link
+                  href="/auth/signin"
+                  className="flex flex-col items-center"
+                >
+                  <img
+                    alt="chat"
+                    src="/assets/icons/chat.svg"
+                    className="h-8"
+                  />
+                  <p className="leading-tight">채팅</p>
+                </Link>
+                <Link href="/profile" className="flex flex-col items-center">
+                  <img
+                    alt="chat"
+                    src="/assets/icons/profile.svg"
+                    className="h-8"
+                  />
+                  <p className="leading-tight">프로필</p>
+                </Link>
+              </div>
             </div>
           ))}
         {rawHeader && (

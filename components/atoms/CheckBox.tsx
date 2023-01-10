@@ -11,7 +11,7 @@ export const CheckBox = React.forwardRef<any, any>(({ children }, ref) => {
         ref={ref}
         className="rounded-full w-[1.3em] h-[1.3em] text-sm ring-inset ring-gray-800 ring-[1.5px] flex justify-center items-center overflow-hidden"
       >
-        <Checkbox.Indicator className="bg-gray-800">
+        <Checkbox.Indicator className="bg-gray-800 w-full h-full">
           <CheckIcon className="fill-white" height="100%" width="1.3em" />
         </Checkbox.Indicator>
       </Checkbox.Root>
