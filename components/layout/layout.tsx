@@ -46,10 +46,7 @@ const LayoutWrapper = ({
                   />
                   <p className="leading-tight">의뢰</p>
                 </Link>
-                <Link
-                  href="/auth/signin"
-                  className="flex flex-col items-center"
-                >
+                <Link href="/chat" className="flex flex-col items-center">
                   <img
                     alt="chat"
                     src="/assets/icons/chat.svg"
