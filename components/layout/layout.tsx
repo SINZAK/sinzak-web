@@ -82,7 +82,7 @@ const LayoutWrapper = ({
               </span>
             </span>
             <span className="flex space-x-4 items-center">
-              <Link href="/profile">
+              <Link href="/chat">
                 <img alt="chat" src="/assets/icons/chat.svg" className="h-8" />
               </Link>
               <Link href="/profile">
