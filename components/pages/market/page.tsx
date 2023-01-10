@@ -56,6 +56,7 @@ const MarketFilter = () => {
     </>
   );
 };
+
 export default function Page() {
   return (
     <>

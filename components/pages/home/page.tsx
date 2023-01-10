@@ -11,7 +11,7 @@ const FeaturedCarousel = () => {
       <div className="flex items-center justify-between">
         <span className="text-xl md:text-2xl font-bold">최신 작품</span>
         <span className="flex space-x-4 text-sm md:text-base font-medium items-center">
-          <Link href="/">
+          <Link href="/featured">
             <span className="text-gray-800">더보기</span>
           </Link>
           <span className="hidden md:flex items-center font-bold space-x-3">
