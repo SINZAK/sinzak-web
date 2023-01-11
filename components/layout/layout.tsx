@@ -1,3 +1,4 @@
+import { WithAuth } from "@lib/services/auth";
 import Link from "next/link";
 import React from "react";
 
@@ -16,12 +17,12 @@ const LayoutWrapper = ({
       <div className="min-h-screen">
         {mobileNav &&
           (typeof mobileNav !== "boolean" ? (
-            <div className="md:hidden fixed bottom-0 bg-white w-full z-50">
+            <div className="fixed bottom-0 z-50 w-full bg-white md:hidden">
               {mobileNav}
             </div>
           ) : (
-            <div className="h-16 md:hidden fixed bottom-0 bg-white w-full z-50 flex justify-center">
-              <div className="max-w-xl w-full px-2 text-xs grid grid-cols-5 items-center h-full">
+            <div className="fixed bottom-0 z-50 flex justify-center w-full h-16 bg-white md:hidden">
+              <div className="grid items-center w-full h-full max-w-xl grid-cols-5 px-2 text-xs">
                 <Link href="/" className="flex flex-col items-center">
                   <img
                     alt="chat"
@@ -66,41 +67,58 @@ const LayoutWrapper = ({
             </div>
           ))}
         {rawHeader && (
-          <div className="md:hidden sticky top-0 z-50">{rawHeader}</div>
+          <div className="sticky top-0 z-50 md:hidden">{rawHeader}</div>
         )}
-        <header className="sticky top-0 md:flex justify-center hidden z-50 bg-white">
-          <div className="container flex justify-between h-16 items-center">
+        <header className="sticky top-0 z-50 justify-center hidden bg-white md:flex">
+          <div className="container flex items-center justify-between h-16">
             <span className="flex items-center">
               <Link href="/">
                 <img alt="logo" src="/assets/logo-type.svg" className="h-7" />
               </Link>
               <span className="w-16" />
-              <span className="text-lg font-bold space-x-8">
+              <span className="space-x-8 text-lg font-bold">
                 <Link href="/">홈</Link>
                 <Link href="/market">마켓</Link>
                 <Link href="/">의뢰</Link>
               </span>
             </span>
-            <span className="flex space-x-4 items-center">
-              <Link href="/chat">
-                <img alt="chat" src="/assets/icons/chat.svg" className="h-8" />
-              </Link>
-              <Link href="/profile">
-                <img alt="noti" src="/assets/icons/noti.svg" className="h-8" />
-              </Link>
-              <Link href="/profile">
-                <img
-                  alt="profile"
-                  src="/assets/icons/profile.svg"
-                  className="h-8"
-                />
-              </Link>
-              <Link
-                href="/auth/signin"
-                className="bg-red h-8 px-4 text-white flex justify-center items-center rounded-full font-bold"
-              >
-                로그인
-              </Link>
+            <span className="flex items-center space-x-4">
+              <WithAuth>
+                {({ user }) =>
+                  user === null ? (
+                    <Link
+                      href="/auth/signin"
+                      className="flex items-center justify-center h-8 px-4 font-bold text-white rounded-full bg-red"
+                    >
+                      로그인
+                    </Link>
+                  ) : (
+                    <>
+                      <Link href="/chat">
+                        <img
+                          alt="chat"
+                          src="/assets/icons/chat.svg"
+                          className="h-8"
+                        />
+                      </Link>
+                      <Link href="/profile">
+                        <img
+                          alt="noti"
+                          src="/assets/icons/noti.svg"
+                          className="h-8"
+                        />
+                      </Link>
+                      <Link href="/profile">
+                        <img
+                          alt="profile"
+                          src="/assets/icons/profile.svg"
+                          className="h-8"
+                        />
+                      </Link>
+                    </>
+                  )
+                }
+              </WithAuth>
             </span>
           </div>
         </header>
