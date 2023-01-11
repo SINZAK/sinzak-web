@@ -1,7 +1,8 @@
+import { isDevEnv } from "@lib/utils/env";
 import inMemoryJwtManager from "./auth/inMemoryJwtManager";
 
-const BASE_URL = "";
-const BASE_PATH_PREFIX = "/api";
+const BASE_URL = isDevEnv ? null : "https://sinzak.net";
+const BASE_PATH_PREFIX = isDevEnv ? "/api" : null;
 
 const commonRequestOptions = {
   // security threat: change later
