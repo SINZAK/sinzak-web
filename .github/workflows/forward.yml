@@ -1,0 +1,17 @@
+name: sync
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  git-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: git-sync
+        uses: wei/git-sync@v3
+        with:
+          source_repo: ${{ secrets.SOURCE_REPO }}
+          source_branch: "main"
+          destination_repo: ${{ secrets.DEST_REPO }}
+          destination_branch: "main"
