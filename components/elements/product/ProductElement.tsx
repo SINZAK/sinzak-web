@@ -24,7 +24,7 @@ export const ProductElement = React.forwardRef<
             src={data.thumbnail}
             fill
             className="object-cover"
-            alt="thumbnail"
+            alt=""
             draggable="false"
           />
         )}
