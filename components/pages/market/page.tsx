@@ -8,7 +8,7 @@ import { Listbox } from "@headlessui/react";
 import { AlignIcon } from "@lib/icons";
 import { http } from "@lib/services/http";
 import { useQuery } from "@tanstack/react-query";
-import { Product } from "@types";
+import { ProductSimple } from "@types";
 
 const options = [
   { id: "recommend", name: "신작추천순" },
@@ -62,7 +62,7 @@ const MarketFilter = () => {
 
 export default function Page() {
   const { data, isLoading } = useQuery<{
-    content: Product[];
+    content: ProductSimple[];
   }>(["productsTest"], async () => {
     return (await http.post.default("/products")).data;
   });

@@ -1,7 +1,7 @@
 import { isDevEnv } from "@lib/utils/env";
 import inMemoryJwtManager from "./auth/inMemoryJwtManager";
 
-const BASE_URL = isDevEnv ? null : "https://sinzak.net";
+const BASE_URL = "https://sinzak.net";
 const BASE_PATH_PREFIX = "/api";
 
 const commonRequestOptions = {
@@ -44,14 +44,16 @@ async function common<T = any>(
     );
     const response = await fetch(getUrl(url), options);
     const contentType = response.headers.get("content-type");
-    let data: T;
+    let data: any;
     if (!response.ok) throw response;
-    else if (contentType && contentType.includes("application/json"))
-      data = (await response.json()) as T;
-    else data = (await response.text()) as T;
+    else if (contentType && contentType.includes("application/json")) {
+      data = await response.json();
+      if (data.hasOwnProperty("success") && data.hasOwnProperty("data"))
+        data = data.data;
+    } else data = await response.text();
     return {
       ...response,
-      data,
+      data: data as T,
     };
   } catch (e) {
     throw e;

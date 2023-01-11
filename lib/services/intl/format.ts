@@ -1,4 +1,5 @@
-export const formatNumber = (number: number | bigint) => {
+export const formatNumber = (number?: number | bigint) => {
+  if (!number) return null;
   return new Intl.NumberFormat("ko").format(number);
 };
 
@@ -9,14 +10,15 @@ const msPerWeek = msPerHour * 24;
 const msPerMonth = msPerDay * 30;
 const msPerYear = msPerDay * 365;
 
-export const formatRelativeTime = (timestamp: Date | string, locale = "ko") => {
+export const formatRelativeTime = (timestamp?: Date | string) => {
+  if (!timestamp) return null;
   const current = Date.now();
   const elapsed = current - new Date(timestamp).getTime();
 
-  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
+  const rtf = new Intl.RelativeTimeFormat("ko", { numeric: "auto" });
 
   if (elapsed < msPerMinute) {
-    return rtf.format(-Math.floor(elapsed / 1000), "seconds");
+    return "방금 전";
   } else if (elapsed < msPerHour) {
     return rtf.format(-Math.floor(elapsed / msPerMinute), "minutes");
   } else if (elapsed < msPerDay) {
@@ -24,6 +26,6 @@ export const formatRelativeTime = (timestamp: Date | string, locale = "ko") => {
   } else if (elapsed < msPerWeek) {
     return rtf.format(-Math.floor(elapsed / msPerDay), "days");
   } else {
-    return new Date(timestamp).toLocaleDateString(locale);
+    return new Date(timestamp).toLocaleDateString("ko");
   }
 };

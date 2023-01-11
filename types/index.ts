@@ -11,7 +11,7 @@ export type CustomAppProps = AppProps & {
   pageProps: Record<string, any>;
 };
 
-export interface Product {
+export interface ProductSimple {
   id: number;
   title: string;
   content: string;
@@ -24,4 +24,34 @@ export interface Product {
   complete: boolean;
   popularity: number;
   like: boolean;
+}
+
+export interface ProductDetail {
+  author: string;
+  author_picture: string;
+  category: string;
+  cert_celeb: boolean;
+  cert_uni: boolean;
+  chatCnt: number;
+  complete: boolean;
+  content: string;
+  date: string;
+  followerNum: number;
+  following: boolean;
+  height: number;
+  id: string;
+  images: string[];
+  like: boolean;
+  likesCnt: number;
+  price: number;
+  suggest: boolean;
+  title: string;
+  trading: boolean;
+  univ: string;
+  userId: string;
+  vertical: number;
+  views: number;
+  width: number;
+  wish: boolean;
+  wishCnt: number;
 }

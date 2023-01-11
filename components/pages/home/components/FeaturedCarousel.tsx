@@ -2,14 +2,14 @@ import { useRef } from "react";
 import { ProductElement } from "@components/elements/product/ProductElement";
 import Flicking from "@egjs/react-flicking";
 import { ChevronLeftIcon, ChevronRightICon } from "@lib/icons";
-import { Product } from "@types";
+import { ProductSimple } from "@types";
 import Link from "next/link";
 
 export const FeaturedCarousel = ({
   data,
   title,
 }: {
-  data?: Product[];
+  data?: ProductSimple[];
   title: string;
 }) => {
   const flick = useRef<Flicking>(null);

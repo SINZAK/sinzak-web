@@ -1,19 +1,19 @@
 import React from "react";
 import { cx } from "class-variance-authority";
 import Link from "next/link";
-import { Product } from "@types";
+import { ProductSimple } from "@types";
 import Skeleton from "react-loading-skeleton";
 import { formatNumber, formatRelativeTime } from "@lib/services/intl/format";
 import Image from "next/image";
 
 export const ProductElement = React.forwardRef<
   HTMLAnchorElement,
-  { className?: string; data?: Product }
+  { className?: string; data?: ProductSimple }
 >(({ className, data }, ref) => {
   if (!data) return <ProductElementSkeleton ref={ref} className={className} />;
   return (
     <Link
-      href="/market/item"
+      href={`/market/${data.id}`}
       ref={ref}
       draggable="false"
       className={cx(className, "flex flex-col")}

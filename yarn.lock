@@ -1413,6 +1413,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@egjs/flicking-plugins@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "@egjs/flicking-plugins@npm:4.5.0"
+  peerDependencies:
+    "@egjs/flicking": ^4.1.0
+  checksum: 3302f8ed74aa6f63f9bb04a5fdd7cdb3833a7d3aa60a8b38a0af8c3ae4435a963b2f86d2493950add4e287e6a899024a9cae9a67423017bfda0092e717889c2d
+  languageName: node
+  linkType: hard
+
 "@egjs/flicking@npm:~4.10.4":
   version: 4.10.4
   resolution: "@egjs/flicking@npm:4.10.4"
@@ -6306,6 +6315,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "sinzak-web@workspace:."
   dependencies:
+    "@egjs/flicking-plugins": ^4.5.0
     "@egjs/react-flicking": ^4.10.5
     "@headlessui/react": ^1.7.7
     "@headlessui/tailwindcss": ^0.1.2

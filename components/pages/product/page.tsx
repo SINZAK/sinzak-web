@@ -1,27 +1,73 @@
 import { createLayout } from "@components/layout/layout";
-import Flicking from "@egjs/react-flicking";
+import Flicking, { ViewportSlot } from "@egjs/react-flicking";
 import "@egjs/react-flicking/dist/flicking.css";
+import { getCategoryText } from "@lib/resources/category";
+import { http } from "@lib/services/http";
+import { formatNumber, formatRelativeTime } from "@lib/services/intl/format";
+import { useQuery } from "@tanstack/react-query";
+import { ProductDetail } from "@types";
 import { useRouter } from "next/router";
+import Image from "next/image";
+import Skeleton from "react-loading-skeleton";
+import { Fade, Pagination, Parallax } from "@egjs/flicking-plugins";
 
+const plugins = [new Fade(), new Pagination({ type: "bullet" })];
 export default function Page() {
   const router = useRouter();
 
+  const { data } = useQuery<ProductDetail>(
+    ["productTest", router.query.slug],
+    async () => {
+      return (await http.post.default(`/products/${router.query.slug}`)).data;
+    },
+    {
+      enabled: !!router.query.slug,
+    }
+  );
+
   return (
     <>
-      {JSON.stringify(router.query)}
       <div className="lg:w-full md:pt-7 lg:bg-gray-100 lg:py-7">
         <Flicking
+          key={data?.images?.length}
+          plugins={plugins}
           circular={true}
           clrcularFallback="bound"
           align="center"
           hideBeforeInit={true}
+          className="sm:pb-[1.125rem] sm:-mb-[1.125rem]"
         >
-          {Array.from({ length: 10 }).map((_, i) => (
+          {data?.images && data?.images.length
+            ? data.images.map((_, i) => (
+                <div
+                  className="relative w-full mr-3 overflow-hidden bg-gray-100 border border-gray-200 lg:mr-7 sm:w-2/5 aspect-4/3 sm:rounded-xl"
+                  draggable="false"
+                  key={i}
+                >
+                  <Image
+                    draggable="false"
+                    alt=""
+                    unoptimized
+                    src={_}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              ))
+            : Array.from({ length: 1 }).map((_, i) => (
+                <div
+                  className="w-full mr-3 bg-gray-100 border border-gray-200 lg:mr-7 sm:w-2/5 aspect-4/3 sm:rounded-xl"
+                  key={i}
+                />
+              ))}
+          <ViewportSlot>
             <div
-              className="w-full mr-3 bg-gray-200 lg:mr-7 sm:w-2/5 aspect-4/3 sm:rounded-xl"
-              key={i}
+              className={
+                "bottom-3 sm:bottom-0 flicking-pagination" +
+                ((data?.images?.length || 0) < 1 ? " hidden" : "")
+              }
             ></div>
-          ))}
+          </ViewportSlot>
         </Flicking>
       </div>
       <div className="container max-w-4xl">
@@ -29,11 +75,27 @@ export default function Page() {
         <div className="flex">
           <div className="flex-1">
             <p className="mb-2 text-sm text-gray-800 divide-x md:mb-3 md:text-base">
-              <span className="pr-2">회화일반</span>
-              <span className="pl-2">방금 전</span>
+              {data ? (
+                <>
+                  <span className="pr-2">
+                    {getCategoryText(data?.category)}
+                  </span>
+                  <span className="pl-2">{formatRelativeTime(data?.date)}</span>
+                </>
+              ) : (
+                <Skeleton className="w-28" />
+              )}
             </p>
-            <p className="text-xl font-bold">환상</p>
-            <p className="text-xl font-bold">43,000원</p>
+            <p className="text-xl font-bold">
+              {data ? <> {data?.title}</> : <Skeleton className="w-48" />}
+            </p>
+            <p className="text-xl font-bold">
+              {data ? (
+                <>{formatNumber(data?.price)}원</>
+              ) : (
+                <Skeleton className="w-20" />
+              )}
+            </p>
             <div className="flex text-lg divide-x max-md:hidden mt-7">
               <button className="flex flex-col items-center pr-4">
                 <img
@@ -41,7 +103,9 @@ export default function Page() {
                   src="/assets/icons/like.svg"
                   className="h-8 opacity-50"
                 />
-                <p className="mt-1 text-sm text-gray-600">123</p>
+                <p className="mt-1 text-sm text-gray-600">
+                  {data ? <>{data.likesCnt}</> : <Skeleton className="w-8" />}
+                </p>
               </button>
               <button className="flex flex-col items-center pl-4">
                 <img
@@ -67,17 +131,31 @@ export default function Page() {
           <div className="flex items-center space-x-4">
             <span className="inline-block w-12 h-12 bg-gray-100 rounded-xl" />
             <div>
-              <p className="text-lg font-bold leading-tight">홍길동</p>
+              <p className="text-lg font-bold leading-tight">
+                {data ? <>{data.author}</> : <Skeleton className="w-16" />}
+              </p>
               <p className="flex space-x-1 text-sm">
-                <span>홍익대verified</span>
-                <span>·</span>
-                <span>팔로우 15</span>
+                {data ? (
+                  <>
+                    <span>{data?.univ}</span>
+                    <span>·</span>
+                    <span>팔로우 {data?.followerNum || 0}</span>
+                  </>
+                ) : (
+                  <Skeleton className="w-28" />
+                )}
               </p>
             </div>
           </div>
-          <button className="px-3 py-1 font-medium border rounded-full border-red text-red">
-            팔로우
-          </button>
+          {data?.following ? (
+            <button className="px-4 py-1 font-medium text-white border rounded-full border-red bg-red">
+              팔로잉
+            </button>
+          ) : (
+            <button className="px-4 py-1 font-medium border rounded-full border-red text-red">
+              팔로우
+            </button>
+          )}
         </div>
         <hr className="my-5 md:my-7" />
         <div>
@@ -95,8 +173,7 @@ export default function Page() {
             </p>
           </div>
           <hr className="my-5 md:my-7" />
-          <div className="text-left whitespace-pre-wrap">{`나의 뭐시기를 표현한 작품. 캔버스 10호. 아크릴. 택배 거래 안돼요,
-어쩌구 저쩌구. 홍대입구에서 직거래 선호합니다.`}</div>
+          <div className="text-left whitespace-pre-wrap">{data?.content}</div>
         </div>
       </div>
     </>
