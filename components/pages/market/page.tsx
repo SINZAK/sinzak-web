@@ -6,6 +6,9 @@ import "@egjs/react-flicking/dist/flicking.css";
 import React from "react";
 import { Listbox } from "@headlessui/react";
 import { AlignIcon } from "@lib/icons";
+import { http } from "@lib/services/http";
+import { useQuery } from "@tanstack/react-query";
+import { Product } from "@types";
 
 const options = [
   { id: "recommend", name: "신작추천순" },
@@ -25,7 +28,7 @@ const MarketFilter = () => {
         {({ open }) => (
           <>
             {open && (
-              <div className="fixed w-full h-full top-0 left-0 bg-black opacity-50 z-50 md:hidden" />
+              <div className="fixed top-0 left-0 z-50 w-full h-full bg-black opacity-50 md:hidden" />
             )}
             <div className="relative font-medium text-gray-800">
               <Listbox.Button className="relative block">
@@ -58,11 +61,17 @@ const MarketFilter = () => {
 };
 
 export default function Page() {
+  const { data, isLoading } = useQuery<{
+    content: Product[];
+  }>(["productsTest"], async () => {
+    return (await http.post.default("/products")).data;
+  });
+
   return (
     <>
-      <div className="md:block hidden h-12" />
+      <div className="hidden h-12 md:block" />
       <div className="container flex flex-col">
-        <div className="md:hidden space-y-4 pt-3 pb-4">
+        <div className="pt-3 pb-4 space-y-4 md:hidden">
           <Flicking
             bound
             moveType="freeScroll"
@@ -70,25 +79,25 @@ export default function Page() {
             className="bleed"
             cameraClass="[&>*]:mr-3"
           >
-            <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
+            <div className="px-3 py-1 font-bold text-gray-600 border border-gray-600 rounded-full">
               ✓ 전체
             </div>
-            <div className="border-red border text-red rounded-full px-3 py-1 font-bold">
+            <div className="px-3 py-1 font-bold border rounded-full border-red text-red">
               ✓ 회화일반
             </div>
-            <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
+            <div className="px-3 py-1 font-bold text-gray-600 border border-gray-600 rounded-full">
               ✓ 동양화
             </div>
-            <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
+            <div className="px-3 py-1 font-bold text-gray-600 border border-gray-600 rounded-full">
               ✓ 조소
             </div>
-            <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
+            <div className="px-3 py-1 font-bold text-gray-600 border border-gray-600 rounded-full">
               ✓ 판화
             </div>
-            <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
+            <div className="px-3 py-1 font-bold text-gray-600 border border-gray-600 rounded-full">
               ✓ 공예
             </div>
-            <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
+            <div className="px-3 py-1 font-bold text-gray-600 border border-gray-600 rounded-full">
               ✓ 기타
             </div>
           </Flicking>
@@ -96,49 +105,54 @@ export default function Page() {
             <MarketFilter />
           </span>
         </div>
-        <div className="md:flex hidden space-x-7 items-center pb-7">
+        <div className="items-center hidden md:flex space-x-7 pb-7">
           <span className="flex-[0_0_16rem] text-3xl font-bold">마켓</span>
-          <span className="flex-1 flex justify-end space-x-4 items-center">
+          <span className="flex items-center justify-end flex-1 space-x-4">
             <MarketFilter />
           </span>
         </div>
         <div className="flex">
           <div className="md:block flex-[0_0_16rem] h-screen hidden mr-7 pr-3.5">
-            <div className="bg-gray-100 rounded-xl px-4 py-2 text-lg text-gray-800">
-              작품 통합 검색
-            </div>
+            <input
+              className="bg-gray-100 rounded-xl focus:ring-[1.5px] focus:ring-gray-200 block w-full px-3 py-2 placeholder-gray-800"
+              placeholder="작품 통합 검색"
+            />
             <div className="h-8" />
             <div className="flex flex-col items-start space-y-3">
-              <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
+              <div className="px-3 py-1 font-bold text-gray-600 border border-gray-600 rounded-full">
                 ✓ 전체
               </div>
-              <div className="border-red border text-red rounded-full px-3 py-1 font-bold">
+              <div className="px-3 py-1 font-bold border rounded-full border-red text-red">
                 ✓ 회화일반
               </div>
-              <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
+              <div className="px-3 py-1 font-bold text-gray-600 border border-gray-600 rounded-full">
                 ✓ 동양화
               </div>
-              <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
+              <div className="px-3 py-1 font-bold text-gray-600 border border-gray-600 rounded-full">
                 ✓ 조소
               </div>
-              <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
+              <div className="px-3 py-1 font-bold text-gray-600 border border-gray-600 rounded-full">
                 ✓ 판화
               </div>
-              <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
+              <div className="px-3 py-1 font-bold text-gray-600 border border-gray-600 rounded-full">
                 ✓ 공예
               </div>
-              <div className="border-gray-600 border text-gray-600 rounded-full px-3 py-1 font-bold">
+              <div className="px-3 py-1 font-bold text-gray-600 border border-gray-600 rounded-full">
                 ✓ 기타
               </div>
             </div>
           </div>
-          <div className="flex-1 flex flex-wrap gap-x-3 md:gap-x-7 gap-y-7">
-            {Array.from({ length: 10 }).map((_, i) => (
+          <div className="flex flex-wrap flex-1 gap-x-3 md:gap-x-7 gap-y-7">
+            {(isLoading
+              ? Array.from({ length: 16 }, () => undefined)
+              : data?.content || []
+            ).map((_, i) => (
               <ProductElement
+                data={_}
                 className="flex-[1_1_40%] sm:flex-[1_1_240px]"
                 key={i}
               />
-            ))}{" "}
+            ))}
             {Array.from({ length: 2 }).map((_, i) => (
               <div className="flex-[1_1_40%] sm:flex-[1_1_240px]" key={i} />
             ))}
@@ -152,8 +166,8 @@ Page.getLayout = createLayout({
   mobileNav: true,
   rawHeader: (
     <>
-      <div className="h-12 flex container items-center justify-between bg-white relative">
-        <span className="font-bold absolute w-full flex top-0 left-0 h-full items-center justify-center">
+      <div className="container relative flex items-center justify-between h-12 bg-white">
+        <span className="absolute top-0 left-0 flex items-center justify-center w-full h-full font-bold">
           마켓
         </span>
         <span></span>

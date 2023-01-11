@@ -5,3 +5,47 @@
 svg {
   @apply inline-block align-top;
 }
+
+input {
+  @apply appearance-none focus:outline-none;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  @apply appearance-none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  @apply appearance-none m-0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+::-moz-selection {
+  /* Code for Firefox */
+  @apply bg-[#ff404088];
+}
+
+::selection {
+  @apply bg-[#ff404088];
+}
+
+img {
+  position: relative;
+}
+
+img::before {
+  @apply block absolute w-full h-full top-0 left-0 bg-gray-100;
+  content: "";
+}
+
+img::after {
+  @apply block left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-transparent absolute font-bold text-2xl text-gray-400;
+  content: ":(";
+}

@@ -3,6 +3,8 @@ import { cx } from "class-variance-authority";
 import Link from "next/link";
 import { Product } from "@types";
 import Skeleton from "react-loading-skeleton";
+import { formatNumber, formatRelativeTime } from "@lib/services/intl/format";
+import Image from "next/image";
 
 export const ProductElement = React.forwardRef<
   HTMLAnchorElement,
@@ -13,20 +15,31 @@ export const ProductElement = React.forwardRef<
     <Link
       href="/market/item"
       ref={ref}
+      draggable="false"
       className={cx(className, "flex flex-col")}
     >
-      <div className="bg-gray-200 rounded-lg aspect-4/3"></div>
+      <div className="relative overflow-hidden bg-gray-100 aspect-4/3 rounded-xl">
+        {data.thumbnail && (
+          <Image
+            src={data.thumbnail}
+            fill
+            className="object-cover"
+            alt="thumbnail"
+            draggable="false"
+          />
+        )}
+      </div>
       <div className="mt-4">
         <p className="font-medium leading-tight md:text-lg md:leading-tight">
-          상품명
+          {data.title}
         </p>
         <p className="font-bold leading-tight md:text-lg md:leading-tight">
-          00,000원
+          {formatNumber(data.price)}원
         </p>
         <p className="flex mt-1 space-x-1 text-xs md:text-sm">
-          <span>홍길동 작가</span>
+          <span>{data.author} 작가</span>
           <span className="text-gray-600">·</span>
-          <span className="text-gray-600">10시간 전</span>
+          <span className="text-gray-600">{formatRelativeTime(data.date)}</span>
         </p>
       </div>
     </Link>
@@ -38,7 +51,7 @@ const ProductElementSkeleton = React.forwardRef<any, { className?: string }>(
   ({ className }, ref) => {
     return (
       <div ref={ref} className={cx(className, "flex flex-col")}>
-        <Skeleton className="block rounded-lg aspect-4/3" />
+        <Skeleton className="block rounded-xl aspect-4/3" />
         <div className="mt-4">
           <p className="font-medium leading-tight md:text-lg md:leading-tight">
             <Skeleton width="3em" />

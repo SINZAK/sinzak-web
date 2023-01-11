@@ -14,6 +14,7 @@ module.exports = {
       lg: "1312px",
     },
     colors: {
+      transparent: "transparent",
       white: "#ffffff",
       black: "#212121",
       red: {

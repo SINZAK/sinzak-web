@@ -1,9 +1,11 @@
-const BASE_URL =
-  "http://ec2-13-209-121-29.ap-northeast-2.compute.amazonaws.com:8080";
+import inMemoryJwtManager from "./auth/inMemoryJwtManager";
+
+const BASE_URL = "";
+const BASE_PATH_PREFIX = "/api";
 
 const commonRequestOptions = {
   // security threat: change later
-  credentials: "include",
+  // credentials: "include",
 } satisfies RequestInit;
 
 export const http = {
@@ -15,7 +17,9 @@ export const http = {
 };
 
 function getUrl(url: RequestInfo | URL) {
-  if (typeof url === "string") return new URL(url, BASE_URL);
+  const _url = (BASE_PATH_PREFIX || "") + url;
+  if (!BASE_URL) return _url;
+  if (typeof url === "string") return new URL(_url, BASE_URL);
   return url;
 }
 
@@ -24,40 +28,81 @@ async function common<T = any>(
   requestOptions?: RequestInit | undefined
 ) {
   try {
-    const response = await fetch(getUrl(url), {
-      ...commonRequestOptions,
-      ...requestOptions,
-    });
+    const options = merge(
+      commonRequestOptions,
+      merge(
+        {
+          headers: {
+            ...(inMemoryJwtManager.getToken() && {
+              Authorization: inMemoryJwtManager.getToken()!,
+            }),
+          },
+        },
+        requestOptions
+      )
+    );
+    const response = await fetch(getUrl(url), options);
     const contentType = response.headers.get("content-type");
-    if (contentType && contentType.includes("application/json"))
-      return response.json() as unknown as Promise<T>;
-    return response.text() as unknown as Promise<T>;
+    let data: T;
+    if (!response.ok) throw response;
+    else if (contentType && contentType.includes("application/json"))
+      data = (await response.json()) as T;
+    else data = (await response.text()) as T;
+    return {
+      ...response,
+      data,
+    };
   } catch (e) {
     throw e;
   }
 }
 
-async function get<T = any>(url: RequestInfo | URL) {
-  const requestOptions = {
-    method: "GET",
-  };
+async function get<T = any>(url: RequestInfo | URL, options?: RequestInit) {
+  const requestOptions = merge(
+    {
+      method: "GET",
+    },
+    options
+  );
   return await common<T>(url, requestOptions);
 }
 
-async function postDefault<T = any>(url: RequestInfo | URL) {
-  const requestOptions = {
-    ...commonRequestOptions,
-    method: "POST",
-  };
+async function postDefault<T = any>(
+  url: RequestInfo | URL,
+  options?: RequestInit
+) {
+  const requestOptions = merge(
+    {
+      method: "POST",
+    },
+    options
+  );
   return await common<T>(url, requestOptions);
 }
 
-async function postJson<T = any>(url: RequestInfo | URL, body: Object) {
-  const requestOptions = {
-    ...commonRequestOptions,
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  };
+async function postJson<T = any>(
+  url: RequestInfo | URL,
+  body: Object,
+  options?: RequestInit
+) {
+  const requestOptions = merge(
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    },
+    options
+  );
   return await common<T>(url, requestOptions);
 }
+
+const merge = (target?: Record<string, any>, source?: Record<string, any>) => {
+  if (!target) return source;
+  if (!source) return target;
+  for (let key of Object.keys(source)) {
+    if (source[key] instanceof Object)
+      Object.assign(source[key], merge(target[key], source[key]));
+  }
+  Object.assign(target || {}, source);
+  return target;
+};

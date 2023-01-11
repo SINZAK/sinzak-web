@@ -4,6 +4,18 @@ const nextConfig = {
   experimental: {
     runtime: "experimental-edge",
   },
+  images: {
+    domains: ["sinzakimage.s3.ap-northeast-2.amazonaws.com"],
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination:
+          "http://ec2-13-209-121-29.ap-northeast-2.compute.amazonaws.com:8080/:path*",
+      },
+    ];
+  },
   webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/,

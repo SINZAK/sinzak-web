@@ -12,16 +12,17 @@ const AuthContext = createContext<{
 
 export const tempLogin = async () => {
   try {
-    // const { accessToken, refreshToken } = await http.post.json<{
-    //   accessToken: string;
-    //   refreshToken: string;
-    // }>("/login", {
-    //   email: "insi2000@naver.com",
-    // });
-    // inMemoryJWTManager.setToken(accessToken);
-    // localStorage.setItem("refreshToken", refreshToken);
-    inMemoryJWTManager.setToken("temp");
-    localStorage.setItem("refreshToken", "temp");
+    const {
+      data: { accessToken, refreshToken, accessTokenExpireDate },
+    } = await http.post.json<{
+      accessToken: string;
+      refreshToken: string;
+      accessTokenExpireDate: number;
+    }>("/login", {
+      email: "insi2000@naver.com",
+    });
+    inMemoryJWTManager.setToken(accessToken, accessTokenExpireDate);
+    localStorage.setItem("refreshToken", refreshToken);
     return true;
   } catch (e) {
     console.error(e);
@@ -56,36 +57,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (isInitialized) return;
     setIsIntialized(true);
-    const accessToken = inMemoryJWTManager.getToken();
 
-    if (accessToken === null) {
-      const refreshToken = localStorage.getItem("refreshToken");
-      if (!refreshToken) return;
-      // http.post
-      //   .json<{
-      //     accessToken: string;
-      //     refreshToken: string;
-      //   }>("/reissue", {
-      //     refreshToken,
-      //   })
-      //   .then(({ accessToken, refreshToken }) => {
-      //     inMemoryJWTManager.setToken(accessToken);
-      //     localStorage.setItem("refreshToken", refreshToken);
-      //     setUser({
-      //       email: "test@test.com",
-      //     });
-      //   })
-      //   .catch((e) => e);
-      inMemoryJWTManager.setToken("temp");
-      localStorage.setItem("refreshToken", "temp");
-      setUser({
-        email: "test@test.com",
-      });
-    } else {
-      setUser({
-        email: "test@test.com",
-      });
-    }
+    const accessToken = inMemoryJWTManager.getToken();
+    if (accessToken === null) return;
+    const refreshToken = localStorage.getItem("refreshToken");
+    if (!refreshToken) return;
+
+    http.post
+      .json<{
+        accessToken: string;
+        refreshToken: string;
+        accessTokenExpireDate: number;
+      }>(
+        "/reissue",
+        { accessToken, refreshToken },
+        { headers: { Authorization: accessToken } }
+      )
+      .then(
+        ({ data: { accessToken, refreshToken, accessTokenExpireDate } }) => {
+          inMemoryJWTManager.setToken(accessToken, accessTokenExpireDate);
+          localStorage.setItem("refreshToken", refreshToken);
+          setUser({
+            email: "test@test.com",
+          });
+        }
+      )
+      .catch((e) => console.error(e));
   }, [isInitialized]);
 
   return (

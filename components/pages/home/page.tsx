@@ -10,16 +10,15 @@ import Link from "next/link";
 import { FeaturedCarousel } from "./components/FeaturedCarousel";
 
 const Featured = () => {
-  const { data, isLoading } = useQuery(["featuredTest"], async () => {
-    return http.post.default("/products");
+  const { data } = useQuery(["featuredTest"], async () => {
+    return (await http.post.default("/home/products")).data;
   });
 
   return (
     <div className="space-y-12 md:space-y-16">
-      <FeaturedCarousel />
-      <FeaturedCarousel />
-      <FeaturedCarousel />
-      <FeaturedCarousel />
+      <FeaturedCarousel title="최신 작품" data={data?.new} />
+      <FeaturedCarousel title="신작에서 사랑받는 작품" data={data?.hot} />
+      <FeaturedCarousel title="지금 거래중" data={data?.recommend} />
     </div>
   );
 };
@@ -28,7 +27,7 @@ export default function Page() {
   const auth = useAuth();
   return (
     <>
-      {JSON.stringify(auth)}
+      <div className="container py-1">{JSON.stringify(auth)}</div>
       <div className="container flex items-center justify-between h-16 mb-8 md:hidden">
         <img alt="logo" src="/assets/logo-type.svg" className="h-7" />
         <img alt="noti" src="/assets/icons/noti.svg" className="h-8" />
@@ -42,7 +41,7 @@ export default function Page() {
         >
           {Array.from({ length: 10 }).map((_, i) => (
             <div
-              className="mr-3 lg:mr-7 w-full md:w-4/5 lg:w-lg aspect-[343/147] md:aspect-[4/1] bg-gray-400 rounded-xl"
+              className="mr-3 lg:mr-7 w-full md:w-4/5 lg:w-lg aspect-[343/147] md:aspect-[4/1] bg-gray-200 rounded-xl"
               key={i}
             ></div>
           ))}
@@ -62,15 +61,20 @@ export default function Page() {
           <Flicking
             bound
             align="prev"
-            className="bleed"
+            className="bl eed"
             cameraClass="space-x-3 lg:space-x-7"
           >
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div
-                key={i}
-                className="w-24 bg-gray-200 aspect-square rounded-xl"
-              ></div>
-            ))}
+            {["회화\n일반", "동양화", "조소", "판화", "공예", "기타"].map(
+              (_, i) => (
+                <Link
+                  href="/market"
+                  key={i}
+                  className="flex items-center justify-center w-24 text-xl font-bold leading-tight text-gray-800 whitespace-pre-line bg-gray-100 aspect-square rounded-xl"
+                >
+                  {_}
+                </Link>
+              )
+            )}
           </Flicking>
         </div>
       </div>
