@@ -6,9 +6,12 @@ type User = null | {
   email: string;
 };
 
-const AuthContext = createContext<{
+type Auth = {
   user: User;
-}>({ user: null });
+  isLoading: boolean;
+};
+
+const AuthContext = createContext<Auth>({ user: null, isLoading: true });
 
 export const tempLogin = async () => {
   try {
@@ -44,7 +47,7 @@ export const WithAuth = ({
   children,
 }: {
   authorized?: boolean;
-  children({ user }: { user: User }): JSX.Element;
+  children(_: Auth): JSX.Element;
 }) => {
   const auth = useAuth();
   return children(auth);
@@ -52,6 +55,7 @@ export const WithAuth = ({
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isInitialized, setIsIntialized] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<User>(null);
 
   useEffect(() => {
@@ -59,9 +63,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsIntialized(true);
 
     const accessToken = inMemoryJWTManager.getToken();
-    if (accessToken === null) return;
+    if (accessToken === null) {
+      setIsLoading(false);
+      return;
+    }
     const refreshToken = localStorage.getItem("refreshToken");
-    if (!refreshToken) return;
+    if (!refreshToken) {
+      setIsLoading(false);
+      return;
+    }
 
     http.post
       .json<{
@@ -80,13 +90,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           setUser({
             email: "test@test.com",
           });
+          setIsLoading(false);
         }
       )
-      .catch((e) => console.error(e));
+      .catch((e) => {
+        console.error(e);
+        setIsLoading(false);
+      });
   }, [isInitialized]);
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, isLoading }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

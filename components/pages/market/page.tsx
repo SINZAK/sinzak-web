@@ -63,7 +63,7 @@ const MarketFilter = () => {
 export default function Page() {
   const { data, isLoading } = useQuery<{
     content: ProductSimple[];
-  }>(["productsTest"], async () => {
+  }>(["marketTest"], async () => {
     return (await http.post.default("/products")).data;
   });
 

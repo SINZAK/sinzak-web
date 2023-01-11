@@ -7,7 +7,7 @@ const BASE_PATH_PREFIX = "/api";
 const commonRequestOptions = {
   // security threat: change later
   // credentials: "include",
-} satisfies RequestInit;
+} satisfies Readonly<RequestInit>;
 
 export const http = {
   get,
@@ -30,7 +30,7 @@ async function common<T = any>(
 ) {
   try {
     const options = merge(
-      commonRequestOptions,
+      { ...commonRequestOptions },
       merge(
         {
           headers: {
