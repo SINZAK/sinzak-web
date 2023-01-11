@@ -1,10 +1,14 @@
 import { createLayout } from "@components/layout/layout";
 import Flicking from "@egjs/react-flicking";
 import "@egjs/react-flicking/dist/flicking.css";
+import { useRouter } from "next/router";
 
 export default function Page() {
+  const router = useRouter();
+
   return (
     <>
+      {JSON.stringify(router.query)}
       <div className="lg:w-full md:pt-7 lg:bg-gray-100 lg:py-7">
         <Flicking
           circular={true}
