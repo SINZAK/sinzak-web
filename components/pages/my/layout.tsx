@@ -66,13 +66,13 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
           </div>
         </div>
         <div className="flex flex-col text-lg font-bold divide-y [&>*]:py-4">
-          <Link href="/profile/bookmark">스크랩 목록</Link>
+          <Link href="/my/bookmark">스크랩 목록</Link>
           <Link href="/">의뢰해요</Link>
           <Link href="/">판매 작품</Link>
           <Link href="/">작업해요</Link>
         </div>
       </div>
-      <div className="hidden h-12 md:block" />
+
       <div className="container hidden md:block">
         <div className="border-b pb-7">
           <div className="flex items-center justify-between">
@@ -101,9 +101,9 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
         <div className="flex">
           <div className="flex-[0_0_16rem] mr-7 pr-3.5">
             <div className="flex flex-col space-y-3 text-lg font-bold">
-              <Link href="/profile">MY</Link>
+              <Link href="/my">MY</Link>
               <div className="h-3" />
-              <Link href="/profile/bookmark">스크랩 목록</Link>
+              <Link href="/my/bookmark">스크랩 목록</Link>
               <Link href="/">의뢰해요</Link>
               <Link href="/">판매 작품</Link>
               <Link href="/">작업해요</Link>

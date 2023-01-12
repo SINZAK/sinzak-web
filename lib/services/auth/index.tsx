@@ -1,9 +1,11 @@
+import { useEffectOnce } from "@lib/hooks/useEffectOnce";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { http } from "../http";
 import inMemoryJWTManager from "./inMemoryJwtManager";
 
 type User = null | {
   email: string;
+  userId: number;
 };
 
 type Auth = {
@@ -53,15 +55,17 @@ export const WithAuth = ({
   return children(auth);
 };
 
+const parseJwt = (jwt: string) => {
+  if (!window) throw Error();
+  return JSON.parse(window.atob(jwt.split(".")[1]));
+};
+
+// fix: auth dependent queries get called before auth init
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isInitialized, setIsIntialized] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<User>(null);
 
-  useEffect(() => {
-    if (isInitialized) return;
-    setIsIntialized(true);
-
+  useEffectOnce(() => {
     const accessToken = inMemoryJWTManager.getToken();
     if (accessToken === null) {
       setIsLoading(false);
@@ -87,8 +91,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         ({ data: { accessToken, refreshToken, accessTokenExpireDate } }) => {
           inMemoryJWTManager.setToken(accessToken, accessTokenExpireDate);
           localStorage.setItem("refreshToken", refreshToken);
+          const payload = parseJwt(accessToken);
           setUser({
-            email: "test@test.com",
+            email: payload.sub,
+            userId: 1,
           });
           setIsLoading(false);
         }
@@ -97,7 +103,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         console.error(e);
         setIsLoading(false);
       });
-  }, [isInitialized]);
+  });
 
   return (
     <AuthContext.Provider value={{ user, isLoading }}>

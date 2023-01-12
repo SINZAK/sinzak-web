@@ -69,7 +69,6 @@ export default function Page() {
 
   return (
     <>
-      <div className="hidden h-12 md:block" />
       <div className="container flex flex-col">
         <div className="pt-3 pb-4 space-y-4 md:hidden">
           <Flicking

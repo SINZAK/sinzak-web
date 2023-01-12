@@ -24,10 +24,8 @@ const Featured = () => {
 };
 
 export default function Page() {
-  const auth = useAuth();
   return (
     <>
-      <div className="container py-1">{JSON.stringify(auth)}</div>
       <div className="container flex items-center justify-between h-16 mb-8 md:hidden">
         <img alt="logo" src="/assets/logo-type.svg" className="h-7" />
         <img alt="noti" src="/assets/icons/noti.svg" className="h-8" />

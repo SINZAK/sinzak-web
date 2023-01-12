@@ -8,3 +8,6 @@ export { default as MenuIcon } from "@public/assets/icons/menu.svg";
 
 export { default as PictureIcon } from "@public/assets/icons/picture.svg";
 export { default as PictureFilledIcon } from "@public/assets/icons/picture-filled.svg";
+
+export { default as LikeIcon } from "@public/assets/icons/like.svg";
+export { default as LikeFilledIcon } from "@public/assets/icons/like-filled.svg";

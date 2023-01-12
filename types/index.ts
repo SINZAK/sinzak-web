@@ -39,7 +39,7 @@ export interface ProductDetail {
   followerNum: number;
   following: boolean;
   height: number;
-  id: string;
+  id: number;
   images: string[];
   like: boolean;
   likesCnt: number;
@@ -48,7 +48,7 @@ export interface ProductDetail {
   title: string;
   trading: boolean;
   univ: string;
-  userId: string;
+  userId: number;
   vertical: number;
   views: number;
   width: number;

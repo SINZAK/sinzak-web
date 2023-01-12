@@ -55,7 +55,7 @@ const LayoutWrapper = ({
                   />
                   <p className="leading-tight">채팅</p>
                 </Link>
-                <Link href="/profile" className="flex flex-col items-center">
+                <Link href="/my" className="flex flex-col items-center">
                   <img
                     alt="chat"
                     src="/assets/icons/profile.svg"
@@ -101,14 +101,14 @@ const LayoutWrapper = ({
                           className="h-8"
                         />
                       </Link>
-                      <Link href="/profile">
+                      <Link href="/my">
                         <img
                           alt="noti"
                           src="/assets/icons/noti.svg"
                           className="h-8"
                         />
                       </Link>
-                      <Link href="/profile">
+                      <Link href="/my">
                         <img
                           alt="profile"
                           src="/assets/icons/profile.svg"
@@ -122,7 +122,10 @@ const LayoutWrapper = ({
             </span>
           </div>
         </header>
-        <main>{children}</main>
+        <main>
+          <div className="hidden h-12 md:block" />
+          {children}
+        </main>
       </div>
       <footer className="container h-32"></footer>
     </>

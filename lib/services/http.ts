@@ -48,6 +48,8 @@ async function common<T = any>(
     if (!response.ok) throw response;
     else if (contentType && contentType.includes("application/json")) {
       data = await response.json();
+      if (data.hasOwnProperty("success") && data.success === false)
+        throw Error();
       if (data.hasOwnProperty("success") && data.hasOwnProperty("data"))
         data = data.data;
     } else data = await response.text();
