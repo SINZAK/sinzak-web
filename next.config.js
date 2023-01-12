@@ -4,6 +4,9 @@ const nextConfig = {
   images: {
     domains: ["sinzakimage.s3.ap-northeast-2.amazonaws.com"],
   },
+  experimental: {
+    scrollRestoration: true,
+  },
   webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/,
