@@ -94,7 +94,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           const payload = parseJwt(accessToken);
           setUser({
             email: payload.sub,
-            userId: 1,
+            userId: payload.id,
           });
           setIsLoading(false);
         }

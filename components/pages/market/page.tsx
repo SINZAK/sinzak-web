@@ -104,7 +104,7 @@ export default function Page() {
             <MarketFilter />
           </span>
         </div>
-        <div className="items-center hidden md:flex space-x-7 pb-7">
+        <div className="items-center hidden h-16 md:flex space-x-7 pb-7">
           <span className="flex-[0_0_16rem] text-3xl font-bold">마켓</span>
           <span className="flex items-center justify-end flex-1 space-x-4">
             <MarketFilter />
