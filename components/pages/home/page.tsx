@@ -48,7 +48,7 @@ export default function Page() {
       <div className="container flex flex-col">
         <div className="h-12 md:h-16" />
         <Featured />
-        <div className="h-24" />
+        <div className="h-12 md:h-24" />
         <div className="flex flex-col space-y-5 md:space-y-10 md:items-center">
           <div className="flex flex-col space-y-2 md:items-center">
             <p className="text-xl font-bold md:text-2xl">장르별 작품</p>
@@ -59,20 +59,29 @@ export default function Page() {
           <Flicking
             bound
             align="prev"
-            className="bl eed"
+            className="bleed"
             cameraClass="space-x-3 lg:space-x-7"
           >
-            {["회화\n일반", "동양화", "조소", "판화", "공예", "기타"].map(
-              (_, i) => (
-                <Link
-                  href="/market"
-                  key={i}
-                  className="flex items-center justify-center w-24 text-xl font-bold leading-tight text-gray-800 whitespace-pre-line bg-gray-100 aspect-square rounded-xl"
-                >
-                  {_}
-                </Link>
-              )
-            )}
+            {[
+              ["회화\n일반", "painting"],
+              ["동양화", "orient"],
+              ["조소", "sculpture"],
+              ["판화", "print"],
+              ["공예", "craft"],
+              ["기타", "other"],
+            ].map((_, i) => (
+              <Link
+                href="/market"
+                key={_[1]}
+                className="flex items-center justify-center w-24 text-lg font-bold leading-tight text-white whitespace-pre-line aspect-square rounded-xl"
+                draggable="false"
+                style={{
+                  backgroundImage: `url("/assets/images/cate-${_[1]}.jpg")`,
+                }}
+              >
+                {_[0]}
+              </Link>
+            ))}
           </Flicking>
         </div>
       </div>

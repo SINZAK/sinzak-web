@@ -11,6 +11,19 @@ export type CustomAppProps = AppProps & {
   pageProps: Record<string, any>;
 };
 
+export interface UserProfile {
+  cert_uni: boolean;
+  followerNumber: string;
+  followingNumber: string;
+  ifFollow: boolean;
+  imageUrl: string;
+  introduction: string;
+  myProfile: boolean;
+  name: string;
+  univ: string;
+  userId: number;
+}
+
 export interface ProductSimple {
   id: number;
   title: string;

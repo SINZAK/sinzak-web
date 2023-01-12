@@ -1,15 +1,14 @@
 import { CheckBox } from "@components/atoms/CheckBox";
 import { ProductElement } from "@components/elements/product/ProductElement";
 import { createLayout } from "@components/layout/layout";
-import Flicking from "@egjs/react-flicking";
-import "@egjs/react-flicking/dist/flicking.css";
 import React from "react";
 import { Listbox } from "@headlessui/react";
 import { AlignIcon } from "@lib/icons";
 import { http } from "@lib/services/http";
 import { useQuery } from "@tanstack/react-query";
-import { ProductSimple } from "@types";
+import { ProductSimple, UserProfile } from "@types";
 import Skeleton from "react-loading-skeleton";
+import { useRouter } from "next/router";
 
 const options = [
   { id: "recommend", name: "신작추천순" },
@@ -18,6 +17,20 @@ const options = [
   { id: "low", name: "낮은가격순" },
   { id: "high", name: "높은가격순" },
 ];
+
+export const useUserProfileQuery = () => {
+  const router = useRouter();
+
+  return useQuery<UserProfile>(
+    ["userProfileTest", Number(router.query.slug)],
+    async () => {
+      return (await http.get(`/users/${router.query.slug}/profile`)).data;
+    },
+    {
+      enabled: !!router.query.slug,
+    }
+  );
+};
 
 const MarketFilter = () => {
   return (
@@ -62,11 +75,7 @@ const MarketFilter = () => {
 };
 
 export default function Page() {
-  const { data, isLoading } = useQuery<{
-    content: ProductSimple[];
-  }>(["marketTest"], async () => {
-    return (await http.post.default("/products")).data;
-  });
+  const { data, isLoading } = useUserProfileQuery();
 
   return (
     <>
@@ -84,17 +93,21 @@ export default function Page() {
               <span className="inline-block w-16 h-16 bg-gray-200 rounded-xl" />
               <div className="text-center">
                 <p className="mb-1 text-xl font-bold leading-tight">
-                  {data ? <>홍길동</> : <Skeleton className="w-12" />}
+                  {data ? <>{data.name}</> : <Skeleton className="w-12" />}
                 </p>
                 <p>
-                  {data ? <>hongik verified</> : <Skeleton className="w-28" />}
+                  {data ? (
+                    <>{data.univ} verified</>
+                  ) : (
+                    <Skeleton className="w-28" />
+                  )}
                 </p>
                 <p className="my-3 space-x-6">
                   <span className="inline-flex items-center text-lg">
                     {data ? (
                       <>
                         <span className="mr-2 font-bold">
-                          {/* {data?.followerNumber} */}
+                          {data?.followerNumber}
                         </span>
                         <span className="text-base">팔로워</span>
                       </>
@@ -106,7 +119,7 @@ export default function Page() {
                     {data ? (
                       <>
                         <span className="mr-2 font-bold">
-                          {/* {data?.followingNumber} */}
+                          {data?.followerNumber}
                         </span>
                         <span className="text-base">팔로잉</span>
                       </>
@@ -116,13 +129,13 @@ export default function Page() {
                   </span>
                 </p>
                 <p className="whitespace-pre-line">
-                  {/* {data?.introduction || "자기소개 미작성"} */}
+                  {data?.introduction || "자기소개 미작성"}
                 </p>
               </div>
             </div>
           </div>
           <div className="flex flex-wrap flex-1 gap-x-3 md:gap-x-7 gap-y-7">
-            {(isLoading
+            {/* {(isLoading
               ? Array.from({ length: 16 }, () => undefined)
               : data?.content || []
             ).map((_, i) => (
@@ -131,7 +144,7 @@ export default function Page() {
                 className="flex-[1_1_40%] sm:flex-[1_1_240px]"
                 key={i}
               />
-            ))}
+            ))} */}
             {Array.from({ length: 2 }).map((_, i) => (
               <div className="flex-[1_1_40%] sm:flex-[1_1_240px]" key={i} />
             ))}

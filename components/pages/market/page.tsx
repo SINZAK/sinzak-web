@@ -9,6 +9,7 @@ import { AlignIcon } from "@lib/icons";
 import { http } from "@lib/services/http";
 import { useQuery } from "@tanstack/react-query";
 import { ProductSimple } from "@types";
+import Link from "next/link";
 
 const options = [
   { id: "recommend", name: "신작추천순" },
@@ -69,6 +70,14 @@ export default function Page() {
 
   return (
     <>
+      <div className="fixed z-50 flex justify-center w-full p-3 bottom-12 md:hidden">
+        <Link
+          href="/market/build"
+          className="bottom-0 right-0 block px-8 py-3 mb-4 font-bold text-center text-white rounded-full bg-red"
+        >
+          작품 등록하기
+        </Link>
+      </div>
       <div className="container flex flex-col">
         <div className="pt-3 pb-4 space-y-4 md:hidden">
           <Flicking
@@ -112,8 +121,14 @@ export default function Page() {
         </div>
         <div className="flex">
           <div className="md:block flex-[0_0_16rem] h-screen hidden mr-7 pr-3.5">
+            <Link
+              href="/market/build"
+              className="block w-full px-4 py-3 mb-4 font-bold text-center text-white rounded-full bg-red"
+            >
+              작품 등록하기
+            </Link>
             <input
-              className="bg-gray-100 rounded-xl focus:ring-[1.5px] focus:ring-gray-200 block w-full px-3 py-2 placeholder-gray-800"
+              className="bg-gray-100 rounded-full focus:ring-[1.5px] focus:ring-gray-200 block w-full px-5 py-3 placeholder-gray-800"
               placeholder="작품 통합 검색"
             />
             <div className="h-8" />
