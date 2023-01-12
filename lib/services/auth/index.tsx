@@ -49,10 +49,10 @@ export const WithAuth = ({
   children,
 }: {
   authorized?: boolean;
-  children(_: Auth): JSX.Element;
+  children(_: Auth): React.ReactNode;
 }) => {
   const auth = useAuth();
-  return children(auth);
+  return <>{children(auth)}</>;
 };
 
 const parseJwt = (jwt: string) => {

@@ -84,8 +84,8 @@ const LayoutWrapper = ({
             </span>
             <span className="flex items-center space-x-4">
               <WithAuth>
-                {({ user }) =>
-                  user === null ? (
+                {({ user, isLoading }) =>
+                  isLoading ? null : user === null ? (
                     <Link
                       href="/auth/signin"
                       className="flex items-center justify-center h-8 px-4 font-bold text-white rounded-full bg-red"

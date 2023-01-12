@@ -1,5 +1,6 @@
 import { LikeIcon, LikeFilledIcon } from "@lib/icons";
 import { useAuth } from "@lib/services/auth";
+import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 import { useLikeMutation } from "../queries/like";
 
@@ -30,10 +31,10 @@ export const LikeButton = ({
 
   if (!user || user.userId === userId)
     return (
-      <div className="flex flex-col items-center pr-4">
+      <Link href="/auth/signin" className="flex flex-col items-center pr-4">
         <LikeIcon className="w-8 h-8 fill-gray-600" />
         <p className="mt-1 text-sm text-gray-600">{likesCnt}</p>
-      </div>
+      </Link>
     );
 
   return (
