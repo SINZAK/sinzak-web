@@ -1,6 +1,6 @@
 import { cva, VariantProps } from "class-variance-authority";
 
-const button = cva(
+export const button = cva(
   [
     "button",
     "hover:bg-opacity-80",
@@ -38,5 +38,12 @@ export const Button: React.FC<ButtonProps> = ({
   className,
   intent,
   size,
+  type,
   ...props
-}) => <button className={button({ intent, size, className })} {...props} />;
+}) => (
+  <button
+    type={type || "button"}
+    className={button({ intent, size, className })}
+    {...props}
+  />
+);

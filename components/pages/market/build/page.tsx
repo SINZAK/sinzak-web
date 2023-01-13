@@ -9,118 +9,282 @@ import { CheckIcon } from "@lib/icons";
 import Flicking from "@egjs/react-flicking";
 import TextareaAutosize from "react-textarea-autosize";
 import { CheckBox } from "@components/atoms/CheckBox";
+import { Controller, useForm } from "react-hook-form";
+import { MultiSelect } from "./components/MultiSelect";
+import { Category } from "@lib/resources/category";
+import { twMerge } from "tailwind-merge";
+import { useRouter } from "next/router";
+import { SingleSelect } from "./components/SingleSelect";
+
+type BuildForm =
+  | {
+      type: "sell";
+      category: Category;
+      content: string;
+      height: number;
+      price: number;
+      suggest: boolean;
+      title: string;
+      vertical: number;
+      width: number;
+    }
+  | {
+      type: "work";
+      category: Category;
+      title: string;
+      content: string;
+      pay: number;
+    };
 
 export default function Page() {
-  const { data, isLoading } = useQuery<{
-    content: ProductSimple[];
-  }>(["marketTest"], async () => {
-    return (await http.post.default("/products")).data;
+  const {
+    control,
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<BuildForm>({
+    defaultValues: {
+      type: "sell",
+      content: "",
+      title: "",
+    },
   });
+  const router = useRouter();
+  const onSubmit = async (data: BuildForm) => {
+    console.log(data);
+    if (data.type === "sell") {
+      const { category, content, height, price, suggest, title } = data;
+      const res = await http.post.json("/products/build", {
+        category,
+        content,
+        height,
+        price,
+        suggest,
+        title,
+        vertical: 150,
+        width: 120,
+      });
+      const id = res.data.id;
+      router.push(`/market/${id}`);
+    }
+  };
+  const type = watch("type");
 
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="fixed bottom-0 z-50 flex justify-center w-full p-3 bg-white pb-7 md:hidden">
-        <Button intent="primary" size="large" className="w-full max-w-xl">
+        <Button
+          //type="button"
+          //onClick={() => console.log(getValues())}
+          type="submit"
+          intent="primary"
+          size="large"
+          className="w-full max-w-xl"
+        >
           등록하기
         </Button>
       </div>
-      <div className="container flex flex-col max-w-2xl space-y-7 max-md:pt-3">
-        <div className="pb-3">
+      <div className="container max-w-2xl max-md:pt-3">
+        <div className="mb-10 max-md:hidden">
           <p className="text-3xl font-bold">작품 등록하기</p>
         </div>
-        <div>
-          <p className="mb-3">분야를 선택해주세요.</p>
-          <div className="grid max-w-sm grid-cols-3 gap-3">
-            <span className="flex items-center justify-center w-full bg-gray-100 aspect-square rounded-xl">
-              작품 판매
-            </span>
-            <span className="flex items-center justify-center w-full bg-gray-100 aspect-square rounded-xl">
-              의뢰해요
-            </span>
-            <span className="flex items-center justify-center w-full bg-gray-100 aspect-square rounded-xl">
-              작업해요
-            </span>
+        <div className="flex flex-col space-y-7">
+          <div>
+            <p className="mb-3">분야를 선택해주세요.</p>
+            <ul className="grid max-w-sm grid-cols-3 gap-3">
+              <li>
+                <input
+                  {...register("type")}
+                  type="radio"
+                  id="type-sell"
+                  name="type"
+                  value="sell"
+                  required
+                  className="hidden peer"
+                />
+                <label
+                  htmlFor="type-sell"
+                  className="flex items-center justify-center w-full bg-gray-100 cursor-pointer peer-checked:border aspect-square rounded-xl peer-checked:border-red"
+                >
+                  작품 판매
+                </label>
+              </li>
+              <li>
+                <input
+                  {...register("type")}
+                  type="radio"
+                  id="type-work"
+                  name="type"
+                  value="work"
+                  className="hidden peer"
+                />
+                <label
+                  htmlFor="type-work"
+                  className="flex items-center justify-center w-full bg-gray-100 cursor-pointer peer-checked:border aspect-square rounded-xl peer-checked:border-red"
+                >
+                  의뢰해요
+                </label>
+              </li>
+              <li>
+                <input
+                  {...register("type")}
+                  type="radio"
+                  id="type-work2"
+                  name="type"
+                  value="work"
+                  className="hidden peer"
+                />
+                <label
+                  htmlFor="type-work2"
+                  className="flex items-center justify-center w-full bg-gray-100 cursor-pointer peer-checked:border aspect-square rounded-xl peer-checked:border-red"
+                >
+                  작업해요
+                </label>
+              </li>
+            </ul>
           </div>
-        </div>
-        <div>
-          <p className="mb-3">카테고리를 선택해주세요. (최대 3개)</p>
-          <div className="flex flex-wrap gap-3">
-            <Button intent="primary">
-              <CheckIcon className="w-7 h-7 -my-0.5 -ml-1.5" />
-              회화일반
-            </Button>
-            <Button>
-              <CheckIcon className="w-7 h-7 -my-0.5 -ml-1.5" />
-              동양화
-            </Button>
-            <Button>
-              <CheckIcon className="w-7 h-7 -my-0.5 -ml-1.5" />
-              조소
-            </Button>
-            <Button>
-              <CheckIcon className="w-7 h-7 -my-0.5 -ml-1.5" />
-              판화
-            </Button>
-            <Button>
-              <CheckIcon className="w-7 h-7 -my-0.5 -ml-1.5" />
-              공예
-            </Button>
-            <Button>
-              <CheckIcon className="w-7 h-7 -my-0.5 -ml-1.5" />
-              기타
-            </Button>
-          </div>
-        </div>
-        <div>
-          <p className="mb-3">사진 등록</p>
-          <Flicking
-            bound
-            align="prev"
-            className="bleed"
-            cameraClass="space-x-3"
-          >
-            {Array.from({ length: 6 }).map((_, i) => (
-              <span
-                key={i}
-                className="flex items-center justify-center w-24 whitespace-pre-line bg-gray-100 aspect-square rounded-xl"
-                draggable="false"
-              ></span>
-            ))}
-          </Flicking>
-        </div>
-        <div>
-          <p className="mb-3">제목</p>
-          <input
-            placeholder="작품 제목"
-            className="w-full px-4 py-3 bg-gray-100 resize-none rounded-xl placeholder:text-gray-600"
-          />
-        </div>
-        <div>
-          <p className="mb-3">가격</p>
-          <span className="flex items-center space-x-8">
-            <span className="flex items-center flex-1">
-              <input
-                placeholder="작품 가격"
-                type="number"
-                className="w-full px-4 py-3 bg-gray-100 resize-none rounded-xl placeholder:text-gray-600"
+          <div>
+            <p className="mb-3">카테고리를 선택해주세요.</p>
+            {type === "sell" ? (
+              <Controller
+                shouldUnregister
+                control={control}
+                name="category"
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange } }) => (
+                  <SingleSelect
+                    onChange={onChange}
+                    data={[
+                      "painting",
+                      "orient",
+                      "sculpture",
+                      "print",
+                      "craft",
+                      "other",
+                    ]}
+                  />
+                )}
               />
-              <span className="ml-4 text-lg font-bold">원</span>
+            ) : (
+              <Controller
+                shouldUnregister
+                control={control}
+                name="category"
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange } }) => (
+                  <SingleSelect
+                    onChange={onChange}
+                    data={[
+                      "portrait",
+                      "illustration",
+                      "logo",
+                      "poster",
+                      "design",
+                      "editorial",
+                      "label",
+                    ]}
+                  />
+                )}
+              />
+            )}
+          </div>
+          <div>
+            <p className="mb-3">사진 등록</p>
+            <Flicking
+              bound
+              align="prev"
+              className="max-md:bleed"
+              cameraClass="space-x-3"
+            >
+              {Array.from({ length: 6 }).map((_, i) => (
+                <span
+                  key={i}
+                  className="flex items-center justify-center w-24 whitespace-pre-line bg-gray-100 aspect-square rounded-xl"
+                  draggable="false"
+                ></span>
+              ))}
+            </Flicking>
+          </div>
+          <div>
+            <p className="mb-3">제목</p>
+            <input
+              {...register("title", {
+                required: true,
+              })}
+              placeholder="작품 제목"
+              className={twMerge(
+                "w-full px-4 py-3 bg-gray-100 rounded-xl placeholder:text-gray-600",
+                errors.title && "ring-1 ring-red-500"
+              )}
+            />
+          </div>
+          <div>
+            <p className="mb-3">{type === "sell" ? "가격" : "의뢰비"}</p>
+            <span className="flex items-center space-x-8">
+              <span className="flex items-center flex-1">
+                <input
+                  {...register("price", {
+                    required: true,
+                    shouldUnregister: true,
+                    valueAsNumber: true,
+                  })}
+                  placeholder={type === "sell" ? "작품 가격" : "제시 의뢰비"}
+                  type="number"
+                  className={twMerge(
+                    "w-full px-4 py-3 bg-gray-100 rounded-xl placeholder:text-gray-600",
+                    (errors as any).price && "ring-1 ring-red-500"
+                  )}
+                />
+                <span className="ml-4 text-lg font-bold">원</span>
+              </span>
+              {type === "sell" && (
+                <span className="flex items-center">
+                  <Controller
+                    shouldUnregister
+                    defaultValue={false}
+                    control={control}
+                    name="suggest"
+                    render={({ field: { ref, value, onChange } }) => (
+                      <CheckBox
+                        ref={ref}
+                        checked={value}
+                        onCheckedChange={onChange}
+                      >
+                        가격제안 받기
+                      </CheckBox>
+                    )}
+                  />
+                </span>
+              )}
             </span>
-            <span className="flex items-center">
-              <CheckBox>가격제안 받기</CheckBox>
-            </span>
-          </span>
+          </div>
+          <div>
+            <p className="mb-3">내용</p>
+            <TextareaAutosize
+              {...register("content", {
+                required: true,
+              })}
+              placeholder={
+                type === "sell"
+                  ? "작품 의도, 작업 기간, 재료, 거래 방법 등을 자유롭게 표현해보세요."
+                  : "원하는 의뢰의 형태, 분위기, 재료 등을 자유롭게 설명해주세요!"
+              }
+              className={twMerge(
+                "w-full px-4 py-3 bg-gray-100 resize-none rounded-xl placeholder:text-gray-600",
+                (errors as any).price && "ring-1 ring-red-500"
+              )}
+              minRows={3}
+            />
+          </div>
         </div>
-        <div>
-          <p className="mb-3">내용</p>
-          <TextareaAutosize
-            placeholder="작품 의도, 작업 기간, 재료, 거래 방법 등을 자유롭게 표현해보세요."
-            className="w-full px-4 py-3 bg-gray-100 resize-none rounded-xl placeholder:text-gray-600"
-            minRows={3}
-          />
-        </div>
-        <div className="pt-7">
+        <div className="mt-10">
           <Button
+            type="submit"
             intent="primary"
             size="large"
             className="w-full max-md:hidden"
@@ -129,7 +293,7 @@ export default function Page() {
           </Button>
         </div>
       </div>
-    </>
+    </form>
   );
 }
 Page.getLayout = createLayout({

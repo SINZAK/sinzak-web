@@ -29,12 +29,20 @@ export const LikeButton = ({
   const { isLoading, mutate } = useLikeMutation();
   const { user } = useAuth();
 
-  if (!user || user.userId === userId)
+  if (!user)
     return (
       <Link href="/auth/signin" className="flex flex-col items-center pr-4">
         <LikeIcon className="w-8 h-8 fill-gray-600" />
         <p className="mt-1 text-sm text-gray-600">{likesCnt}</p>
       </Link>
+    );
+
+  if (user.userId === userId)
+    return (
+      <span className="flex flex-col items-center pr-4">
+        <LikeIcon className="w-8 h-8 fill-gray-600" />
+        <p className="mt-1 text-sm text-gray-600">{likesCnt}</p>
+      </span>
     );
 
   return (

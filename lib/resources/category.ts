@@ -14,6 +14,8 @@ export const category = {
   label: "패키지/라벨",
 } as const;
 
+export type Category = keyof typeof category;
+
 export const getCategoryText = (cate?: string) => {
   if (!cate) return null;
   return (category as any)[cate] || null;
