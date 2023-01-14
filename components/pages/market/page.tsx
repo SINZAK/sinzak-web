@@ -43,8 +43,8 @@ export default function Page() {
             <Filter />
           </span>
         </div>
-        <div className="flex">
-          <div className="md:block flex-[0_0_16rem] h-screen hidden mr-7 pr-3.5">
+        <div className="flex items-start">
+          <div className="md:block flex-[0_0_16rem] hidden mr-7 pr-3.5">
             <Link
               href="/build"
               className="block w-full px-4 py-3 mb-4 font-bold text-center text-white rounded-full bg-red"
