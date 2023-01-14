@@ -5,7 +5,6 @@ import { useCallback, useEffect, useState } from "react";
 
 export const MultiSelect = ({
   data,
-  value,
   onChange,
 }: {
   data: Category[];
@@ -29,18 +28,14 @@ export const MultiSelect = ({
     });
   }, []);
 
-  return (
-    <div className="flex flex-wrap gap-3">
-      {data.map((_, i) => (
-        <Button
-          onClick={() => onClick(_)}
-          key={i}
-          intent={selectState.includes(_) ? "primary" : "base"}
-        >
-          <CheckIcon className="w-7 h-7 -my-0.5 -ml-1.5" />
-          {getCategoryText(_)}
-        </Button>
-      ))}
-    </div>
-  );
+  return data.map((_, i) => (
+    <Button
+      onClick={() => onClick(_)}
+      key={i}
+      intent={selectState.includes(_) ? "primary" : "base"}
+    >
+      <CheckIcon className="w-7 h-7 -my-0.5 -ml-1.5" />
+      {getCategoryText(_)}
+    </Button>
+  ));
 };

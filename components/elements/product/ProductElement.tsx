@@ -7,7 +7,7 @@ import { formatNumber, formatRelativeTime } from "@lib/services/intl/format";
 import Image from "next/image";
 
 export const ProductElement = React.forwardRef<
-  HTMLAnchorElement,
+  any,
   { className?: string; data?: ProductSimple }
 >(({ className, data }, ref) => {
   if (!data) return <ProductElementSkeleton ref={ref} className={className} />;
@@ -47,24 +47,25 @@ export const ProductElement = React.forwardRef<
 });
 ProductElement.displayName = "ProductElement";
 
-const ProductElementSkeleton = React.forwardRef<any, { className?: string }>(
-  ({ className }, ref) => {
-    return (
-      <div ref={ref} className={cx(className, "flex flex-col")}>
-        <Skeleton className="block rounded-xl aspect-4/3" />
-        <div className="mt-4">
-          <p className="font-medium leading-tight md:text-lg md:leading-tight">
-            <Skeleton width="3em" />
-          </p>
-          <p className="font-bold leading-tight md:text-lg md:leading-tight">
-            <Skeleton width="10em" />
-          </p>
-          <p className="flex mt-1 space-x-1 text-xs md:text-sm">
-            <Skeleton width="10em" />
-          </p>
-        </div>
+const ProductElementSkeleton = React.forwardRef<
+  HTMLDivElement,
+  { className?: string }
+>(({ className }, ref) => {
+  return (
+    <div ref={ref} className={cx(className, "flex flex-col")}>
+      <Skeleton className="block rounded-xl aspect-4/3" />
+      <div className="mt-4">
+        <p className="font-medium leading-tight md:text-lg md:leading-tight">
+          <Skeleton width="3em" />
+        </p>
+        <p className="font-bold leading-tight md:text-lg md:leading-tight">
+          <Skeleton width="10em" />
+        </p>
+        <p className="flex mt-1 space-x-1 text-xs md:text-sm">
+          <Skeleton width="10em" />
+        </p>
       </div>
-    );
-  }
-);
+    </div>
+  );
+});
 ProductElementSkeleton.displayName = "ProductElementSkeleton";

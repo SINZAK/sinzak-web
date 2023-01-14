@@ -11,3 +11,5 @@ export { default as PictureFilledIcon } from "@public/assets/icons/picture-fille
 
 export { default as LikeIcon } from "@public/assets/icons/like.svg";
 export { default as LikeFilledIcon } from "@public/assets/icons/like-filled.svg";
+
+export { default as CloseIcon } from "@public/assets/icons/close.svg";

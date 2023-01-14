@@ -1,9 +1,11 @@
 import { useRef } from "react";
 import { ProductElement } from "@components/elements/product/ProductElement";
-import Flicking from "@egjs/react-flicking";
 import { ChevronLeftIcon, ChevronRightICon } from "@lib/icons";
 import { ProductSimple } from "@types";
 import Link from "next/link";
+
+import Flicking from "@egjs/react-flicking";
+import "@egjs/react-flicking/dist/flicking.css";
 
 export const FeaturedCarousel = ({
   data,
@@ -13,6 +15,32 @@ export const FeaturedCarousel = ({
   title: string;
 }) => {
   const flick = useRef<Flicking>(null);
+
+  const onClickPrev = () => {
+    if (!flick.current || flick.current.animating) return;
+    flick.current.moveTo(
+      Math.max(
+        0,
+        flick.current.index >
+          flick.current.panelCount - flick.current.visiblePanels.length
+          ? flick.current.panelCount -
+              flick.current.visiblePanels.length -
+              flick.current.visiblePanels.length
+          : flick.current.index - flick.current.visiblePanels.length
+      )
+    );
+  };
+
+  const onClickNext = () => {
+    if (!flick.current || flick.current.animating) return;
+    flick.current.moveTo(
+      Math.min(
+        flick.current.panelCount - 1,
+        flick.current.index + flick.current.visiblePanels.length
+      )
+    );
+  };
+
   return (
     <div className="space-y-5 md:space-y-10">
       <div className="flex items-center justify-between">
@@ -22,36 +50,10 @@ export const FeaturedCarousel = ({
             <span className="text-gray-800">더보기</span>
           </Link>
           <span className="items-center hidden space-x-3 font-bold md:flex">
-            <button
-              onClick={() => {
-                if (!flick.current || flick.current.animating) return;
-                flick.current.moveTo(
-                  Math.max(
-                    0,
-                    flick.current.index >
-                      flick.current.panelCount -
-                        flick.current.visiblePanels.length
-                      ? flick.current.panelCount -
-                          flick.current.visiblePanels.length -
-                          flick.current.visiblePanels.length
-                      : flick.current.index - flick.current.visiblePanels.length
-                  )
-                );
-              }}
-            >
+            <button onClick={onClickPrev}>
               <ChevronLeftIcon className="fill-gray-800" />
             </button>
-            <button
-              onClick={() => {
-                if (!flick.current || flick.current.animating) return;
-                flick.current.moveTo(
-                  Math.min(
-                    flick.current.panelCount - 1,
-                    flick.current.index + flick.current.visiblePanels.length
-                  )
-                );
-              }}
-            >
+            <button onClick={onClickNext}>
               <ChevronRightICon className="fill-gray-800" />
             </button>
           </span>
@@ -64,7 +66,7 @@ export const FeaturedCarousel = ({
         bound
         align="prev"
       >
-        {Array.from({ length: 13 }).map((_, i) => (
+        {Array.from({ length: 10 }).map((_, i) => (
           <ProductElement
             className="w-3/5 mr-3 lg:mr-7 sm:w-48 md:w-56"
             data={data && data.length >= i ? data[i] : undefined}

@@ -1,20 +1,82 @@
 import { createLayout } from "@components/layout/layout";
 import "@egjs/react-flicking/dist/flicking.css";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { http } from "@lib/services/http";
-import { useQuery } from "@tanstack/react-query";
-import { ProductSimple } from "@types";
 import { Button } from "@components/atoms/Button";
-import { CheckIcon } from "@lib/icons";
-import Flicking from "@egjs/react-flicking";
+import { CloseIcon } from "@lib/icons";
 import TextareaAutosize from "react-textarea-autosize";
 import { CheckBox } from "@components/atoms/CheckBox";
 import { Controller, useForm } from "react-hook-form";
-import { MultiSelect } from "./components/MultiSelect";
 import { Category } from "@lib/resources/category";
 import { twMerge } from "tailwind-merge";
 import { useRouter } from "next/router";
 import { SingleSelect } from "./components/SingleSelect";
+
+const ImageUpload = () => {
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [progressInfos, setProgressInfos] = useState({ val: [] });
+  const [message, setMessage] = useState([]);
+  const [imageInfos, setImageInfos] = useState([]);
+  const progressInfosRef = useRef(null);
+
+  const selectFiles: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    if (!event.target.files) return;
+    let images: string[] = [];
+
+    for (let i = 0; i < event.target.files.length; i++) {
+      images.push(URL.createObjectURL(event.target.files[i]));
+    }
+
+    setImagePreviews((_) => [..._, ...images]);
+    // setProgressInfos({ val: [] });
+    // setMessage([]);
+  };
+
+  return (
+    <div className="grid grid-cols-[repeat(auto-fill,minmax(6rem,1fr))] gap-3">
+      <span>
+        <input
+          id="input-file"
+          type="file"
+          multiple
+          accept="image/png, image/jpeg"
+          className="hidden"
+          onChange={selectFiles}
+        />
+        <label
+          htmlFor="input-file"
+          className="flex items-center justify-center w-full h-full whitespace-pre-line bg-gray-100 cursor-pointer aspect-square rounded-xl"
+        >
+          업로드
+        </label>
+      </span>
+      {/* <Flicking
+        bound
+        align="prev"
+        className="max-md:bleed"
+        cameraClass="space-x-3"
+      > */}
+      {imagePreviews.map((_, i) => (
+        <span className="relative" key={i}>
+          <img
+            alt=""
+            src={_}
+            className="flex items-center justify-center object-cover whitespace-pre-line bg-gray-100 border aspect-square rounded-xl"
+            draggable="false"
+          />
+          <button
+            onClick={() => setImagePreviews((x) => x.filter((_, j) => i !== j))}
+            type="button"
+            className="absolute top-0 right-0 grid w-5 h-5 text-white rounded-full translate-x-1/3 -translate-y-1/3 bg-red place-content-center"
+          >
+            <CloseIcon />
+          </button>
+        </span>
+      ))}
+      {/* </Flicking> */}
+    </div>
+  );
+};
 
 type BuildForm =
   | {
@@ -75,8 +137,6 @@ export default function Page() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="fixed bottom-0 z-50 flex justify-center w-full p-3 bg-white pb-7 md:hidden">
         <Button
-          //type="button"
-          //onClick={() => console.log(getValues())}
           type="submit"
           intent="primary"
           size="large"
@@ -195,20 +255,7 @@ export default function Page() {
           </div>
           <div>
             <p className="mb-3">사진 등록</p>
-            <Flicking
-              bound
-              align="prev"
-              className="max-md:bleed"
-              cameraClass="space-x-3"
-            >
-              {Array.from({ length: 6 }).map((_, i) => (
-                <span
-                  key={i}
-                  className="flex items-center justify-center w-24 whitespace-pre-line bg-gray-100 aspect-square rounded-xl"
-                  draggable="false"
-                ></span>
-              ))}
-            </Flicking>
+            <ImageUpload />
           </div>
           <div>
             <p className="mb-3">제목</p>

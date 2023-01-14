@@ -5,15 +5,15 @@ import { default as CheckIcon } from "@public/assets/icons/check.svg";
 export const CheckBox = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof Checkbox.Root>
->(({ children, ...props }, ref) => {
+>(({ children, defaultChecked, ...props }, ref) => {
   const id = useId();
   return (
     <>
       <Checkbox.Root
+        defaultChecked={defaultChecked ?? false}
         id={id}
         ref={ref}
         className="rounded-full w-[1.3em] h-[1.3em] text-sm ring-inset ring-gray-800 ring-[1.5px] flex justify-center items-center overflow-hidden"
-        onChange={(e) => console.log(e.target)}
         {...props}
       >
         <Checkbox.Indicator className="w-full h-full bg-gray-800">

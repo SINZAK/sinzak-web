@@ -74,6 +74,7 @@ async function get<T = any>(url: RequestInfo | URL, options?: RequestInit) {
 
 async function postDefault<T = any>(
   url: RequestInfo | URL,
+  params?: Record<string, any>, // ConstructorParameters<typeof URLSearchParams>[0],
   options?: RequestInit
 ) {
   const requestOptions = merge(
@@ -82,6 +83,11 @@ async function postDefault<T = any>(
     },
     options
   );
+  if (params)
+    return await common<T>(
+      url + "?" + new URLSearchParams(params).toString(),
+      requestOptions
+    );
   return await common<T>(url, requestOptions);
 }
 
