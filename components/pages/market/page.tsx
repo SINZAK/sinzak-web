@@ -51,7 +51,7 @@ export default function Page() {
               작품 등록하기
             </Link>
             <input
-              className="bg-gray-100 rounded-full focus:ring-[1.5px] focus:ring-gray-200 block w-full px-5 py-3 placeholder-gray-800"
+              className="block w-full px-5 py-3 placeholder-gray-800 bg-gray-100 rounded-full"
               placeholder="작품 통합 검색"
             />
             <div className="h-8" />

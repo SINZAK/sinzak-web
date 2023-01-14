@@ -6,8 +6,9 @@ svg {
   @apply block align-top;
 }
 
-input {
-  @apply appearance-none focus:outline-none;
+input,
+textarea {
+  @apply appearance-none focus:outline-none focus:ring-gray-200 focus:ring-1;
 }
 
 input[type="search"]::-webkit-search-decoration,

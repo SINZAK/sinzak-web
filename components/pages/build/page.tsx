@@ -266,7 +266,7 @@ export default function Page() {
               placeholder="작품 제목"
               className={twMerge(
                 "w-full px-4 py-3 bg-gray-100 rounded-xl placeholder:text-gray-600",
-                errors.title && "ring-1 ring-red-500"
+                errors.title && "ring-1 !ring-red-500"
               )}
             />
           </div>
@@ -284,7 +284,7 @@ export default function Page() {
                   type="number"
                   className={twMerge(
                     "w-full px-4 py-3 bg-gray-100 rounded-xl placeholder:text-gray-600",
-                    (errors as any).price && "ring-1 ring-red-500"
+                    (errors as any).price && "ring-1 !ring-red-500"
                   )}
                 />
                 <span className="ml-4 text-lg font-bold">원</span>
@@ -323,7 +323,7 @@ export default function Page() {
               }
               className={twMerge(
                 "w-full px-4 py-3 bg-gray-100 resize-none rounded-xl placeholder:text-gray-600",
-                (errors as any).price && "ring-1 ring-red-500"
+                (errors as any).price && "ring-1 !ring-red-500"
               )}
               minRows={3}
             />
