@@ -28,14 +28,24 @@ export const MultiSelect = ({
     });
   }, []);
 
-  return data.map((_, i) => (
+  return [
     <Button
-      onClick={() => onClick(_)}
-      key={i}
-      intent={selectState.includes(_) ? "primary" : "base"}
+      key="reset"
+      onClick={() => setSelectState([])}
+      intent={selectState.length === 0 ? "primary" : "base"}
     >
       <CheckIcon className="w-7 h-7 -my-0.5 -ml-1.5" />
-      {getCategoryText(_)}
-    </Button>
-  ));
+      전체
+    </Button>,
+    ...data.map((_, i) => (
+      <Button
+        onClick={() => onClick(_)}
+        key={i}
+        intent={selectState.includes(_) ? "primary" : "base"}
+      >
+        <CheckIcon className="w-7 h-7 -my-0.5 -ml-1.5" />
+        {getCategoryText(_)}
+      </Button>
+    )),
+  ];
 };

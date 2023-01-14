@@ -113,35 +113,36 @@ export default function Page() {
               </button>
             </div>
           </div>
-          {data && data?.userId !== user?.userId ? (
-            <div className="max-md:hidden flex-[0_0_12rem] flex flex-col text-lg font-bold space-y-3">
-              <button className="p-2 text-white rounded-full bg-red">
-                <img
-                  alt="ask"
-                  src="/assets/icons/ask.svg"
-                  className="mr-1 h-7 invert brightness-0"
-                />
-                거래 문의하기
-              </button>
-              <button className="box-border p-2 bg-white rounded-full text-red ring-red ring-inset ring-1">
-                가격 제안하기
-              </button>
-            </div>
-          ) : (
-            <div className="flex space-x-3 text-lg font-bold max-md:hidden h-fit">
-              <button className="flex items-center px-5 text-white rounded-full h-11 bg-red">
-                <img
-                  alt="ask"
-                  src="/assets/icons/ask.svg"
-                  className="mr-1 h-7 invert brightness-0"
-                />
-                문의 중인 채팅방 {data?.chatCnt || 0}
-              </button>
-              <button className="flex items-center justify-center text-gray-800 bg-gray-100 rounded-full h-11 w-11">
-                <MenuIcon />
-              </button>
-            </div>
-          )}
+          {data &&
+            (data?.userId !== user?.userId ? (
+              <div className="max-md:hidden flex-[0_0_12rem] flex flex-col text-lg font-bold space-y-3">
+                <button className="flex items-center justify-center p-2 text-white align-bottom rounded-full bg-red">
+                  <img
+                    alt="ask"
+                    src="/assets/icons/ask.svg"
+                    className="mr-1 invert brightness-0"
+                  />
+                  <span>거래 문의하기</span>
+                </button>
+                <button className="box-border p-2 bg-white rounded-full text-red ring-red ring-inset ring-1">
+                  가격 제안하기
+                </button>
+              </div>
+            ) : (
+              <div className="flex space-x-3 text-lg font-bold max-md:hidden h-fit">
+                <button className="flex items-center px-5 text-white rounded-full h-11 bg-red">
+                  <img
+                    alt="ask"
+                    src="/assets/icons/ask.svg"
+                    className="mr-1 h-7 invert brightness-0"
+                  />
+                  문의 중인 채팅방 {data?.chatCnt || 0}
+                </button>
+                <button className="flex items-center justify-center text-gray-800 bg-gray-100 rounded-full h-11 w-11">
+                  <MenuIcon />
+                </button>
+              </div>
+            ))}
         </div>
         <hr className="my-5 md:my-7" />
         <div className="flex items-center justify-between">
