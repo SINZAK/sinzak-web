@@ -135,7 +135,7 @@ export default function Page() {
                   src="/assets/icons/ask.svg"
                   className="mr-1 h-7 invert brightness-0"
                 />
-                문의 중인 채팅방 3
+                문의 중인 채팅방 {data?.chatCnt || 0}
               </button>
               <button className="flex items-center justify-center text-gray-800 bg-gray-100 rounded-full h-11 w-11">
                 <MenuIcon />

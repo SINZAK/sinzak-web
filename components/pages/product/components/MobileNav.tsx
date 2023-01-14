@@ -50,7 +50,7 @@ export const MobileNav = () => {
               src="/assets/icons/ask.svg"
               className="mr-1 h-7 invert brightness-0"
             />
-            문의 중인 채팅방 3
+            문의 중인 채팅방 {data?.chatCnt || 0}
           </button>
         </div>
       )}
