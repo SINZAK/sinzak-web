@@ -17,7 +17,7 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
 
   useEffect(() => {
     console.log(isLoading, user);
-    if (router && !isLoading && !user) router.push("/auth/signin");
+    if (router && !isLoading && !user) router.replace("/auth/signin");
   }, [user, isLoading, router]);
 
   if (isLoading || !user) return null;
