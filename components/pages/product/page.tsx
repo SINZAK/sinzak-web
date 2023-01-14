@@ -177,18 +177,19 @@ export default function Page() {
         <hr className="my-5 md:my-7" />
         {data ? (
           <>
-            {(data.height || data.width) && (
+            {(typeof data.height === "number" ||
+              typeof data.width === "number") && (
               <div>
                 <p className="mb-3 font-bold">상세 사이즈</p>
                 <div className="grid max-w-xl grid-cols-3">
-                  {data.width && (
+                  {typeof data.width === "number" && (
                     <p className="contents">
                       <span>가로</span>
                       <span>{data.width}</span>
                       <span>cm</span>
                     </p>
                   )}
-                  {data.height && (
+                  {typeof data.height === "number" && (
                     <p className="contents">
                       <span>세로</span>
                       <span>{data.height}</span>
