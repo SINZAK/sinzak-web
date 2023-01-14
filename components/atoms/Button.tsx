@@ -52,7 +52,7 @@ export const button = cva(
     ],
     defaultVariants: {
       intent: "base",
-      outline: true,
+      outline: false,
       size: "medium",
     },
   }
@@ -63,11 +63,11 @@ export interface ButtonProps
     VariantProps<typeof button> {}
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, intent, size, type, ...props }, ref) => (
+  ({ className, outline, intent, size, type, ...props }, ref) => (
     <button
       ref={ref}
       type={type || "button"}
-      className={button({ intent, size, className })}
+      className={button({ intent, size, className, outline })}
       {...props}
     />
   )

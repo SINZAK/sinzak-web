@@ -30,6 +30,7 @@ export const MultiSelect = ({
 
   return [
     <Button
+      outline
       key="reset"
       onClick={() => setSelectState([])}
       intent={selectState.length === 0 ? "primary" : "base"}
@@ -39,6 +40,7 @@ export const MultiSelect = ({
     </Button>,
     ...data.map((_, i) => (
       <Button
+        outline
         onClick={() => onClick(_)}
         key={i}
         intent={selectState.includes(_) ? "primary" : "base"}
