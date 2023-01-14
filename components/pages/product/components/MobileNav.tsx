@@ -1,8 +1,10 @@
+import { useAuth } from "@lib/services/auth";
 import { useProductQuery } from "../queries/product";
 import { LikeButton, LikeButtonPlaceholder } from "./LikeButton";
 
 export const MobileNav = () => {
   const { data } = useProductQuery();
+  const { user } = useAuth();
 
   return (
     <div className="flex items-start w-full px-3 pt-3 pb-2 space-x-2">
@@ -26,19 +28,32 @@ export const MobileNav = () => {
           <p className="mt-1 text-sm text-gray-600">찜하기</p>
         </button>
       </div>
-      <div className="flex flex-col flex-1">
-        <button className="flex items-center justify-center p-2 font-bold text-white rounded-full bg-red">
-          <img
-            alt="ask"
-            src="/assets/icons/ask.svg"
-            className="mr-1 h-7 invert brightness-0"
-          />
-          거래 문의하기
-        </button>
-        <button className="mt-1 text-sm font-bold text-purple">
-          가격 제안하기
-        </button>
-      </div>
+      {data && data?.userId !== user?.userId ? (
+        <div className="flex flex-col flex-1">
+          <button className="flex items-center justify-center p-2 font-bold text-white rounded-full bg-red">
+            <img
+              alt="ask"
+              src="/assets/icons/ask.svg"
+              className="mr-1 h-7 invert brightness-0"
+            />
+            거래 문의하기
+          </button>
+          <button className="mt-1 text-sm font-bold text-purple">
+            가격 제안하기
+          </button>
+        </div>
+      ) : (
+        <div className="flex flex-col self-center flex-1">
+          <button className="flex items-center justify-center p-2 font-bold text-white rounded-full bg-red">
+            <img
+              alt="ask"
+              src="/assets/icons/ask.svg"
+              className="mr-1 h-7 invert brightness-0"
+            />
+            문의 중인 채팅방 3
+          </button>
+        </div>
+      )}
     </div>
   );
 };

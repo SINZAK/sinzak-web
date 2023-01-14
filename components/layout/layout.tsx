@@ -1,6 +1,19 @@
+import {
+  ChatFilledIcon,
+  ChatIcon,
+  HomeFilledIcon,
+  HomeIcon,
+  MarketFilledIcon,
+  MarketIcon,
+  ProfileFilledIcon,
+  ProfileIcon,
+  TaskFilledIcon,
+  TaskIcon,
+} from "@lib/icons";
 import { WithAuth } from "@lib/services/auth";
 import Link from "next/link";
 import React from "react";
+import { MobileNavLink } from "./NavLink";
 
 interface LayoutProps {
   rawHeader?: React.ReactNode;
@@ -21,50 +34,41 @@ const LayoutWrapper = ({
               {mobileNav}
             </div>
           ) : (
-            <div className="fixed bottom-0 z-50 flex justify-center w-full h-16 bg-white md:hidden">
-              <div className="grid items-center w-full h-full max-w-xl grid-cols-5 px-2 text-xs">
-                <Link href="/" className="flex flex-col items-center">
-                  <img
-                    alt="chat"
-                    src="/assets/icons/home.svg"
-                    className="h-8"
-                  />
-                  <p className="leading-tight">홈</p>
-                </Link>
-                <Link href="/market" className="flex flex-col items-center">
-                  <img
-                    alt="chat"
-                    src="/assets/icons/market.svg"
-                    className="h-8"
-                  />
-                  <p className="leading-tight">마켓</p>
-                </Link>
-                <Link href="/" className="flex flex-col items-center">
-                  <img
-                    alt="chat"
-                    src="/assets/icons/task.svg"
-                    className="h-8"
-                  />
-                  <p className="leading-tight">의뢰</p>
-                </Link>
-                <Link href="/chat" className="flex flex-col items-center">
-                  <img
-                    alt="chat"
-                    src="/assets/icons/chat.svg"
-                    className="h-8"
-                  />
-                  <p className="leading-tight">채팅</p>
-                </Link>
-                <Link href="/my" className="flex flex-col items-center">
-                  <img
-                    alt="chat"
-                    src="/assets/icons/profile.svg"
-                    className="h-8"
-                  />
-                  <p className="leading-tight">프로필</p>
-                </Link>
-              </div>
-            </div>
+            <nav className="fixed bottom-0 z-50 flex justify-center w-full h-16 bg-white md:hidden">
+              <ul className="grid items-center w-full h-full max-w-xl grid-cols-5 px-2 text-sm">
+                <MobileNavLink
+                  href="/"
+                  exact
+                  icon={HomeIcon}
+                  activeIcon={HomeFilledIcon}
+                  text="홈"
+                />
+                <MobileNavLink
+                  href="/market"
+                  icon={MarketIcon}
+                  activeIcon={MarketFilledIcon}
+                  text="마켓"
+                />
+                <MobileNavLink
+                  href="/404"
+                  icon={TaskIcon}
+                  activeIcon={HomeFilledIcon}
+                  text="의뢰"
+                />
+                <MobileNavLink
+                  href="/chat"
+                  icon={ChatIcon}
+                  activeIcon={ChatFilledIcon}
+                  text="채팅"
+                />
+                <MobileNavLink
+                  href="/my"
+                  icon={ProfileIcon}
+                  activeIcon={ProfileFilledIcon}
+                  text="프로필"
+                />
+              </ul>
+            </nav>
           ))}
         {rawHeader && (
           <div className="sticky top-0 z-50 md:hidden">{rawHeader}</div>

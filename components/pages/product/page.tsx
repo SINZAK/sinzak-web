@@ -13,6 +13,7 @@ import { MobileNav } from "./components/MobileNav";
 import { useProductQuery } from "./queries/product";
 
 import "@egjs/react-flicking/dist/flicking.css";
+import { MenuIcon } from "@lib/icons";
 
 const plugins = [new Fade(), new Pagination({ type: "bullet" })];
 export default function Page() {
@@ -112,13 +113,32 @@ export default function Page() {
               </button>
             </div>
           </div>
-          {data && data?.userId !== user?.userId && (
+          {data && data?.userId !== user?.userId ? (
             <div className="max-md:hidden flex-[0_0_12rem] flex flex-col text-lg font-bold space-y-3">
               <button className="p-2 text-white rounded-full bg-red">
+                <img
+                  alt="ask"
+                  src="/assets/icons/ask.svg"
+                  className="mr-1 h-7 invert brightness-0"
+                />
                 거래 문의하기
               </button>
               <button className="box-border p-2 bg-white rounded-full text-red ring-red ring-inset ring-1">
                 가격 제안하기
+              </button>
+            </div>
+          ) : (
+            <div className="flex space-x-3 text-lg font-bold max-md:hidden h-fit">
+              <button className="flex items-center px-5 text-white rounded-full h-11 bg-red">
+                <img
+                  alt="ask"
+                  src="/assets/icons/ask.svg"
+                  className="mr-1 h-7 invert brightness-0"
+                />
+                문의 중인 채팅방 3
+              </button>
+              <button className="flex items-center justify-center text-gray-800 bg-gray-100 rounded-full h-11 w-11">
+                <MenuIcon />
               </button>
             </div>
           )}
@@ -155,31 +175,45 @@ export default function Page() {
           )}
         </div>
         <hr className="my-5 md:my-7" />
-        <div>
-          <p className="mb-3 font-bold">상세 사이즈</p>
-          <div className="grid max-w-xl grid-cols-3">
-            <p className="contents">
-              <span>가로</span>
-              <span>12.3</span>
-              <span>cm</span>
-            </p>
-            <p className="contents">
-              <span>세로</span>
-              <span>45.6</span>
-              <span>cm</span>
-            </p>
+        {data ? (
+          <>
+            {(data.height || data.width) && (
+              <div>
+                <p className="mb-3 font-bold">상세 사이즈</p>
+                <div className="grid max-w-xl grid-cols-3">
+                  {data.width && (
+                    <p className="contents">
+                      <span>가로</span>
+                      <span>{data.width}</span>
+                      <span>cm</span>
+                    </p>
+                  )}
+                  {data.height && (
+                    <p className="contents">
+                      <span>세로</span>
+                      <span>{data.height}</span>
+                      <span>cm</span>
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
+            <hr className="my-5 md:my-7" />
+            <div className="text-left whitespace-pre-wrap">{data?.content}</div>
+          </>
+        ) : (
+          <div className="text-lg">
+            <Skeleton count={4} />
+            <Skeleton className="w-2/3" />
           </div>
-          <hr className="my-5 md:my-7" />
-          <div className="text-left whitespace-pre-wrap">{data?.content}</div>
-        </div>
+        )}
       </div>
     </>
   );
 }
 
-Page.getLayout = createLayout({
-  mobileNav: <MobileNav />,
-  rawHeader: (
+const MobileHeader = () => {
+  return (
     <>
       <div className="container relative flex items-center justify-between h-12 bg-white">
         <span>
@@ -190,5 +224,10 @@ Page.getLayout = createLayout({
         </span>
       </div>
     </>
-  ),
+  );
+};
+
+Page.getLayout = createLayout({
+  mobileNav: <MobileNav />,
+  rawHeader: <MobileHeader />,
 });

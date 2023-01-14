@@ -7,7 +7,6 @@ import { FilterProvider } from "./states/filter";
 import { Filter } from "./components/Filter";
 import { ProductsView } from "./components/ProductsView";
 import { CategoryFilter } from "./components/CategoryFilter";
-import { MultiSelect } from "./components/MultiSelect";
 
 export default function Page() {
   return (

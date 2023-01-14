@@ -6,9 +6,15 @@ import { Filter } from "../states/filter";
 export const useProductQuery = (filter: Filter) => {
   const query = useQuery<{
     content: ProductSimple[];
-  }>(["marketTest", filter], async () => {
-    return (await http.post.default("/products", filter)).data;
-  });
+  }>(
+    ["marketTest", filter],
+    async () => {
+      return (await http.post.default("/products", filter)).data;
+    },
+    {
+      keepPreviousData: true,
+    }
+  );
 
   return query;
 };

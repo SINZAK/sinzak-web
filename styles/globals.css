@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 svg {
-  @apply inline-block align-top;
+  @apply block align-top;
 }
 
 input {
