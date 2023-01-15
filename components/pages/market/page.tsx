@@ -1,12 +1,57 @@
 import { createLayout } from "@components/layout/layout";
 import Flicking from "@egjs/react-flicking";
 import "@egjs/react-flicking/dist/flicking.css";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { FilterProvider } from "./states/filter";
+import {
+  FilterProvider,
+  filterSearchAtom,
+  useFilterContext,
+} from "./states/filter";
 import { Filter } from "./components/Filter";
 import { ProductsView } from "./components/ProductsView";
 import { CategoryFilter } from "./components/CategoryFilter";
+import { useAtom } from "jotai/react";
+import { RESET } from "jotai/vanilla/utils";
+import { CloseIcon } from "@lib/icons";
+
+const SearchInput = () => {
+  const store = useFilterContext();
+  const [search, setSearch] = useState("");
+  const [, setFilterSearch] = useAtom(filterSearchAtom, {
+    store,
+  });
+  const reset = () => (setSearch(""), setFilterSearch(RESET));
+  const isValid = search.length >= 2;
+
+  return (
+    <form
+      className="relative"
+      onSubmit={(e) => (
+        e.preventDefault(), isValid ? setFilterSearch(search || RESET) : reset()
+      )}
+    >
+      {isValid && (
+        <button
+          onClick={reset}
+          type="button"
+          className="absolute grid w-6 h-6 text-white -translate-y-1/2 rounded-full right-3 top-1/2 bg-red place-content-center"
+        >
+          <CloseIcon />
+        </button>
+      )}
+      <input
+        onKeyDown={(e) => {
+          if (e.key === "Esc" || e.key === "Escape") reset();
+        }}
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="block w-full px-5 py-3 placeholder-gray-800 bg-gray-100 rounded-full"
+        placeholder="작품 통합 검색"
+      />
+    </form>
+  );
+};
 
 export default function Page() {
   return (
@@ -50,10 +95,7 @@ export default function Page() {
             >
               작품 등록하기
             </Link>
-            <input
-              className="block w-full px-5 py-3 placeholder-gray-800 bg-gray-100 rounded-full"
-              placeholder="작품 통합 검색"
-            />
+            <SearchInput />
             <div className="h-8" />
             <div className="flex flex-col items-start space-y-3">
               {CategoryFilter()}

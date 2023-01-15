@@ -9,6 +9,7 @@ export const CategoryFilter = () => {
     store,
   });
   return MultiSelect({
+    value: filterCategory,
     onChange: setFilterCategory,
     data: ["painting", "orient", "sculpture", "print", "craft", "other"],
   });

@@ -1,5 +1,18 @@
+import {
+  filterCategoriesAtom,
+  filterStore,
+} from "@components/pages/market/states/filter";
 import Flicking from "@egjs/react-flicking";
 import Link from "next/link";
+
+const categories = [
+  ["회화\n일반", "painting"],
+  ["동양화", "orient"],
+  ["조소", "sculpture"],
+  ["판화", "print"],
+  ["공예", "craft"],
+  ["기타", "other"],
+] as const;
 
 export const GenreView = () => {
   return (
@@ -14,18 +27,17 @@ export const GenreView = () => {
         className="bleed"
         cameraClass="space-x-3 lg:space-x-7"
       >
-        {[
-          ["회화\n일반", "painting"],
-          ["동양화", "orient"],
-          ["조소", "sculpture"],
-          ["판화", "print"],
-          ["공예", "craft"],
-          ["기타", "other"],
-        ].map((_, i) => (
+        {categories.map((_, i) => (
           <Link
-            href="/market"
+            href={`/market#categories=[${_[1]}]`}
+            onClick={() => {
+              setTimeout(
+                () => filterStore.set(filterCategoriesAtom, [_[1]]),
+                0
+              );
+            }}
             key={_[1]}
-            className="flex items-center justify-center w-24 text-lg font-bold leading-tight text-white whitespace-pre-line aspect-square rounded-xl"
+            className="flex items-center justify-center w-24 text-lg font-bold leading-tight text-white whitespace-pre-line bg-cover aspect-square rounded-xl"
             draggable="false"
             style={{
               backgroundImage: `url("/assets/images/cate-${_[1]}.jpg")`,

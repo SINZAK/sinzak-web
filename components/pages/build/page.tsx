@@ -344,6 +344,7 @@ export default function Page() {
   );
 }
 Page.getLayout = createLayout({
+  authenticated: true,
   rawHeader: (
     <>
       <div className="container relative flex items-center justify-between h-12 bg-white">

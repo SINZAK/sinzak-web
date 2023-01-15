@@ -1,4 +1,6 @@
 import { Category } from "@lib/resources/category";
+import { atomWithHash } from "@lib/utils/atomWithHash";
+import removeEmptyField from "@lib/utils/removeEmptyField";
 import { useAtomValue } from "jotai/react";
 import { atom, createStore } from "jotai/vanilla";
 import { useContext, createContext } from "react";
@@ -14,27 +16,40 @@ export const filterOptions: { id: FilterAlign; name: string }[] = [
 ];
 
 export interface Filter {
+  search: string | undefined;
   align: FilterAlign;
-  categories: string[];
+  categories: Category[];
   sale: boolean;
 }
 
-export const filterAlignAtom = atom<FilterAlign>("recommend");
-export const filterCategoriesAtom = atom<Category[]>([]);
-export const filterSaleAtom = atom<boolean>(false);
+export const filterSearchAtom = atomWithHash<Filter["search"]>(
+  "search",
+  undefined
+);
+export const filterAlignAtom = atomWithHash<Filter["align"]>(
+  "align",
+  "recommend"
+);
+export const filterCategoriesAtom = atomWithHash<Filter["categories"]>(
+  "categories",
+  []
+);
+export const filterSaleAtom = atomWithHash<Filter["sale"]>("sale", false);
 
 export const filterAtom = atom<Filter>((get) => {
   const filter = {
+    search: get(filterSearchAtom),
     align: get(filterAlignAtom),
     categories: get(filterCategoriesAtom),
     sale: get(filterSaleAtom),
   };
-  return filter;
+  return removeEmptyField(filter);
 });
 
 export const useFilter = () => useAtomValue(filterAtom, { store: filterStore });
 
 export const filterStore = createStore();
+
 const FilterContext = createContext(filterStore);
 export const useFilterContext = () => useContext(FilterContext);
 

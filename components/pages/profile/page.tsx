@@ -1,12 +1,11 @@
 import { CheckBox } from "@components/atoms/CheckBox";
-import { ProductElement } from "@components/elements/product/ProductElement";
 import { createLayout } from "@components/layout/layout";
 import React from "react";
 import { Listbox } from "@headlessui/react";
 import { AlignIcon } from "@lib/icons";
 import { http } from "@lib/services/http";
 import { useQuery } from "@tanstack/react-query";
-import { ProductSimple, UserProfile } from "@types";
+import { UserProfile } from "@types";
 import Skeleton from "react-loading-skeleton";
 import { useRouter } from "next/router";
 

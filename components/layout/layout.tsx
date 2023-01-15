@@ -1,3 +1,4 @@
+import { Authenticated } from "@components/atoms/Authenticated";
 import {
   ChatFilledIcon,
   ChatIcon,
@@ -7,7 +8,6 @@ import {
   MarketIcon,
   ProfileFilledIcon,
   ProfileIcon,
-  TaskFilledIcon,
   TaskIcon,
 } from "@lib/icons";
 import { WithAuth } from "@lib/services/auth";
@@ -16,16 +16,20 @@ import React from "react";
 import { MobileNavLink } from "./NavLink";
 
 interface LayoutProps {
+  authenticated?: boolean;
   rawHeader?: React.ReactNode;
   mobileNav?: boolean | React.ReactNode;
 }
 
 const LayoutWrapper = ({
+  authenticated,
   children,
   rawHeader,
   mobileNav,
 }: React.PropsWithChildren<LayoutProps>) => {
-  return (
+  return React.createElement(
+    authenticated ? Authenticated : React.Fragment,
+    {},
     <>
       <div className="min-h-screen">
         {mobileNav &&

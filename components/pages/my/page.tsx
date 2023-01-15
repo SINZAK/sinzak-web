@@ -6,6 +6,7 @@ export default function Page() {
 }
 
 Page.getLayout = createLayout({
+  authenticated: true,
   mobileNav: true,
   rawHeader: (
     <>

@@ -14,21 +14,16 @@ export const ProductsView = () => {
     if (inView) fetchNextPage();
   }, [data, fetchNextPage, inView]);
 
+  const content = data?.pages.map(({ content }) => content).flat();
+
   return (
-    <div>
-      <div className="flex flex-wrap flex-1 gap-x-3 md:gap-x-7 gap-y-7">
+    <div className="flex-1">
+      <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-x-3 md:gap-x-7 gap-y-7">
         {(isLoading
           ? Array.from({ length: 16 }, () => undefined)
-          : data?.pages.map(({ content }) => content).flat() || []
+          : content || []
         ).map((_, i) => (
-          <ProductElement
-            data={_}
-            className="flex-[1_1_40%] sm:flex-[1_1_240px]"
-            key={_?.id || `t-{${i}}`}
-          />
-        ))}
-        {Array.from({ length: 2 }).map((_, i) => (
-          <div className="flex-[1_1_40%] sm:flex-[1_1_240px]" key={i} />
+          <ProductElement data={_} key={_?.id || `t-{${i}}`} />
         ))}
       </div>
       <div className="-translate-y-[50vh]" ref={ref} />

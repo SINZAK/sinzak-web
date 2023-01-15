@@ -12,16 +12,6 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
     return (await http.get(`/users/my-profile`)).data;
   });
 
-  const { user, isLoading } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    console.log(isLoading, user);
-    if (router && !isLoading && !user) router.replace("/auth/signin");
-  }, [user, isLoading, router]);
-
-  if (isLoading || !user) return null;
-
   return (
     <NoSsr>
       <div className="container flex flex-col md:hidden">

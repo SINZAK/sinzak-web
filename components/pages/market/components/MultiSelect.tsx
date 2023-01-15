@@ -5,28 +5,45 @@ import { useCallback, useEffect, useState } from "react";
 
 export const MultiSelect = ({
   data,
+  value,
   onChange,
 }: {
   data: Category[];
-  value?: Category[];
-  onChange?: (value: Category[]) => void;
+  value: Category[];
+  onChange(value: Category[]): void;
 }) => {
-  const [selectState, setSelectState] = useState<Category[]>([]);
+  // const [selectState, setSelectState] = useState<Category[]>([]);
+  const selectState = value;
+  const setSelectState = onChange;
 
-  useEffect(() => {
-    if (onChange) onChange(selectState);
-  }, [onChange, selectState]);
+  // useEffect(() => {
+  //   if (onChange) onChange(selectState);
+  // }, [onChange, selectState]);
 
-  const onClick = useCallback((category: Category) => {
-    setSelectState((select) => {
-      if (select.includes(category)) {
-        return select.filter((_) => _ !== category);
-      } else {
-        if (select.length >= 3) return select;
-        return [...select, category];
-      }
-    });
-  }, []);
+  const onClick = useCallback(
+    (category: Category) => {
+      const select = selectState;
+      onChange(
+        (() => {
+          if (select.includes(category)) {
+            return select.filter((_) => _ !== category);
+          } else {
+            if (select.length >= 3) return select;
+            return [...select, category];
+          }
+        })()
+      );
+      // setSelectState((select) => {
+      //   if (select.includes(category)) {
+      //     return select.filter((_) => _ !== category);
+      //   } else {
+      //     if (select.length >= 3) return select;
+      //     return [...select, category];
+      //   }
+      // });
+    },
+    [onChange, selectState]
+  );
 
   return [
     <Button
