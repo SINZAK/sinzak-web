@@ -5,7 +5,7 @@ import { useAtomValue } from "jotai/react";
 import { atom, createStore } from "jotai/vanilla";
 import { useContext, createContext } from "react";
 
-export type FilterAlign = "recommend" | "popular" | "recent" | "low" | "high";
+export type FilterAlign = "recommend" | "recent";
 
 export const filterOptions: { id: FilterAlign; name: string }[] = [
   { id: "recommend", name: "신작추천순" },

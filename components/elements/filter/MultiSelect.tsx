@@ -3,14 +3,14 @@ import { CheckIcon } from "@lib/icons";
 import { Category, getCategoryText } from "@lib/resources/category";
 import { useCallback, useEffect, useState } from "react";
 
-export const MultiSelect = ({
+export const MultiSelect = <T extends Category>({
   data,
   value,
   onChange,
 }: {
-  data: Category[];
-  value: Category[];
-  onChange(value: Category[]): void;
+  data: T[];
+  value: T[];
+  onChange(value: T[]): void;
 }) => {
   // const [selectState, setSelectState] = useState<Category[]>([]);
   const selectState = value;
@@ -21,7 +21,7 @@ export const MultiSelect = ({
   // }, [onChange, selectState]);
 
   const onClick = useCallback(
-    (category: Category) => {
+    (category: T) => {
       const select = selectState;
       onChange(
         (() => {

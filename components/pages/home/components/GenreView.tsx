@@ -29,7 +29,9 @@ export const GenreView = () => {
       >
         {categories.map((_, i) => (
           <Link
-            href={`/market#categories=[${_[1]}]`}
+            href={`/market#categories=${encodeURIComponent(
+              JSON.stringify(`[${_[1]}]`)
+            )}`}
             onClick={() => {
               setTimeout(
                 () => filterStore.set(filterCategoriesAtom, [_[1]]),
