@@ -47,7 +47,7 @@ const SearchInput = () => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         className="block w-full px-5 py-3 placeholder-gray-800 bg-gray-100 rounded-full"
-        placeholder="작품 통합 검색"
+        placeholder="의뢰 통합 검색"
       />
     </form>
   );
@@ -61,7 +61,7 @@ export default function Page() {
           href="/build"
           className="bottom-0 right-0 block px-8 py-3 mb-4 font-bold text-center text-white rounded-full bg-red"
         >
-          작품 등록하기
+          의뢰 등록하기
         </Link>
       </div>
       <div className="container flex flex-col">
@@ -82,7 +82,7 @@ export default function Page() {
           </span>
         </div>
         <div className="items-center hidden h-16 md:flex space-x-7 pb-7">
-          <span className="flex-[0_0_16rem] text-3xl font-bold">마켓</span>
+          <span className="flex-[0_0_16rem] text-3xl font-bold">의뢰</span>
           <span className="flex items-center justify-end flex-1 space-x-4">
             <Filter />
           </span>
@@ -93,7 +93,7 @@ export default function Page() {
               href="/build"
               className="block w-full px-4 py-3 mb-4 font-bold text-center text-white rounded-full bg-red"
             >
-              작품 등록하기
+              의뢰 등록하기
             </Link>
             <SearchInput />
             <div className="h-8" />
@@ -107,14 +107,13 @@ export default function Page() {
     </FilterProvider>
   );
 }
-
 Page.getLayout = createLayout({
   mobileNav: true,
   rawHeader: (
     <>
       <div className="container relative flex items-center justify-between h-12 bg-white">
         <span className="absolute top-0 left-0 flex items-center justify-center w-full h-full font-bold">
-          마켓
+          의뢰
         </span>
         <span></span>
         <span>

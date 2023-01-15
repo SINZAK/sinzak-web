@@ -54,7 +54,7 @@ const LayoutWrapper = ({
                   text="마켓"
                 />
                 <MobileNavLink
-                  href="/404"
+                  href="/work"
                   icon={TaskIcon}
                   activeIcon={HomeFilledIcon}
                   text="의뢰"
@@ -87,7 +87,7 @@ const LayoutWrapper = ({
               <span className="space-x-8 text-lg font-bold">
                 <Link href="/">홈</Link>
                 <Link href="/market">마켓</Link>
-                <Link href="/">의뢰</Link>
+                <Link href="/work">의뢰</Link>
               </span>
             </span>
             <span className="flex items-center space-x-4">

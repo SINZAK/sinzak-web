@@ -10,6 +10,14 @@ export const CategoryFilter = () => {
   return MultiSelect({
     value: filterCategory,
     onChange: setFilterCategory,
-    data: ["painting", "orient", "sculpture", "print", "craft", "other"],
+    data: [
+      "portrait",
+      "illustration",
+      "logo",
+      "poster",
+      "design",
+      "editorial",
+      "label",
+    ],
   });
 };
