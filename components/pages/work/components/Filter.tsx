@@ -17,7 +17,7 @@ export const Filter = () => {
   );
 
   return (
-    <span className="flex items-center justify-between flex-1 h-6 px-0.5">
+    <span className="flex items-center justify-between flex-1 h-6 max-md:px-0.5">
       <span className="space-x-4 text-base font-bold text-gray-800 md:text-xl">
         <button
           onClick={() => setFilterEmployment(true)}

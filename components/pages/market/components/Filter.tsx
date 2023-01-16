@@ -13,7 +13,7 @@ export const Filter = () => {
   const [filterAlign, setFilterAlign] = useAtom(filterAlignAtom, { store });
   const [filterSale, setFilterSale] = useAtom(filterSaleAtom, { store });
   return (
-    <span className="flex items-center justify-between flex-1 h-6 px-0.5">
+    <span className="flex items-center justify-between flex-1 h-6 max-md:px-0.5">
       <span className="inline-flex items-center font-medium text-gray-800">
         <CheckBox
           checked={filterSale}
