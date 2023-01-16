@@ -130,9 +130,12 @@ export default function Page() {
                   />
                   <span>거래 문의하기</span>
                 </button>
-                <button className="box-border rounded-full bg-white p-2 text-red ring-1 ring-inset ring-red">
-                  가격 제안하기
-                </button>
+                <div className="flex space-x-3">
+                  <button className="box-border flex-1 rounded-full bg-white p-2 text-red ring-1 ring-inset ring-red">
+                    가격 제안하기
+                  </button>
+                  <DesktopMenuButton />
+                </div>
               </div>
             ) : (
               <div className="flex h-fit space-x-3 text-lg font-bold max-md:hidden">
@@ -221,8 +224,27 @@ export default function Page() {
 }
 
 const DesktopMenuButton = () => {
+  const { data } = useProductQuery();
+  const { user } = useAuth();
   const { mutate } = useDeleteMutation();
   const [isOpen, setIsOpen] = useState(false);
+  if (!data || data?.userId !== user?.userId)
+    return (
+      <>
+        <Menu
+          button={
+            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gray-100 text-gray-800">
+              <MenuIcon />
+            </span>
+          }
+        >
+          <Menu.Item as="button">신고하기</Menu.Item>
+          <Menu.Item as="button" className="text-purple">
+            {data?.author}님 차단하기
+          </Menu.Item>
+        </Menu>
+      </>
+    );
   return (
     <>
       <DeletePopup
@@ -251,8 +273,27 @@ const DesktopMenuButton = () => {
 };
 
 const MobileMenuButton = () => {
+  const { data } = useProductQuery();
+  const { user } = useAuth();
   const { mutate } = useDeleteMutation();
   const [isOpen, setIsOpen] = useState(false);
+  if (!data || data?.userId !== user?.userId)
+    return (
+      <>
+        <Menu
+          button={
+            <span>
+              <MenuIcon />
+            </span>
+          }
+        >
+          <Menu.Item as="button">신고하기</Menu.Item>
+          <Menu.Item as="button" className="text-purple">
+            {data?.author}님 차단하기
+          </Menu.Item>
+        </Menu>
+      </>
+    );
   return (
     <>
       <DeletePopup
@@ -267,13 +308,13 @@ const MobileMenuButton = () => {
           </span>
         }
       >
-        <Menu.Item as="button">수정</Menu.Item>
+        <Menu.Item as="button">수정하기</Menu.Item>
         <Menu.Item
           onClick={() => setIsOpen(true)}
           as="button"
           className="text-red"
         >
-          삭제
+          삭제하기
         </Menu.Item>
       </Menu>
     </>
