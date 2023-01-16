@@ -1,6 +1,6 @@
 import { CloseIcon } from "@lib/icons";
 import { RESET } from "jotai/vanilla/utils";
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 
 type SetSearchStateAction = SetStateAction<string | undefined | typeof RESET>;
 
@@ -13,6 +13,11 @@ export const SearchInput = ({
 }) => {
   const [search, setSearch] = useState("");
   const [filterSearch, setFilterSearch] = [value, setValue];
+
+  useEffect(() => {
+    if (!filterSearch) setSearch("");
+  }, [filterSearch]);
+
   const reset = () => (setSearch(""), setFilterSearch(RESET));
   const isValid = search.length >= 2;
 
@@ -27,7 +32,7 @@ export const SearchInput = ({
         <button
           onClick={reset}
           type="button"
-          className="absolute grid w-6 h-6 text-white -translate-y-1/2 rounded-full right-3 top-1/2 bg-red place-content-center"
+          className="absolute right-3 top-1/2 grid h-6 w-6 -translate-y-1/2 place-content-center rounded-full bg-red text-white"
         >
           <CloseIcon />
         </button>
@@ -40,7 +45,7 @@ export const SearchInput = ({
         onChange={(e) =>
           e.target.value !== "" ? setSearch(e.target.value) : reset()
         }
-        className="block w-full px-5 py-3 placeholder-gray-800 bg-gray-100 rounded-full"
+        className="block w-full rounded-full bg-gray-100 px-5 py-3 placeholder-gray-800"
         placeholder={"의뢰 통합 검색"}
       />
     </form>

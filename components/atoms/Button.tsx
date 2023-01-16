@@ -1,5 +1,6 @@
 import { cva, VariantProps } from "class-variance-authority";
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
 export const button = cva(
   [
@@ -16,6 +17,7 @@ export const button = cva(
     variants: {
       intent: {
         primary: [],
+        secondary: [],
         base: [],
       },
       outline: {
@@ -38,6 +40,16 @@ export const button = cva(
         intent: "primary",
         outline: true,
         className: ["ring-red", "text-red"],
+      },
+      {
+        intent: "secondary",
+        outline: false,
+        className: ["bg-purple", "text-white"],
+      },
+      {
+        intent: "secondary",
+        outline: true,
+        className: ["ring-purple", "text-purple"],
       },
       {
         intent: "base",
@@ -67,7 +79,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     <button
       ref={ref}
       type={type || "button"}
-      className={button({ intent, size, className, outline })}
+      className={twMerge(button({ intent, size, outline }), className)}
       {...props}
     />
   )

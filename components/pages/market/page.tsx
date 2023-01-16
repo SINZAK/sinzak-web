@@ -12,23 +12,22 @@ import { SearchInput } from "./components/SearchInput";
 export default function Page() {
   return (
     <FilterProvider>
-      <div className="fixed z-50 flex justify-center w-full p-3 bottom-12 md:hidden">
+      <div className="fixed bottom-12 z-50 flex w-full justify-center p-3 md:hidden">
         <Link
           href="/build"
-          className="bottom-0 right-0 block px-8 py-3 mb-4 font-bold text-center text-white rounded-full bg-red"
+          className="bottom-0 right-0 mb-4 block rounded-full bg-red px-8 py-3 text-center font-bold text-white"
         >
           작품 등록하기
         </Link>
       </div>
       <div className="container flex flex-col">
-        <div className="pt-3 pb-5 space-y-4 md:hidden">
+        <div className="space-y-4 pt-3 pb-5 md:hidden">
           <Flicking
             bound
             moveType="freeScroll"
             align="prev"
             className="bleed"
             cameraClass="[&>*]:mr-3"
-            useFindDOMNode={true}
             renderOnSameKey
           >
             {CategoryFilter()}
@@ -37,17 +36,17 @@ export default function Page() {
             <Filter />
           </span>
         </div>
-        <div className="items-center hidden h-16 md:flex space-x-7 pb-7">
+        <div className="hidden h-16 items-center space-x-7 pb-7 md:flex">
           <span className="flex-[0_0_16rem] text-3xl font-bold">마켓</span>
-          <span className="flex items-center justify-end flex-1 space-x-4">
+          <span className="flex flex-1 items-center justify-end space-x-4">
             <Filter />
           </span>
         </div>
         <div className="flex items-start">
-          <div className="md:block flex-[0_0_16rem] hidden mr-7 pr-3.5">
+          <div className="mr-7 hidden flex-[0_0_16rem] pr-3.5 md:block">
             <Link
               href="/build"
-              className="block w-full px-4 py-3 mb-4 font-bold text-center text-white rounded-full bg-red"
+              className="mb-4 block w-full rounded-full bg-red px-4 py-3 text-center font-bold text-white"
             >
               작품 등록하기
             </Link>
@@ -68,8 +67,8 @@ Page.getLayout = createLayout({
   mobileNav: true,
   rawHeader: (
     <>
-      <div className="container relative flex items-center justify-between h-12 bg-white">
-        <span className="absolute top-0 left-0 flex items-center justify-center w-full h-full font-bold">
+      <div className="container relative flex h-12 items-center justify-between bg-white">
+        <span className="absolute top-0 left-0 flex h-full w-full items-center justify-center font-bold">
           마켓
         </span>
         <span></span>

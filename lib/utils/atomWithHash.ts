@@ -7,6 +7,7 @@ import {
   RESET,
 } from "jotai/vanilla/utils";
 import { Router } from "next/router";
+import NextRouter from "next/router";
 
 type SetStateActionWithReset<Value> =
   | Value
@@ -20,12 +21,12 @@ export function atomWithHash<Value>(
     serialize?: (val: Value) => string;
     deserialize?: (str: string | null) => Value | typeof NO_STORAGE_VALUE;
     delayInit?: boolean;
-    /**
-     * @deprecated Use {@link options.setHash} with 'replaceState' instead
-     */
-    replaceState?: boolean;
     subscribe?: (callback: () => void) => () => void;
-    setHash?: "default" | "replaceState" | ((searchParams: string) => void);
+    setHash?:
+      | "default"
+      | "replaceState"
+      | "nextRouterReplace"
+      | ((searchParams: string) => void);
   }
 ): WritableAtom<Value, [SetStateActionWithReset<Value>], void> {
   const serialize = options?.serialize || JSON.stringify;
@@ -58,10 +59,6 @@ export function atomWithHash<Value>(
         window.removeEventListener("hashchange", callback);
       };
     });
-  if (options?.replaceState) {
-    // eslint-disable-next-line no-console
-    console.warn("[DEPRECATED] Use setHash=replaceState instead");
-  }
   const setHashOption = options?.setHash;
   let setHash = (searchParams: string) => {
     searchParams
@@ -72,11 +69,18 @@ export function atomWithHash<Value>(
           `${window.location.pathname}${window.location.search}`
         );
   };
-  if (setHashOption === "replaceState" || options?.replaceState) {
+  if (setHashOption === "replaceState") {
     setHash = (searchParams) => {
       window.history.replaceState(
         null,
         "",
+        `${window.location.pathname}${window.location.search}#${searchParams}`
+      );
+    };
+  }
+  if (setHashOption === "nextRouterReplace") {
+    setHash = (searchParams) => {
+      NextRouter.replace(
         `${window.location.pathname}${window.location.search}#${searchParams}`
       );
     };

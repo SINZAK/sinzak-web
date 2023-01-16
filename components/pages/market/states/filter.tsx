@@ -28,13 +28,21 @@ export const filterSearchAtom = atomWithHash<Filter["search"]>(
 );
 export const filterAlignAtom = atomWithHash<Filter["align"]>(
   "align",
-  "recommend"
+  "recommend",
+  {
+    setHash: "nextRouterReplace",
+  }
 );
 export const filterCategoriesAtom = atomWithHash<Filter["categories"]>(
   "categories",
-  []
+  [],
+  {
+    setHash: "nextRouterReplace",
+  }
 );
-export const filterSaleAtom = atomWithHash<Filter["sale"]>("sale", false);
+export const filterSaleAtom = atomWithHash<Filter["sale"]>("sale", false, {
+  setHash: "nextRouterReplace",
+});
 
 export const filterAtom = atom<Filter>((get) => {
   const filter = {

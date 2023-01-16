@@ -3,7 +3,7 @@ import "@egjs/react-flicking/dist/flicking.css";
 import React, { useRef, useState } from "react";
 import { http } from "@lib/services/http";
 import { Button } from "@components/atoms/Button";
-import { CloseIcon } from "@lib/icons";
+import { BackIcon, CloseIcon } from "@lib/icons";
 import TextareaAutosize from "react-textarea-autosize";
 import { CheckBox } from "@components/atoms/CheckBox";
 import { Controller, useForm } from "react-hook-form";
@@ -45,7 +45,7 @@ const ImageUpload = () => {
         />
         <label
           htmlFor="input-file"
-          className="flex items-center justify-center w-full h-full whitespace-pre-line bg-gray-100 cursor-pointer aspect-square rounded-xl"
+          className="flex aspect-square h-full w-full cursor-pointer items-center justify-center whitespace-pre-line rounded-xl bg-gray-100"
         >
           업로드
         </label>
@@ -61,13 +61,13 @@ const ImageUpload = () => {
           <img
             alt=""
             src={_}
-            className="flex items-center justify-center object-cover whitespace-pre-line bg-gray-100 border aspect-square rounded-xl"
+            className="flex aspect-square items-center justify-center whitespace-pre-line rounded-xl border bg-gray-100 object-cover"
             draggable="false"
           />
           <button
             onClick={() => setImagePreviews((x) => x.filter((_, j) => i !== j))}
             type="button"
-            className="absolute top-0 right-0 grid w-5 h-5 text-white rounded-full translate-x-1/3 -translate-y-1/3 bg-red place-content-center"
+            className="absolute top-0 right-0 grid h-5 w-5 translate-x-1/3 -translate-y-1/3 place-content-center rounded-full bg-red text-white"
           >
             <CloseIcon />
           </button>
@@ -157,7 +157,7 @@ export default function Page() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="fixed bottom-0 z-50 flex justify-center w-full p-3 bg-white pb-7 md:hidden">
+      <div className="fixed bottom-0 z-50 flex w-full justify-center bg-white p-3 pb-7 md:hidden">
         <Button
           type="submit"
           intent="primary"
@@ -183,11 +183,11 @@ export default function Page() {
                   name="type"
                   value="sell"
                   required
-                  className="hidden peer"
+                  className="peer hidden"
                 />
                 <label
                   htmlFor="type-sell"
-                  className="flex items-center justify-center w-full bg-gray-100 cursor-pointer peer-checked:border aspect-square rounded-xl peer-checked:border-red"
+                  className="flex aspect-square w-full cursor-pointer items-center justify-center rounded-xl bg-gray-100 peer-checked:border peer-checked:border-red"
                 >
                   작품 판매
                 </label>
@@ -199,11 +199,11 @@ export default function Page() {
                   id="type-workSell"
                   name="type"
                   value="workSell"
-                  className="hidden peer"
+                  className="peer hidden"
                 />
                 <label
                   htmlFor="type-workSell"
-                  className="flex items-center justify-center w-full bg-gray-100 cursor-pointer peer-checked:border aspect-square rounded-xl peer-checked:border-red"
+                  className="flex aspect-square w-full cursor-pointer items-center justify-center rounded-xl bg-gray-100 peer-checked:border peer-checked:border-red"
                 >
                   의뢰해요
                 </label>
@@ -215,11 +215,11 @@ export default function Page() {
                   id="type-workBuy"
                   name="type"
                   value="workBuy"
-                  className="hidden peer"
+                  className="peer hidden"
                 />
                 <label
                   htmlFor="type-workBuy"
-                  className="flex items-center justify-center w-full bg-gray-100 cursor-pointer peer-checked:border aspect-square rounded-xl peer-checked:border-red"
+                  className="flex aspect-square w-full cursor-pointer items-center justify-center rounded-xl bg-gray-100 peer-checked:border peer-checked:border-red"
                 >
                   작업해요
                 </label>
@@ -287,7 +287,7 @@ export default function Page() {
               })}
               placeholder="작품 제목"
               className={twMerge(
-                "w-full px-4 py-3 bg-gray-100 rounded-xl placeholder:text-gray-600",
+                "w-full rounded-xl bg-gray-100 px-4 py-3 placeholder:text-gray-600",
                 errors.title && "ring-1 !ring-red-500"
               )}
             />
@@ -295,7 +295,7 @@ export default function Page() {
           <div>
             <p className="mb-3">{type === "sell" ? "가격" : "의뢰비"}</p>
             <span className="flex items-center space-x-8">
-              <span className="flex items-center flex-1">
+              <span className="flex flex-1 items-center">
                 <input
                   {...register("price", {
                     required: true,
@@ -305,7 +305,7 @@ export default function Page() {
                   placeholder={type === "sell" ? "작품 가격" : "제시 의뢰비"}
                   type="number"
                   className={twMerge(
-                    "w-full px-4 py-3 bg-gray-100 rounded-xl placeholder:text-gray-600",
+                    "w-full rounded-xl bg-gray-100 px-4 py-3 placeholder:text-gray-600",
                     (errors as any).price && "ring-1 !ring-red-500"
                   )}
                 />
@@ -344,7 +344,7 @@ export default function Page() {
                   : "원하는 의뢰의 형태, 분위기, 재료 등을 자유롭게 설명해주세요!"
               }
               className={twMerge(
-                "w-full px-4 py-3 bg-gray-100 resize-none rounded-xl placeholder:text-gray-600",
+                "w-full resize-none rounded-xl bg-gray-100 px-4 py-3 placeholder:text-gray-600",
                 (errors as any).price && "ring-1 !ring-red-500"
               )}
               minRows={3}
@@ -365,19 +365,24 @@ export default function Page() {
     </form>
   );
 }
-Page.getLayout = createLayout({
-  authenticated: true,
-  rawHeader: (
+
+const MobileHeader = () => {
+  const router = useRouter();
+  return (
     <>
-      <div className="container relative flex items-center justify-between h-12 bg-white">
-        <span className="absolute top-0 left-0 flex items-center justify-center w-full h-full font-bold">
+      <div className="container relative flex h-12 items-center justify-start bg-white">
+        <button onClick={() => router.back()}>
+          <BackIcon />
+        </button>
+        <span className="absolute left-1/2 flex h-full -translate-x-1/2 items-center font-bold">
           등록하기
         </span>
-        <span>
-          <img src="/assets/icons/back.svg" className="h-6" />
-        </span>
-        <span></span>
       </div>
     </>
-  ),
+  );
+};
+
+Page.getLayout = createLayout({
+  authenticated: true,
+  rawHeader: <MobileHeader />,
 });

@@ -7,8 +7,8 @@ export const MobileNav = () => {
   const { user } = useAuth();
 
   return (
-    <div className="flex items-start w-full px-3 pt-3 pb-2 space-x-2">
-      <div className="flex text-lg divide-x mt-1.5 px-4">
+    <div className="flex w-full items-start space-x-2 px-3 pt-3 pb-2">
+      <div className="mt-1.5 flex divide-x px-4 text-lg">
         {data ? (
           <LikeButton
             id={data.id}
@@ -29,12 +29,12 @@ export const MobileNav = () => {
         </button>
       </div>
       {data && data?.userId !== user?.userId ? (
-        <div className="flex flex-col flex-1">
-          <button className="flex items-center justify-center p-2 font-bold text-white rounded-full bg-red">
+        <div className="flex h-[4.25rem] flex-1 flex-col">
+          <button className="flex items-center justify-center rounded-full bg-red p-2 font-bold text-white">
             <img
               alt="ask"
               src="/assets/icons/ask.svg"
-              className="mr-1 h-7 invert brightness-0"
+              className="mr-1 h-7 brightness-0 invert"
             />
             거래 문의하기
           </button>
@@ -43,12 +43,12 @@ export const MobileNav = () => {
           </button>
         </div>
       ) : (
-        <div className="flex flex-col self-center flex-1">
-          <button className="flex items-center justify-center p-2 font-bold text-white rounded-full bg-red">
+        <div className="flex h-[4.25rem] flex-1 flex-col self-center">
+          <button className="flex items-center justify-center rounded-full bg-red p-2 font-bold text-white">
             <img
               alt="ask"
               src="/assets/icons/ask.svg"
-              className="mr-1 h-7 invert brightness-0"
+              className="mr-1 h-7 brightness-0 invert"
             />
             문의 중인 채팅방 {data?.chatCnt || 0}
           </button>

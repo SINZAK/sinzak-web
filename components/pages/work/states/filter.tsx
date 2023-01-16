@@ -25,15 +25,24 @@ export const filterSearchAtom = atomWithHash<Filter["search"]>(
 );
 export const filterAlignAtom = atomWithHash<Filter["align"]>(
   "align",
-  "recommend"
+  "recommend",
+  {
+    setHash: "nextRouterReplace",
+  }
 );
 export const filterCategoriesAtom = atomWithHash<Filter["categories"]>(
   "categories",
-  []
+  [],
+  {
+    setHash: "nextRouterReplace",
+  }
 );
 export const filterEmploymentAtom = atomWithHash<Filter["employment"]>(
   "employment",
-  true
+  true,
+  {
+    setHash: "nextRouterReplace",
+  }
 );
 
 export const filterAtom = atom<Filter>((get) => {

@@ -32,14 +32,19 @@ export default function App({ Component, pageProps }: CustomAppProps) {
   const getLayout =
     Component.getLayout || ((page: React.ReactElement) => <>{page}</>);
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <SkeletonTheme inline baseColor="#eee" highlightColor="#ddd">
-          <main id="main" className={`${globalFont.variable} font-sans`}>
-            {getLayout(<Component {...pageProps} />)}
-          </main>
-        </SkeletonTheme>
-      </AuthProvider>
-    </QueryClientProvider>
+    <>
+      <style jsx global>{`
+        html {
+          font-family: ${globalFont.style.fontFamily};
+        }
+      `}</style>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <SkeletonTheme inline baseColor="#eee" highlightColor="#ddd">
+            <main id="main">{getLayout(<Component {...pageProps} />)}</main>
+          </SkeletonTheme>
+        </AuthProvider>
+      </QueryClientProvider>
+    </>
   );
 }
