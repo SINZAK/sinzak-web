@@ -175,30 +175,32 @@ export default function Page() {
             />
           )}
         </div>
-        <hr className="my-5 md:my-7" />
         {data ? (
           <>
             {(typeof data.height === "number" ||
               typeof data.width === "number") && (
-              <div>
-                <p className="mb-3 font-bold">상세 사이즈</p>
-                <div className="grid max-w-xl grid-cols-3">
-                  {typeof data.width === "number" && (
-                    <p className="contents">
-                      <span>가로</span>
-                      <span>{data.width}</span>
-                      <span>cm</span>
-                    </p>
-                  )}
-                  {typeof data.height === "number" && (
-                    <p className="contents">
-                      <span>세로</span>
-                      <span>{data.height}</span>
-                      <span>cm</span>
-                    </p>
-                  )}
+              <>
+                <hr className="my-5 md:my-7" />
+                <div>
+                  <p className="mb-3 font-bold">상세 사이즈</p>
+                  <div className="grid max-w-xl grid-cols-3">
+                    {typeof data.width === "number" && (
+                      <p className="contents">
+                        <span>가로</span>
+                        <span>{data.width}</span>
+                        <span>cm</span>
+                      </p>
+                    )}
+                    {typeof data.height === "number" && (
+                      <p className="contents">
+                        <span>세로</span>
+                        <span>{data.height}</span>
+                        <span>cm</span>
+                      </p>
+                    )}
+                  </div>
                 </div>
-              </div>
+              </>
             )}
             <hr className="my-5 md:my-7" />
             <div className="text-left whitespace-pre-wrap">{data?.content}</div>
