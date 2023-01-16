@@ -4,7 +4,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { ProductSimple } from "@types";
 import { Filter } from "../states/filter";
 
-export const useProductQuery = (filter: Filter) => {
+export const useWorkQuery = (filter: Filter) => {
   const isClient = useIsClient();
   const query = useInfiniteQuery<{
     content: ProductSimple[];
@@ -15,8 +15,12 @@ export const useProductQuery = (filter: Filter) => {
   }>({
     queryKey: ["worksTest", filter],
     queryFn: async ({ pageParam = 0 }) => {
-      return (await http.post.default("/works", { ...filter, page: pageParam }))
-        .data;
+      return (
+        await http.post.default("/works", {
+          ...filter,
+          page: pageParam,
+        })
+      ).data;
     },
     enabled: isClient,
     keepPreviousData: true,
@@ -27,4 +31,4 @@ export const useProductQuery = (filter: Filter) => {
   return query;
 };
 
-export type ProductQueryResult = ReturnType<typeof useProductQuery>;
+export type WorkQueryResult = ReturnType<typeof useWorkQuery>;

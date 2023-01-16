@@ -22,7 +22,7 @@ export default function Page() {
         </Link>
       </div>
       <div className="container flex flex-col">
-        <div className="pt-3 pb-4 space-y-4 md:hidden">
+        <div className="pt-3 pb-5 space-y-4 md:hidden">
           <Flicking
             bound
             moveType="freeScroll"

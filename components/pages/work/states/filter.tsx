@@ -16,6 +16,7 @@ export interface Filter {
   search: string | undefined;
   align: FilterAlign;
   categories: Category[];
+  employment: boolean;
 }
 
 export const filterSearchAtom = atomWithHash<Filter["search"]>(
@@ -30,12 +31,17 @@ export const filterCategoriesAtom = atomWithHash<Filter["categories"]>(
   "categories",
   []
 );
+export const filterEmploymentAtom = atomWithHash<Filter["employment"]>(
+  "employment",
+  true
+);
 
 export const filterAtom = atom<Filter>((get) => {
   const filter = {
     search: get(filterSearchAtom),
     align: get(filterAlignAtom),
     categories: get(filterCategoriesAtom),
+    employment: get(filterEmploymentAtom),
   };
   return removeEmptyField(filter);
 });

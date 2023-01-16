@@ -91,11 +91,21 @@ type BuildForm =
       width: number;
     }
   | {
-      type: "work";
+      type: "workSell";
+      category: Category;
+      employment: false;
+      title: string;
+      content: string;
+      price: number;
+      suggest: boolean;
+    }
+  | {
+      type: "workBuy";
       category: Category;
       title: string;
       content: string;
-      pay: number;
+      price: number;
+      suggest: boolean;
     };
 
 export default function Page() {
@@ -114,7 +124,6 @@ export default function Page() {
   });
   const router = useRouter();
   const onSubmit = async (data: BuildForm) => {
-    console.log(data);
     if (data.type === "sell") {
       const { category, content, height, price, suggest, title } = data;
       const res = await http.post.json("/products/build", {
@@ -129,6 +138,19 @@ export default function Page() {
       });
       const id = res.data.id;
       router.push(`/market/${id}`);
+    } else {
+      const { type, category, content, price, suggest, title } = data;
+      const employment = type === "workBuy";
+      const res = await http.post.json("/works/build", {
+        category,
+        content,
+        employment,
+        price,
+        suggest,
+        title,
+      });
+      const id = res.data.id;
+      router.push(`/work/${id}`);
     }
   };
   const type = watch("type");
@@ -174,13 +196,13 @@ export default function Page() {
                 <input
                   {...register("type")}
                   type="radio"
-                  id="type-work"
+                  id="type-workSell"
                   name="type"
-                  value="work"
+                  value="workSell"
                   className="hidden peer"
                 />
                 <label
-                  htmlFor="type-work"
+                  htmlFor="type-workSell"
                   className="flex items-center justify-center w-full bg-gray-100 cursor-pointer peer-checked:border aspect-square rounded-xl peer-checked:border-red"
                 >
                   의뢰해요
@@ -190,13 +212,13 @@ export default function Page() {
                 <input
                   {...register("type")}
                   type="radio"
-                  id="type-work2"
+                  id="type-workBuy"
                   name="type"
-                  value="work"
+                  value="workBuy"
                   className="hidden peer"
                 />
                 <label
-                  htmlFor="type-work2"
+                  htmlFor="type-workBuy"
                   className="flex items-center justify-center w-full bg-gray-100 cursor-pointer peer-checked:border aspect-square rounded-xl peer-checked:border-red"
                 >
                   작업해요
@@ -289,25 +311,25 @@ export default function Page() {
                 />
                 <span className="ml-4 text-lg font-bold">원</span>
               </span>
-              {type === "sell" && (
-                <span className="flex items-center">
-                  <Controller
-                    shouldUnregister
-                    defaultValue={false}
-                    control={control}
-                    name="suggest"
-                    render={({ field: { ref, value, onChange } }) => (
-                      <CheckBox
-                        ref={ref}
-                        checked={value}
-                        onCheckedChange={onChange}
-                      >
-                        가격제안 받기
-                      </CheckBox>
-                    )}
-                  />
-                </span>
-              )}
+              {/* {type === "sell" && ( */}
+              <span className="flex items-center">
+                <Controller
+                  shouldUnregister
+                  defaultValue={false}
+                  control={control}
+                  name="suggest"
+                  render={({ field: { ref, value, onChange } }) => (
+                    <CheckBox
+                      ref={ref}
+                      checked={value}
+                      onCheckedChange={onChange}
+                    >
+                      가격제안 받기
+                    </CheckBox>
+                  )}
+                />
+              </span>
+              {/* )} */}
             </span>
           </div>
           <div>
