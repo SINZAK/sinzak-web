@@ -8,6 +8,6 @@ const Button = () => (
   </span>
 );
 
-export const DesktopMenuButton = () => {
+export const MobileMenuButton = () => {
   return <MenuButton button={Button} />;
 };
