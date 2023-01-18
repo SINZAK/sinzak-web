@@ -10,6 +10,7 @@ import {
   MarketIcon,
   ProfileFilledIcon,
   ProfileIcon,
+  TaskFilledIcon,
   TaskIcon,
 } from "@lib/icons";
 import { WithAuth } from "@lib/services/auth";
@@ -59,7 +60,7 @@ const LayoutWrapper = ({
                 <MobileNavLink
                   href="/work"
                   icon={TaskIcon}
-                  activeIcon={HomeFilledIcon}
+                  activeIcon={TaskFilledIcon}
                   text="의뢰"
                 />
                 <MobileNavLink
