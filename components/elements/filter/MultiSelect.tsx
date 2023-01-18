@@ -14,13 +14,8 @@ export const MultiSelect = <T extends Category>({
   value: T[];
   onChange(value: T[]): void;
 }) => {
-  // const [selectState, setSelectState] = useState<Category[]>([]);
   const selectState = value;
   const setSelectState = onChange;
-
-  // useEffect(() => {
-  //   if (onChange) onChange(selectState);
-  // }, [onChange, selectState]);
 
   const onClick = useCallback(
     (category: T) => {
@@ -35,14 +30,6 @@ export const MultiSelect = <T extends Category>({
           }
         })()
       );
-      // setSelectState((select) => {
-      //   if (select.includes(category)) {
-      //     return select.filter((_) => _ !== category);
-      //   } else {
-      //     if (select.length >= 3) return select;
-      //     return [...select, category];
-      //   }
-      // });
     },
     [onChange, selectState]
   );

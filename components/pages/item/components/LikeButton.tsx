@@ -26,7 +26,10 @@ export const LikeButton = ({
 
   if (!user)
     return (
-      <Link href="/auth/signin" className="flex flex-col items-center pr-4">
+      <Link
+        href="/auth/signin"
+        className="-ml-4 flex flex-col items-center px-4"
+      >
         <LikeIcon className="h-8 w-8 fill-gray-600" />
         <p className="mt-1 text-sm text-gray-600">{likesCnt}</p>
       </Link>
@@ -34,7 +37,7 @@ export const LikeButton = ({
 
   if (user.userId === userId)
     return (
-      <span className="flex flex-col items-center pr-4">
+      <span className="-ml-4 flex flex-col items-center px-4">
         <LikeIcon className="h-8 w-8 fill-gray-600" />
         <p className="mt-1 text-sm text-gray-600">{likesCnt}</p>
       </span>
@@ -50,7 +53,7 @@ export const LikeButton = ({
           })
         }
         disabled={isLoading}
-        className="flex flex-col items-center pr-4"
+        className="-ml-4 flex flex-col items-center px-4"
       >
         {isLike ? (
           <LikeFilledIcon className="h-8 w-8 fill-gray-600" />
@@ -65,7 +68,7 @@ export const LikeButton = ({
 
 export const LikeButtonPlaceholder = () => {
   return (
-    <div className="flex flex-col items-center pr-4">
+    <div className="-ml-4 flex flex-col items-center px-4">
       <LikeIcon className="h-8 w-8 fill-gray-600" />
       <p className="mt-1 text-sm text-gray-600">
         <Skeleton className="w-8" />

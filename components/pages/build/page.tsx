@@ -159,16 +159,18 @@ export default function Page() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="fixed bottom-0 z-30 flex w-full justify-center bg-white p-3 pb-7 md:hidden">
-        <Button
-          type="submit"
-          intent="primary"
-          size="large"
-          className="w-full max-w-xl"
-        >
-          등록하기
-        </Button>
-      </div>
+      {type && (
+        <div className="fixed bottom-0 z-30 flex w-full justify-center bg-white p-3 pb-7 md:hidden">
+          <Button
+            type="submit"
+            intent="primary"
+            size="large"
+            className="w-full max-w-xl"
+          >
+            등록하기
+          </Button>
+        </div>
+      )}
       <div className="container max-w-2xl max-md:pt-3">
         <div className="mb-10 max-md:hidden">
           <p className="text-3xl font-bold">작품 등록하기</p>
@@ -359,16 +361,18 @@ export default function Page() {
             </>
           )}
         </div>
-        <div className="mt-10">
-          <Button
-            type="submit"
-            intent="primary"
-            size="large"
-            className="w-full max-md:hidden"
-          >
-            등록하기
-          </Button>
-        </div>
+        {type && (
+          <div className="mt-10">
+            <Button
+              type="submit"
+              intent="primary"
+              size="large"
+              className="w-full max-md:hidden"
+            >
+              등록하기
+            </Button>
+          </div>
+        )}
       </div>
     </form>
   );

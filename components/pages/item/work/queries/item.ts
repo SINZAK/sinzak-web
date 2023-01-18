@@ -8,7 +8,7 @@ export const useWorkItemQuery = () => {
   const router = useRouter();
 
   return useQuery<WorkItemDetail>(
-    ["workItemTest", Number(router.query.slug)],
+    ["work-item", Number(router.query.slug)],
     async () => {
       return (await http.post.default(`/works/${router.query.slug}`)).data;
     },

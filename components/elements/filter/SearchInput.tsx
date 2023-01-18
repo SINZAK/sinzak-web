@@ -12,11 +12,13 @@ export const SearchInput = ({
   setValue,
   onSearch: externalOnSearch,
   autoFocus,
+  placeholder,
 }: {
   value: SetSearchStateAction;
   setValue: (val: SetSearchStateAction) => void;
   onSearch?: (val: SetSearchStateAction) => void;
   autoFocus?: boolean;
+  placeholder?: string;
 }) => {
   const [search, setSearch] = useState("");
   const [filterSearch, setFilterSearch] = [value, setValue];
@@ -58,7 +60,7 @@ export const SearchInput = ({
           e.target.value !== "" ? setSearch(e.target.value) : reset()
         }
         className="block w-full rounded-full bg-gray-100 placeholder-gray-800 max-md:h-full max-md:px-4 md:px-5 md:py-3"
-        placeholder={"의뢰 통합 검색"}
+        placeholder={placeholder}
       />
     </form>
   );

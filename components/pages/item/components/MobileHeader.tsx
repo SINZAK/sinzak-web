@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 import { BackIcon } from "@lib/icons";
 
-import { MobileMenuButton } from "./MenuButton/MobileMenuButton";
+import { MobileMenuButton } from "./Menu/MobileMenuButton";
 
 export const MobileHeader = () => {
   const router = useRouter();

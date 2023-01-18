@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { MarketItemDetail } from "@types";
+import { MarketItemDetail, WorkItemDetail } from "@types";
 
 import { http } from "@lib/services/http";
 
@@ -27,6 +27,12 @@ export const useFollowMutation = () => {
         type: "active",
         predicate: ({ state }) =>
           (state.data as MarketItemDetail)?.userId === userId,
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["work-item"],
+        type: "active",
+        predicate: ({ state }) =>
+          (state.data as WorkItemDetail)?.userId === userId,
       });
     },
   });

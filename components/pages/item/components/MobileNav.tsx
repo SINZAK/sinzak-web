@@ -2,6 +2,7 @@ import { useAuth } from "@lib/services/auth";
 
 import { useQueryContext } from "../states/QueryProvider";
 import { LikeButton, LikeButtonPlaceholder } from "./LikeButton";
+import { WishButton, WishButtonPlaceholder } from "./WishButton";
 
 export const MobileNav = () => {
   const { useItemQuery } = useQueryContext();
@@ -22,14 +23,11 @@ export const MobileNav = () => {
           ) : (
             <LikeButtonPlaceholder />
           )}
-          <button className="flex flex-col items-center pl-4">
-            <img
-              alt="bookmark"
-              src="/assets/icons/bookmark.svg"
-              className="h-8 opacity-50"
-            />
-            <p className="mt-1 text-sm text-gray-600">찜하기</p>
-          </button>
+          {data ? (
+            <WishButton id={data.id} userId={data.userId} isWish={data.wish} />
+          ) : (
+            <WishButtonPlaceholder />
+          )}
         </div>
         {data && data?.userId !== user?.userId ? (
           <div className="flex h-[4.25rem] flex-1 flex-col">

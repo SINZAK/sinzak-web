@@ -9,5 +9,7 @@ export const SearchInput = () => {
   const [search, setSearch] = useAtom(filterSearchAtom, {
     store,
   });
-  return <Input value={search} setValue={setSearch} />;
+  return (
+    <Input placeholder="의뢰 통합 검색" value={search} setValue={setSearch} />
+  );
 };

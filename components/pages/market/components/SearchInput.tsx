@@ -15,5 +15,12 @@ export const SearchInput = (props: {
   const [search, setSearch] = useAtom(filterSearchAtom, {
     store,
   });
-  return <Input value={search} setValue={setSearch} {...props} />;
+  return (
+    <Input
+      placeholder="작품 통합 검색"
+      value={search}
+      setValue={setSearch}
+      {...props}
+    />
+  );
 };

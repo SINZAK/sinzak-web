@@ -1,3 +1,7 @@
+export { default as ViewMiniIcon } from "@public/assets/icons/view-mini.svg";
+export { default as ChatMiniIcon } from "@public/assets/icons/chat-mini.svg";
+export { default as ScrapMiniIcon } from "@public/assets/icons/scrap-mini.svg";
+
 export { default as CheckIcon } from "@public/assets/icons/check.svg";
 
 export { default as SearchIcon } from "@public/assets/icons/search.svg";
@@ -33,3 +37,6 @@ export { default as ChatFilledIcon } from "@public/assets/icons/chat-filled.svg"
 
 export { default as ProfileIcon } from "@public/assets/icons/profile.svg";
 export { default as ProfileFilledIcon } from "@public/assets/icons/profile-filled.svg";
+
+export { default as WishIcon } from "@public/assets/icons/wish.svg";
+export { default as WishFilledIcon } from "@public/assets/icons/wish-filled.svg";

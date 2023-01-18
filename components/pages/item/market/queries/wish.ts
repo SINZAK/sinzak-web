@@ -1,18 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { LikeMutationVariables } from "@types";
+import { WishMutationVariables } from "@types";
 
 import { http } from "@lib/services/http";
 
-export const useLikeWorkItemMutation = () => {
+export const useWishMarketItemMutation = () => {
   const queryClient = useQueryClient();
-  return useMutation<unknown, unknown, LikeMutationVariables>({
+  return useMutation<unknown, unknown, WishMutationVariables>({
     mutationFn: async ({ mode, id }) => {
-      const res = await http.post.json(`/works/likes`, { id, mode });
+      const res = await http.post.json(`/products/wish`, { id, mode });
       return res;
     },
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({
-        queryKey: ["work-item", id],
+        queryKey: ["market-item", id],
       });
     },
   });

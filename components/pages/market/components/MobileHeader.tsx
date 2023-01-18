@@ -1,14 +1,23 @@
 import { useAtom } from "jotai/react";
 import { RESET } from "jotai/vanilla/utils";
-import { useState } from "react";
+import { SetStateAction } from "react";
 
-import { BackIcon, CloseIcon, SearchIcon } from "@lib/icons";
+import { BackIcon, SearchIcon } from "@lib/icons";
+import { atomWithHash } from "@lib/utils/atomWithHash";
 
 import { filterSearchAtom, useFilterContext } from "../states/filter";
 import { SearchInput } from "./SearchInput";
 
+const mobileSearchOpenAtom = atomWithHash<boolean | typeof RESET>(
+  "msearch",
+  RESET,
+  {
+    setHash: "nextRouterReplace",
+  }
+);
+
 export const MobileHeader = () => {
-  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useAtom(mobileSearchOpenAtom);
 
   const store = useFilterContext();
   const [search, setSearch] = useAtom(filterSearchAtom, {
@@ -17,23 +26,8 @@ export const MobileHeader = () => {
 
   return (
     <>
-      {searchOpen && (
-        <div className="fixed inset-0 z-30 bg-white md:hidden">
-          <div className="sticky top-0">
-            <div className="container relative flex h-12 items-center justify-between space-x-4 bg-white">
-              <button
-                className="-m-3 inline p-3"
-                onClick={() => setSearchOpen(false)}
-              >
-                <BackIcon />
-              </button>
-              <span className="inline-block h-full flex-1 py-1">
-                <SearchInput autoFocus onSearch={() => setSearchOpen(false)} />
-                {/* <span className="inline-block h-full w-full rounded-full bg-gray-100"></span> */}
-              </span>
-            </div>
-          </div>
-        </div>
+      {searchOpen !== RESET && (
+        <MobileFullpageSearch setSearchOpen={setSearchOpen} />
       )}
       {search ? (
         <div className="sticky top-0 z-20 md:hidden">
@@ -49,6 +43,7 @@ export const MobileHeader = () => {
                 <input
                   onClick={() => setSearchOpen(true)}
                   value={search}
+                  readOnly
                   className="block w-full rounded-full bg-gray-100 placeholder-gray-800 max-md:h-full max-md:px-4 md:px-5 md:py-3"
                 />
               </div>
@@ -72,5 +67,29 @@ export const MobileHeader = () => {
         </div>
       )}
     </>
+  );
+};
+
+const MobileFullpageSearch = ({
+  setSearchOpen,
+}: {
+  setSearchOpen(val: SetStateAction<boolean | typeof RESET>): void;
+}) => {
+  return (
+    <div className="fixed inset-0 z-30 bg-white md:hidden">
+      <div className="sticky top-0">
+        <div className="container relative flex h-12 items-center justify-between space-x-4 bg-white">
+          <button
+            className="-m-3 inline p-3"
+            onClick={() => setSearchOpen(RESET)}
+          >
+            <BackIcon />
+          </button>
+          <span className="inline-block h-full flex-1 py-1">
+            <SearchInput autoFocus onSearch={() => setSearchOpen(RESET)} />
+          </span>
+        </div>
+      </div>
+    </div>
   );
 };

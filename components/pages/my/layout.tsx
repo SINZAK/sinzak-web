@@ -58,7 +58,7 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
           </div>
         </div>
         <div className="flex flex-col divide-y text-lg font-bold [&>*]:py-4">
-          <Link href="/my/bookmark">스크랩 목록</Link>
+          <Link href="/my/wish">스크랩 목록</Link>
           <Link href="/">의뢰해요</Link>
           <Link href="/">판매 작품</Link>
           <Link href="/">작업해요</Link>
@@ -95,7 +95,7 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
             <div className="flex flex-col space-y-3 text-lg font-bold">
               <Link href="/my">MY</Link>
               <div className="h-3" />
-              <Link href="/my/bookmark">스크랩 목록</Link>
+              <Link href="/my/wish">스크랩 목록</Link>
               <Link href="/">의뢰해요</Link>
               <Link href="/">판매 작품</Link>
               <Link href="/">작업해요</Link>

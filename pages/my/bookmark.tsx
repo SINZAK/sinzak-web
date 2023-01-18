@@ -1,1 +1,1 @@
-export { default } from "@components/pages/my/bookmark/page";
+export { default } from "@components/pages/my/wish/page";

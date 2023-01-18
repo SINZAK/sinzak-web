@@ -1,21 +1,7 @@
-import Flicking from "@egjs/react-flicking";
 import "@egjs/react-flicking/dist/flicking.css";
-import { Listbox } from "@headlessui/react";
-import React from "react";
 
-import { AlignIcon } from "@lib/icons";
-
-import { CheckBox } from "@components/atoms/CheckBox";
 import { ProductElement } from "@components/elements/product/ProductElement";
 import { createLayout } from "@components/layout/layout";
-
-const options = [
-  { id: "recommend", name: "신작추천순" },
-  { id: "popular", name: "인기순" },
-  { id: "recent", name: "최신순" },
-  { id: "low", name: "낮은가격순" },
-  { id: "high", name: "높은가격순" },
-];
 
 export default function Page() {
   return (
