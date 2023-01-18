@@ -2,13 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scrollbar-gutter: stable;
+}
+
 svg {
   @apply block align-top;
 }
 
 input,
 textarea {
-  @apply appearance-none focus:outline-none focus:ring-gray-200 focus:ring-1;
+  @apply appearance-none focus:outline-none focus:ring-1 focus:ring-gray-200;
 }
 
 input[type="search"]::-webkit-search-decoration,
@@ -20,7 +24,7 @@ input[type="search"]::-webkit-search-results-decoration {
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  @apply appearance-none m-0;
+  @apply m-0 appearance-none;
 }
 
 /* Firefox */
@@ -42,12 +46,12 @@ img {
 }
 
 img::before {
-  @apply block absolute w-full h-full top-0 left-0 bg-gray-100;
+  @apply absolute top-0 left-0 block h-full w-full bg-gray-100;
   content: "";
 }
 
 img::after {
-  @apply block left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-transparent absolute font-bold text-2xl text-gray-400;
+  @apply absolute left-1/2 top-1/2 block -translate-x-1/2 -translate-y-1/2 bg-transparent text-2xl font-bold text-gray-400;
   content: ":(";
 }
 
