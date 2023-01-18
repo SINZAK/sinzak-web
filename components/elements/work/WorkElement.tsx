@@ -5,7 +5,7 @@ import Link from "next/link";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 
-import { formatNumber, formatRelativeTime } from "@lib/services/intl/format";
+import { formatRelativeTime } from "@lib/services/intl/format";
 
 export const WorkElement = React.forwardRef<
   any,
@@ -34,9 +34,6 @@ export const WorkElement = React.forwardRef<
         <p className="font-medium leading-tight md:text-lg md:leading-tight">
           {data.title}
         </p>
-        <p className="font-bold leading-tight md:text-lg md:leading-tight">
-          {formatNumber(data.price)}원
-        </p>
         <p className="mt-1 flex space-x-1 text-xs md:text-sm">
           <span>{data.author} 작가</span>
           <span className="text-gray-600">·</span>
@@ -46,7 +43,7 @@ export const WorkElement = React.forwardRef<
     </Link>
   );
 });
-WorkElement.displayName = "ProductElement";
+WorkElement.displayName = "WorkElement";
 
 const WorkElementSkeleton = React.forwardRef<
   HTMLDivElement,
@@ -57,10 +54,7 @@ const WorkElementSkeleton = React.forwardRef<
       <Skeleton className="block aspect-4/3 rounded-xl" />
       <div className="mt-4">
         <p className="font-medium leading-tight md:text-lg md:leading-tight">
-          <Skeleton width="3em" />
-        </p>
-        <p className="font-bold leading-tight md:text-lg md:leading-tight">
-          <Skeleton width="10em" />
+          <Skeleton width="6em" />
         </p>
         <p className="mt-1 flex space-x-1 text-xs md:text-sm">
           <Skeleton width="10em" />
@@ -69,4 +63,5 @@ const WorkElementSkeleton = React.forwardRef<
     </div>
   );
 });
-WorkElementSkeleton.displayName = "ProductElementSkeleton";
+WorkElementSkeleton.displayName = "WorkElementSkeleton";
+WorkElementSkeleton;

@@ -7,8 +7,8 @@ import { createLayout } from "@components/layout/layout";
 
 import { CategoryFilter } from "./components/CategoryFilter";
 import { Filter } from "./components/Filter";
+import { ListView } from "./components/ListView";
 import { MobileHeader } from "./components/MobileHeader";
-import { ProductsView } from "./components/ProductsView";
 import { SearchInput } from "./components/SearchInput";
 import { FilterProvider } from "./states/filter";
 
@@ -60,7 +60,7 @@ export default function Page() {
               {CategoryFilter()}
             </div>
           </div>
-          <ProductsView />
+          <ListView />
         </div>
       </div>
     </FilterProvider>

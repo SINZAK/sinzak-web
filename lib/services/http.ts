@@ -13,6 +13,7 @@ export const http = {
   post: {
     default: postDefault,
     json: postJson,
+    multipart: postMultipart,
   },
 };
 
@@ -100,6 +101,22 @@ async function postJson<T = any>(
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
+    },
+    options
+  );
+  return await common<T>(url, requestOptions);
+}
+
+async function postMultipart<T = any>(
+  url: RequestInfo | URL,
+  body: FormData,
+  options?: RequestInit
+) {
+  const requestOptions = merge(
+    {
+      method: "POST",
+      headers: { "Content-Type": "multipart/form-data" },
+      body,
     },
     options
   );

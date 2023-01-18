@@ -7,7 +7,7 @@ import { createLayout } from "@components/layout/layout";
 
 import { CategoryFilter } from "./components/CategoryFilter";
 import { Filter } from "./components/Filter";
-import { ProductsView } from "./components/ProductsView";
+import { ListView } from "./components/ListView";
 import { SearchInput } from "./components/SearchInput";
 import { FilterProvider } from "./states/filter";
 
@@ -58,7 +58,7 @@ export default function Page() {
               {CategoryFilter()}
             </div>
           </div>
-          <ProductsView />
+          <ListView />
         </div>
       </div>
     </FilterProvider>

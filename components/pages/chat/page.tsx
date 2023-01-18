@@ -1,7 +1,9 @@
+import { useQuery } from "@tanstack/react-query";
 import { cx } from "class-variance-authority";
 import useBreakpoint from "use-breakpoint";
 
 import { BackIcon, MenuIcon, PictureFilledIcon } from "@lib/icons";
+import { http } from "@lib/services/http";
 
 import NoSsr from "@components/atoms/NoSsr";
 import { createLayout } from "@components/layout/layout";
@@ -9,9 +11,22 @@ import { createLayout } from "@components/layout/layout";
 const BREAKPOINTS = { narrow: 0, wide: 960 };
 
 const ChatListView = () => {
+  const { data } = useQuery<
+    {
+      roomUuid: string;
+      roomName: string;
+      image: null;
+      univ: string;
+    }[]
+  >({
+    queryKey: ["chat-rooms"],
+    queryFn: async () => {
+      return (await http.post.default("/chat/rooms")).data;
+    },
+  });
   return (
     <div className="flex flex-col max-md:container">
-      {Array.from({ length: 20 }).map((_, i) => (
+      {data?.map((room, i) => (
         <button
           className="flex items-center justify-between py-4 max-md:bleed md:-mx-4 md:px-4"
           key={i}
@@ -20,9 +35,9 @@ const ChatListView = () => {
             <span className="inline-block h-12 w-12 rounded-xl bg-gray-200" />
             <div className="flex flex-col justify-around">
               <p className="flex items-center font-medium">
-                <span>홍길동</span>
+                <span>{room.roomName}</span>
                 <span className="ml-2 space-x-1 text-sm text-gray-600">
-                  <span>홍익대</span>
+                  <span>{room.univ}</span>
                   <span>·</span>
                   <span>1시간 전</span>
                 </span>
@@ -160,6 +175,7 @@ export default function Page() {
 }
 Page.getLayout = createLayout({
   mobileNav: true,
+  authenticated: true,
   rawHeader: (
     <>
       <div className="container relative flex h-12 items-center justify-between bg-white">

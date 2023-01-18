@@ -57,10 +57,10 @@ const ProductElementSkeleton = React.forwardRef<
       <Skeleton className="block aspect-4/3 rounded-xl" />
       <div className="mt-4">
         <p className="font-medium leading-tight md:text-lg md:leading-tight">
-          <Skeleton width="3em" />
+          <Skeleton width="6em" />
         </p>
         <p className="font-bold leading-tight md:text-lg md:leading-tight">
-          <Skeleton width="10em" />
+          <Skeleton width="9em" />
         </p>
         <p className="mt-1 flex space-x-1 text-xs md:text-sm">
           <Skeleton width="10em" />

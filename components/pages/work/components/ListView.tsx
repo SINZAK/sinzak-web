@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
-import { ProductElement } from "@components/elements/product/ProductElement";
+import { WorkElement } from "@components/elements/work/WorkElement";
 
-import { useProductQuery } from "../queries/product";
+import { useWorkQuery } from "../queries/product";
 import { useFilter } from "../states/filter";
 
-export const ProductsView = () => {
+export const ListView = () => {
   const filter = useFilter();
-  const { data, isLoading, fetchNextPage } = useProductQuery(filter);
+  const { data, isLoading, fetchNextPage } = useWorkQuery(filter);
   const [ref, inView] = useInView();
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export const ProductsView = () => {
           ? Array.from({ length: 16 }, () => undefined)
           : content || []
         ).map((_, i) => (
-          <ProductElement data={_} key={_?.id || `t-{${i}}`} />
+          <WorkElement data={_} key={_?.id || `t-{${i}}`} />
         ))}
       </div>
       <div className="-translate-y-[50vh]" ref={ref} />
