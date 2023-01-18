@@ -1,4 +1,3 @@
-import { isDevEnv } from "@lib/utils/env";
 import inMemoryJwtManager from "./auth/inMemoryJwtManager";
 
 const BASE_URL = "https://sinzak.net";
@@ -7,7 +6,7 @@ const BASE_PATH_PREFIX = "/api";
 const commonRequestOptions = {
   // security threat: change later
   // credentials: "include",
-} satisfies Readonly<RequestInit>;
+}; // satisfies Readonly<RequestInit>;
 
 export const http = {
   get,

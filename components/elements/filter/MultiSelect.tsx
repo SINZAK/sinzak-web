@@ -1,7 +1,9 @@
-import { Button } from "@components/atoms/Button";
+import { useCallback, useEffect, useState } from "react";
+
 import { CheckIcon } from "@lib/icons";
 import { Category, getCategoryText } from "@lib/resources/category";
-import { useCallback, useEffect, useState } from "react";
+
+import { Button } from "@components/atoms/Button";
 
 export const MultiSelect = <T extends Category>({
   data,
@@ -52,7 +54,7 @@ export const MultiSelect = <T extends Category>({
       onClick={() => setSelectState([])}
       intent={selectState.length === 0 ? "primary" : "base"}
     >
-      <CheckIcon className="w-7 h-7 -my-0.5 -ml-1.5" />
+      <CheckIcon className="-my-0.5 -ml-1.5 h-7 w-7" />
       전체
     </Button>,
     ...data.map((_, i) => (
@@ -62,7 +64,7 @@ export const MultiSelect = <T extends Category>({
         key={i}
         intent={selectState.includes(_) ? "primary" : "base"}
       >
-        <CheckIcon className="w-7 h-7 -my-0.5 -ml-1.5" />
+        <CheckIcon className="-my-0.5 -ml-1.5 h-7 w-7" />
         {getCategoryText(_)}
       </Button>
     )),

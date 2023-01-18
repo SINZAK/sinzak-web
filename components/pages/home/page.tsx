@@ -1,4 +1,5 @@
 import { createLayout } from "@components/layout/layout";
+
 import { BannerView } from "./components/BannerView";
 import { FeaturedView } from "./components/FeaturedView";
 import { GenreView } from "./components/GenreView";
@@ -6,7 +7,7 @@ import { GenreView } from "./components/GenreView";
 export default function Page() {
   return (
     <>
-      <div className="container flex items-center justify-between h-16 mb-8 md:hidden">
+      <div className="container mb-8 flex h-16 items-center justify-between md:hidden">
         <img alt="logo" src="/assets/logo-type.svg" className="h-7" />
         <img alt="noti" src="/assets/icons/noti.svg" className="h-8" />
       </div>

@@ -1,11 +1,13 @@
-import NoSsr from "@components/atoms/NoSsr";
-import { logout, useAuth } from "@lib/services/auth";
-import { http } from "@lib/services/http";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
+
+import { logout, useAuth } from "@lib/services/auth";
+import { http } from "@lib/services/http";
+
+import NoSsr from "@components/atoms/NoSsr";
 
 const Layout = ({ children }: { children?: React.ReactNode }) => {
   const { data } = useQuery<any>(["profileTest"], async () => {
@@ -16,7 +18,7 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
     <NoSsr>
       <div className="container flex flex-col md:hidden">
         <div className="flex flex-col items-center justify-center space-y-4 py-7">
-          <span className="inline-block w-16 h-16 bg-gray-200 rounded-xl" />
+          <span className="inline-block h-16 w-16 rounded-xl bg-gray-200" />
           <div className="text-center">
             <p className="mb-1 text-xl font-bold leading-tight">
               {data ? <>{data.name}</> : <Skeleton className="w-12" />}
@@ -55,7 +57,7 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
             </p>
           </div>
         </div>
-        <div className="flex flex-col text-lg font-bold divide-y [&>*]:py-4">
+        <div className="flex flex-col divide-y text-lg font-bold [&>*]:py-4">
           <Link href="/my/bookmark">스크랩 목록</Link>
           <Link href="/">의뢰해요</Link>
           <Link href="/">판매 작품</Link>
@@ -67,7 +69,7 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
         <div className="border-b pb-7">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <span className="inline-block bg-gray-100 w-14 h-14 rounded-xl" />
+              <span className="inline-block h-14 w-14 rounded-xl bg-gray-100" />
               <div>
                 <p className="text-xl font-bold leading-tight">
                   {data ? <>{data.name}</> : <Skeleton className="w-12" />}
@@ -81,15 +83,15 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
                 </p>
               </div>
             </div>
-            <button className="border-red border text-red rounded-full px-8 py-1.5 font-medium">
+            <button className="rounded-full border border-red px-8 py-1.5 font-medium text-red">
               프로필 편집
             </button>
           </div>
         </div>
       </div>
-      <div className="container hidden mt-12 md:block">
+      <div className="container mt-12 hidden md:block">
         <div className="flex">
-          <div className="flex-[0_0_16rem] mr-7 pr-3.5">
+          <div className="mr-7 flex-[0_0_16rem] pr-3.5">
             <div className="flex flex-col space-y-3 text-lg font-bold">
               <Link href="/my">MY</Link>
               <div className="h-3" />
@@ -104,7 +106,7 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
               </button>
             </div>
           </div>
-          <div className="flex flex-col flex-1">{children}</div>
+          <div className="flex flex-1 flex-col">{children}</div>
         </div>
       </div>
     </NoSsr>

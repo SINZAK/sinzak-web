@@ -1,7 +1,9 @@
-import { Button } from "@components/atoms/Button";
+import { useCallback, useEffect, useState } from "react";
+
 import { CheckIcon } from "@lib/icons";
 import { Category, getCategoryText } from "@lib/resources/category";
-import { useCallback, useEffect, useState } from "react";
+
+import { Button } from "@components/atoms/Button";
 
 export const SingleSelect = ({
   data,
@@ -30,7 +32,7 @@ export const SingleSelect = ({
           key={i}
           intent={selectState === _ ? "primary" : "base"}
         >
-          <CheckIcon className="w-7 h-7 -my-0.5 -ml-1.5" />
+          <CheckIcon className="-my-0.5 -ml-1.5 h-7 w-7" />
           {getCategoryText(_)}
         </Button>
       ))}

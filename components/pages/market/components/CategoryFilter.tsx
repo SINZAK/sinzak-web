@@ -1,6 +1,8 @@
 import { useAtom } from "jotai/react";
-import { filterCategoriesAtom, useFilterContext } from "../states/filter";
+
 import { MultiSelect } from "@components/elements/filter/MultiSelect";
+
+import { filterCategoriesAtom, useFilterContext } from "../states/filter";
 
 export const CategoryFilter = () => {
   const store = useFilterContext();

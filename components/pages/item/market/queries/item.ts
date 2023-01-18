@@ -1,7 +1,8 @@
-import { http } from "@lib/services/http";
 import { useQuery } from "@tanstack/react-query";
 import { MarketItemDetail } from "@types";
 import { useRouter } from "next/router";
+
+import { http } from "@lib/services/http";
 
 export const useMarketItemQuery = () => {
   const router = useRouter();

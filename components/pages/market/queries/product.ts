@@ -1,7 +1,9 @@
-import useIsClient from "@lib/hooks/useIsClient";
-import { http } from "@lib/services/http";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { ItemSimple } from "@types";
+
+import useIsClient from "@lib/hooks/useIsClient";
+import { http } from "@lib/services/http";
+
 import { Filter } from "../states/filter";
 
 export const useProductQuery = (filter: Filter) => {

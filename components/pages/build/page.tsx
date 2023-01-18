@@ -1,15 +1,18 @@
-import { createLayout } from "@components/layout/layout";
 import "@egjs/react-flicking/dist/flicking.css";
-import React, { useRef, useState } from "react";
-import { http } from "@lib/services/http";
-import { Button } from "@components/atoms/Button";
-import { BackIcon, CloseIcon } from "@lib/icons";
-import TextareaAutosize from "react-textarea-autosize";
-import { CheckBox } from "@components/atoms/CheckBox";
-import { Controller, useForm } from "react-hook-form";
-import { Category } from "@lib/resources/category";
-import { twMerge } from "tailwind-merge";
 import { useRouter } from "next/router";
+import React, { useRef, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import TextareaAutosize from "react-textarea-autosize";
+import { twMerge } from "tailwind-merge";
+
+import { BackIcon, CloseIcon } from "@lib/icons";
+import { Category } from "@lib/resources/category";
+import { http } from "@lib/services/http";
+
+import { Button } from "@components/atoms/Button";
+import { CheckBox } from "@components/atoms/CheckBox";
+import { createLayout } from "@components/layout/layout";
+
 import { SingleSelect } from "./components/SingleSelect";
 
 const ImageUpload = () => {

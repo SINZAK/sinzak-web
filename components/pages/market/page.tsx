@@ -1,14 +1,16 @@
-import { createLayout } from "@components/layout/layout";
 import Flicking from "@egjs/react-flicking";
 import "@egjs/react-flicking/dist/flicking.css";
-import React from "react";
 import Link from "next/link";
-import { FilterProvider } from "./states/filter";
-import { Filter } from "./components/Filter";
-import { ProductsView } from "./components/ProductsView";
+import React from "react";
+
+import { createLayout } from "@components/layout/layout";
+
 import { CategoryFilter } from "./components/CategoryFilter";
-import { SearchInput } from "./components/SearchInput";
+import { Filter } from "./components/Filter";
 import { MobileHeader } from "./components/MobileHeader";
+import { ProductsView } from "./components/ProductsView";
+import { SearchInput } from "./components/SearchInput";
+import { FilterProvider } from "./states/filter";
 
 export default function Page() {
   return (

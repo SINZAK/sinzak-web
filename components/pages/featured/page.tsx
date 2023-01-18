@@ -1,11 +1,13 @@
+import Flicking from "@egjs/react-flicking";
+import "@egjs/react-flicking/dist/flicking.css";
+import { Listbox } from "@headlessui/react";
+import React from "react";
+
+import { AlignIcon } from "@lib/icons";
+
 import { CheckBox } from "@components/atoms/CheckBox";
 import { ProductElement } from "@components/elements/product/ProductElement";
 import { createLayout } from "@components/layout/layout";
-import Flicking from "@egjs/react-flicking";
-import "@egjs/react-flicking/dist/flicking.css";
-import React from "react";
-import { Listbox } from "@headlessui/react";
-import { AlignIcon } from "@lib/icons";
 
 const options = [
   { id: "recommend", name: "신작추천순" },
@@ -18,14 +20,14 @@ const options = [
 export default function Page() {
   return (
     <>
-      <div className="md:block hidden h-12" />
+      <div className="hidden h-12 md:block" />
       <div className="container flex flex-col">
-        <div className="md:flex hidden space-x-7 items-center pb-7">
+        <div className="hidden items-center space-x-7 pb-7 md:flex">
           <span className="flex-[0_0_16rem] text-3xl font-bold">최신 작품</span>
         </div>
-        <div className="md:hidden h-7" />
+        <div className="h-7 md:hidden" />
         <div className="flex">
-          <div className="flex-1 flex flex-wrap gap-x-3 md:gap-x-7 gap-y-7">
+          <div className="flex flex-1 flex-wrap gap-x-3 gap-y-7 md:gap-x-7">
             {Array.from({ length: 20 }).map((_, i) => (
               <ProductElement
                 className="flex-[1_1_40%] sm:flex-[1_1_200px]"
@@ -45,8 +47,8 @@ Page.getLayout = createLayout({
   mobileNav: true,
   rawHeader: (
     <>
-      <div className="h-12 flex container items-center justify-between bg-white relative">
-        <span className="font-bold absolute w-full flex top-0 left-0 h-full items-center justify-center">
+      <div className="container relative flex h-12 items-center justify-between bg-white">
+        <span className="absolute top-0 left-0 flex h-full w-full items-center justify-center font-bold">
           최신 작품
         </span>
         <span>

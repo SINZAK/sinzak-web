@@ -1,4 +1,5 @@
 import { useAuth } from "@lib/services/auth";
+
 import { useQueryContext } from "../states/QueryProvider";
 import { LikeButton, LikeButtonPlaceholder } from "./LikeButton";
 

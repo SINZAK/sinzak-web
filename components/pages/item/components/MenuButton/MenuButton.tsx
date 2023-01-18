@@ -1,8 +1,11 @@
-import { useQueryContext } from "../../states/QueryProvider";
+import { useState } from "react";
+
+import { useAuth } from "@lib/services/auth";
+
 import { Menu } from "@components/atoms/Menu";
 import { DeletePopup } from "@components/elements/product/DeletePopup";
-import { useAuth } from "@lib/services/auth";
-import { useState } from "react";
+
+import { useQueryContext } from "../../states/QueryProvider";
 
 export const MenuButton = ({
   button: MenuButton,

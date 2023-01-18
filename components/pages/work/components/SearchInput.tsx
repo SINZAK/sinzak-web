@@ -1,7 +1,8 @@
 import { useAtom } from "jotai/react";
-import { useFilterContext, filterSearchAtom } from "../states/filter";
 
 import { SearchInput as Input } from "@components/elements/filter/SearchInput";
+
+import { filterSearchAtom, useFilterContext } from "../states/filter";
 
 export const SearchInput = () => {
   const store = useFilterContext();

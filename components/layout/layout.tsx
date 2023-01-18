@@ -1,4 +1,6 @@
-import { Authenticated } from "@components/atoms/Authenticated";
+import Link from "next/link";
+import React from "react";
+
 import {
   ChatFilledIcon,
   ChatIcon,
@@ -11,8 +13,9 @@ import {
   TaskIcon,
 } from "@lib/icons";
 import { WithAuth } from "@lib/services/auth";
-import Link from "next/link";
-import React from "react";
+
+import { Authenticated } from "@components/atoms/Authenticated";
+
 import { MobileNavLink } from "./NavLink";
 
 interface LayoutProps {

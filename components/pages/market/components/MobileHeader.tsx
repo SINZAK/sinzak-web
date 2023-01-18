@@ -1,8 +1,10 @@
-import { BackIcon, CloseIcon, SearchIcon } from "@lib/icons";
 import { useAtom } from "jotai/react";
 import { RESET } from "jotai/vanilla/utils";
 import { useState } from "react";
-import { useFilterContext, filterSearchAtom } from "../states/filter";
+
+import { BackIcon, CloseIcon, SearchIcon } from "@lib/icons";
+
+import { filterSearchAtom, useFilterContext } from "../states/filter";
 import { SearchInput } from "./SearchInput";
 
 export const MobileHeader = () => {

@@ -1,12 +1,13 @@
-import { AlignSelectFilter } from "@components/elements/filter/AlignSelectFilter";
-import {
-  useFilterContext,
-  filterAlignAtom,
-  filterOptions,
-  filterEmploymentAtom,
-} from "@components/pages/work/states/filter";
 import { useAtom } from "jotai/react";
 import { twMerge } from "tailwind-merge";
+
+import { AlignSelectFilter } from "@components/elements/filter/AlignSelectFilter";
+import {
+  filterAlignAtom,
+  filterEmploymentAtom,
+  filterOptions,
+  useFilterContext,
+} from "@components/pages/work/states/filter";
 
 export const Filter = () => {
   const store = useFilterContext();
@@ -17,7 +18,7 @@ export const Filter = () => {
   );
 
   return (
-    <span className="flex items-center justify-between flex-1 h-6 max-md:px-0.5">
+    <span className="flex h-6 flex-1 items-center justify-between max-md:px-0.5">
       <span className="space-x-4 text-base font-bold text-gray-800 md:text-xl">
         <button
           onClick={() => setFilterEmployment(true)}
@@ -25,7 +26,7 @@ export const Filter = () => {
         >
           의뢰해요
           {filterEmployment && (
-            <span className="absolute bottom-0 left-0 inline-block w-full translate-y-0.5 bg-black border-b-2 border-black" />
+            <span className="absolute bottom-0 left-0 inline-block w-full translate-y-0.5 border-b-2 border-black bg-black" />
           )}
         </button>
         <button
@@ -34,7 +35,7 @@ export const Filter = () => {
         >
           작업해요
           {!filterEmployment && (
-            <span className="absolute bottom-0 left-0 inline-block w-full translate-y-0.5 bg-black border-b-2 border-black" />
+            <span className="absolute bottom-0 left-0 inline-block w-full translate-y-0.5 border-b-2 border-black bg-black" />
           )}
         </button>
       </span>

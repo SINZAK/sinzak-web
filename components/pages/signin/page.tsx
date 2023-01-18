@@ -8,33 +8,33 @@ export default function Page() {
 
   return (
     <>
-      <div className="fixed w-full h-full sm:bg-[url(/assets/login-splash-bg.jpg)] bg-cover"></div>
-      <div className="relative flex items-center justify-center w-full h-screen bg-white bg-opacity-25">
-        <div className="bg-white w-full max-w-md min-h-[80vh] sm:min-h-[480px] px-7 sm:px-14 py-14 rounded-xl sm:shadow-xl justify-between flex flex-col">
+      <div className="fixed h-full w-full bg-cover sm:bg-[url(/assets/login-splash-bg.jpg)]"></div>
+      <div className="relative flex h-screen w-full items-center justify-center bg-white bg-opacity-25">
+        <div className="flex min-h-[80vh] w-full max-w-md flex-col justify-between rounded-xl bg-white px-7 py-14 sm:min-h-[480px] sm:px-14 sm:shadow-xl">
           <div className="w-full">
             <img alt="logo" src="/assets/logo-type.svg" className="h-12" />
-            <p className="mt-1 text-xl font-bold text-right">
+            <p className="mt-1 text-right text-xl font-bold">
               신세대의 작품을 만나다
             </p>
           </div>
           <div>
-            <p className="mb-3 text-sm text-center">
+            <p className="mb-3 text-center text-sm">
               SNS 계정으로 간편하게 시작하기
             </p>
             <div className="flex flex-col space-y-3 font-medium">
               <button
                 onClick={onClick}
-                className="px-6 py-3 bg-red-500 rounded-xl"
+                className="rounded-xl bg-red-500 px-6 py-3"
               >
                 임시 로그인
               </button>
-              <a className="px-6 py-3 bg-gray-100 rounded-xl">
+              <a className="rounded-xl bg-gray-100 px-6 py-3">
                 네이버로 시작하기
               </a>
-              <a className="px-6 py-3 bg-gray-100 rounded-xl">
+              <a className="rounded-xl bg-gray-100 px-6 py-3">
                 카카오로 시작하기
               </a>
-              <a className="px-6 py-3 bg-gray-100 rounded-xl">
+              <a className="rounded-xl bg-gray-100 px-6 py-3">
                 Google로 시작하기
               </a>
             </div>

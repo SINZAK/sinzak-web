@@ -1,6 +1,7 @@
-import { http } from "@lib/services/http";
-import { useQueryClient, useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { LikeMutationVariables } from "@types";
+
+import { http } from "@lib/services/http";
 
 export const useLikeWorkItemMutation = () => {
   const queryClient = useQueryClient();

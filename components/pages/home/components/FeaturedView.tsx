@@ -1,5 +1,7 @@
-import { http } from "@lib/services/http";
 import { useQuery } from "@tanstack/react-query";
+
+import { http } from "@lib/services/http";
+
 import { FeaturedCarousel } from "./FeaturedCarousel";
 
 export const FeaturedView = () => {

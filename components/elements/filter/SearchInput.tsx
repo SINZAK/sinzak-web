@@ -1,6 +1,7 @@
-import { CloseIcon } from "@lib/icons";
 import { RESET } from "jotai/vanilla/utils";
 import { SetStateAction, useEffect, useState } from "react";
+
+import { CloseIcon } from "@lib/icons";
 
 export type SetSearchStateAction = SetStateAction<
   string | undefined | typeof RESET

@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-
-import { globalFont } from "@lib/services/font";
-import { CustomAppProps } from "@types";
-import { AuthProvider } from "@lib/services/auth";
-import { createQueryClient } from "@lib/services/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { CustomAppProps } from "@types";
+import React, { useState } from "react";
 import { SkeletonTheme } from "react-loading-skeleton";
-
 import "react-loading-skeleton/dist/skeleton.css";
+
+import { AuthProvider } from "@lib/services/auth";
+import { globalFont } from "@lib/services/font";
+import { createQueryClient } from "@lib/services/queryClient";
+
 import "../styles/globals.css";
 
 if (typeof document === "undefined") {

@@ -1,6 +1,7 @@
-import { useAuth } from "@lib/services/auth";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+
+import { useAuth } from "@lib/services/auth";
 
 export const Authenticated = ({ children }: { children?: React.ReactNode }) => {
   const { user, isLoading } = useAuth();

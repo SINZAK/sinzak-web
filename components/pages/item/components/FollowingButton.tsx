@@ -1,6 +1,7 @@
+import Link from "next/link";
+
 import { useFollowMutation } from "@lib/queries/follow";
 import { useAuth } from "@lib/services/auth";
-import Link from "next/link";
 
 export const FollowingButton = ({
   isFollowing,

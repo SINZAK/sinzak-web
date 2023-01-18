@@ -1,8 +1,10 @@
-import NoSsr from "@components/atoms/NoSsr";
-import { createLayout } from "@components/layout/layout";
-import { BackIcon, MenuIcon, PictureFilledIcon } from "@lib/icons";
 import { cx } from "class-variance-authority";
 import useBreakpoint from "use-breakpoint";
+
+import { BackIcon, MenuIcon, PictureFilledIcon } from "@lib/icons";
+
+import NoSsr from "@components/atoms/NoSsr";
+import { createLayout } from "@components/layout/layout";
 
 const BREAKPOINTS = { narrow: 0, wide: 960 };
 
@@ -11,11 +13,11 @@ const ChatListView = () => {
     <div className="flex flex-col max-md:container">
       {Array.from({ length: 20 }).map((_, i) => (
         <button
-          className="flex items-center justify-between py-4 md:-mx-4 md:px-4 max-md:bleed"
+          className="flex items-center justify-between py-4 max-md:bleed md:-mx-4 md:px-4"
           key={i}
         >
           <div className="flex space-x-4">
-            <span className="inline-block w-12 h-12 bg-gray-200 rounded-xl" />
+            <span className="inline-block h-12 w-12 rounded-xl bg-gray-200" />
             <div className="flex flex-col justify-around">
               <p className="flex items-center font-medium">
                 <span>홍길동</span>
@@ -31,7 +33,7 @@ const ChatListView = () => {
             </div>
           </div>
           <div className="mr-2">
-            <span className="inline-flex min-w-[1.5rem] h-6 bg-purple items-center justify-center rounded-full text-sm text-white font-bold">
+            <span className="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-purple text-sm font-bold text-white">
               1
             </span>
           </div>
@@ -45,7 +47,7 @@ const ChatText = ({ text, own }: any) => {
   return (
     <div
       className={cx(
-        "px-4 py-2 rounded-full",
+        "rounded-full px-4 py-2",
         own ? "self-end bg-red text-white" : "self-start bg-gray-100 text-black"
       )}
     >
@@ -56,9 +58,9 @@ const ChatText = ({ text, own }: any) => {
 
 const ChatRoomView = () => {
   return (
-    <div className="flex flex-col h-full max-md:container md:px-4 max-md:bleed">
-      <div className="relative flex items-center justify-between h-12 bg-white">
-        <span className="absolute top-0 left-0 flex items-center justify-center w-full h-full font-bold">
+    <div className="flex h-full flex-col max-md:container max-md:bleed md:px-4">
+      <div className="relative flex h-12 items-center justify-between bg-white">
+        <span className="absolute top-0 left-0 flex h-full w-full items-center justify-center font-bold">
           홍길동
         </span>
         <span>
@@ -68,8 +70,8 @@ const ChatRoomView = () => {
           <MenuIcon />
         </span>
       </div>
-      <div className="flex px-2 py-4 space-x-4">
-        <span className="inline-block w-10 h-10 bg-gray-200 rounded-xl" />
+      <div className="flex space-x-4 px-2 py-4">
+        <span className="inline-block h-10 w-10 rounded-xl bg-gray-200" />
         <div className="flex flex-col justify-around">
           <p className="flex items-center">
             <span className="space-x-1 text-sm">
@@ -85,7 +87,7 @@ const ChatRoomView = () => {
           </p>
         </div>
       </div>
-      <div className="flex flex-col flex-[1_1_auto] min-h-0 space-y-1 overflow-y-scroll max-md:bleed md:-mx-4 md:px-4">
+      <div className="flex min-h-0 flex-[1_1_auto] flex-col space-y-1 overflow-y-scroll max-md:bleed md:-mx-4 md:px-4">
         <ChatText own />
         <ChatText />
         <ChatText />
@@ -113,11 +115,11 @@ const ChatRoomView = () => {
         <ChatText own />
         <ChatText />
       </div>
-      <div className="flex items-center px-4 py-4 space-x-3 max-md:bleed md:-mx-4">
+      <div className="flex items-center space-x-3 px-4 py-4 max-md:bleed md:-mx-4">
         <span>
-          <PictureFilledIcon className="w-10 h-10 fill-gray-600" />
+          <PictureFilledIcon className="h-10 w-10 fill-gray-600" />
         </span>
-        <span className="flex items-center flex-1 h-12 px-6 font-medium text-gray-600 bg-gray-100 rounded-full">
+        <span className="flex h-12 flex-1 items-center rounded-full bg-gray-100 px-6 font-medium text-gray-600">
           메세지 보내기
         </span>
       </div>
@@ -136,8 +138,8 @@ const Chat = () => {
   if (breakpoint === "wide")
     return (
       <div className="container">
-        <div className="grid mx-auto grid-cols-2 divide-x relative max-w-5xl h-[80vh] mt-7 ring-1 ring-gray-100">
-          <div className="px-4 overflow-y-scroll">
+        <div className="relative mx-auto mt-7 grid h-[80vh] max-w-5xl grid-cols-2 divide-x ring-1 ring-gray-100">
+          <div className="overflow-y-scroll px-4">
             <ChatListView />
           </div>
           <div className="h-full min-h-0">
@@ -160,8 +162,8 @@ Page.getLayout = createLayout({
   mobileNav: true,
   rawHeader: (
     <>
-      <div className="container relative flex items-center justify-between h-12 bg-white">
-        <span className="absolute top-0 left-0 flex items-center justify-center w-full h-full font-bold">
+      <div className="container relative flex h-12 items-center justify-between bg-white">
+        <span className="absolute top-0 left-0 flex h-full w-full items-center justify-center font-bold">
           채팅
         </span>
         <span></span>

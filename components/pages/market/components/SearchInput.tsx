@@ -1,9 +1,11 @@
-import { filterSearchAtom, useFilterContext } from "../states/filter";
+import { useAtom } from "jotai/react";
+
 import {
   SearchInput as Input,
   SetSearchStateAction,
 } from "@components/elements/filter/SearchInput";
-import { useAtom } from "jotai/react";
+
+import { filterSearchAtom, useFilterContext } from "../states/filter";
 
 export const SearchInput = (props: {
   onSearch?: (val: SetSearchStateAction) => void;

@@ -1,5 +1,6 @@
-import React, { useId } from "react";
 import * as Checkbox from "@radix-ui/react-checkbox";
+import React, { useId } from "react";
+
 import { CheckIcon } from "@lib/icons";
 
 export const CheckBox = React.forwardRef<

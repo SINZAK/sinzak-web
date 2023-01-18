@@ -1,5 +1,6 @@
-import { Button } from "@components/atoms/Button";
 import { Dialog } from "@headlessui/react";
+
+import { Button } from "@components/atoms/Button";
 
 export const DeletePopup = ({
   isOpen,

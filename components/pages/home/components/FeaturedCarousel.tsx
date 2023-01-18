@@ -1,11 +1,12 @@
-import { useRef } from "react";
-import { ProductElement } from "@components/elements/product/ProductElement";
-import { ChevronLeftIcon, ChevronRightICon } from "@lib/icons";
-import { ItemSimple } from "@types";
-import Link from "next/link";
-
 import Flicking from "@egjs/react-flicking";
 import "@egjs/react-flicking/dist/flicking.css";
+import { ItemSimple } from "@types";
+import Link from "next/link";
+import { useRef } from "react";
+
+import { ChevronLeftIcon, ChevronRightICon } from "@lib/icons";
+
+import { ProductElement } from "@components/elements/product/ProductElement";
 
 export const FeaturedCarousel = ({
   data,

@@ -1,19 +1,20 @@
+import { useAtom } from "jotai/react";
+
 import { CheckBox } from "@components/atoms/CheckBox";
 import { AlignSelectFilter } from "@components/elements/filter/AlignSelectFilter";
 import {
-  useFilterContext,
   filterAlignAtom,
-  filterSaleAtom,
   filterOptions,
+  filterSaleAtom,
+  useFilterContext,
 } from "@components/pages/market/states/filter";
-import { useAtom } from "jotai/react";
 
 export const Filter = () => {
   const store = useFilterContext();
   const [filterAlign, setFilterAlign] = useAtom(filterAlignAtom, { store });
   const [filterSale, setFilterSale] = useAtom(filterSaleAtom, { store });
   return (
-    <span className="flex items-center justify-between flex-1 h-6 max-md:px-0.5">
+    <span className="flex h-6 flex-1 items-center justify-between max-md:px-0.5">
       <span className="inline-flex items-center font-medium text-gray-800">
         <CheckBox
           checked={filterSale}

@@ -1,5 +1,6 @@
 import { StompSubscription } from "@stomp/stompjs";
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
+
 import useClient from "./client";
 
 const useStomp = (topic: string) => {

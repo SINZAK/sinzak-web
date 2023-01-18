@@ -1,13 +1,15 @@
-import { CheckBox } from "@components/atoms/CheckBox";
-import { createLayout } from "@components/layout/layout";
-import React from "react";
 import { Listbox } from "@headlessui/react";
-import { AlignIcon } from "@lib/icons";
-import { http } from "@lib/services/http";
 import { useQuery } from "@tanstack/react-query";
 import { UserProfile } from "@types";
-import Skeleton from "react-loading-skeleton";
 import { useRouter } from "next/router";
+import React from "react";
+import Skeleton from "react-loading-skeleton";
+
+import { AlignIcon } from "@lib/icons";
+import { http } from "@lib/services/http";
+
+import { CheckBox } from "@components/atoms/CheckBox";
+import { createLayout } from "@components/layout/layout";
 
 const options = [
   { id: "recommend", name: "신작추천순" },

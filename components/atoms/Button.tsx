@@ -1,7 +1,8 @@
-import { forwardRefWithPolymorphic } from "@lib/utils/forwardRefWithPolymorphic";
-import { cva, VariantProps } from "class-variance-authority";
+import { VariantProps, cva } from "class-variance-authority";
 import React from "react";
 import { twMerge } from "tailwind-merge";
+
+import { forwardRefWithPolymorphic } from "@lib/utils/forwardRefWithPolymorphic";
 
 export const button = cva(
   [

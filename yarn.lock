@@ -1484,12 +1484,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@egjs/flicking-plugins@npm:^4.5.0":
-  version: 4.5.0
-  resolution: "@egjs/flicking-plugins@npm:4.5.0"
+"@egjs/flicking-plugins@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "@egjs/flicking-plugins@npm:4.6.0"
   peerDependencies:
     "@egjs/flicking": ^4.1.0
-  checksum: 3302f8ed74aa6f63f9bb04a5fdd7cdb3833a7d3aa60a8b38a0af8c3ae4435a963b2f86d2493950add4e287e6a899024a9cae9a67423017bfda0092e717889c2d
+  checksum: b87161d551d0855e05cb848c24a719ceb80cf7d57837e151f90ba339519e671488efb2e567b3b9687fa8203df0c1fe14eccb4b9b33da72e5ce2cb5399015232c
   languageName: node
   linkType: hard
 
@@ -1654,116 +1654,116 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/env@npm:13.1.1":
-  version: 13.1.1
-  resolution: "@next/env@npm:13.1.1"
-  checksum: e265b9b9e7c28023b33ba99b95e84abdfa501507e2f1b7d7b6469ab93d21edbb59fe4378f0557d12864508b747ff1fbc2f9c7de3d704ba51a37c7295fddb0ec1
+"@next/env@npm:13.1.2":
+  version: 13.1.2
+  resolution: "@next/env@npm:13.1.2"
+  checksum: 0b25af4a1c31b4d798fea57df05ba45c5e35b13d87a7c612532e5f25e4b800d1d61854b7f95b8064587ee5a5b43f3d33da5d914ec70c132b6ee82925d44cf18c
   languageName: node
   linkType: hard
 
-"@next/eslint-plugin-next@npm:13.1.1":
-  version: 13.1.1
-  resolution: "@next/eslint-plugin-next@npm:13.1.1"
+"@next/eslint-plugin-next@npm:13.1.2":
+  version: 13.1.2
+  resolution: "@next/eslint-plugin-next@npm:13.1.2"
   dependencies:
     glob: 7.1.7
-  checksum: 27e49ef988db3203d494930ad1fcdc270761a61a41e6925c0eadf1e2b1ebd6648722a3aaec7f0c0266eea8771797e06d52f041d33c93d21ba3b361ffe696c36c
+  checksum: 6095e224feaaaf4e8d272ce38f86eabd3a3e885ad9a6b06d57566790166ff899bb0378140f129d20ded04ab0ab629fa5f53a7d2754c38176004f92ab53d7c9e6
   languageName: node
   linkType: hard
 
-"@next/font@npm:13.1.1":
-  version: 13.1.1
-  resolution: "@next/font@npm:13.1.1"
-  checksum: 468a77d3a6db4a95ece3cc99c28dcaaf6135354ad81c3954a08a6c7d977693d7b7f07ff835b972a80d25794b711d6cb6545ea55fe6bed4c624346f3524061d19
+"@next/font@npm:13.1.2":
+  version: 13.1.2
+  resolution: "@next/font@npm:13.1.2"
+  checksum: 36fa827f95076d49b6a7d6e42cea7848412135f880d953d94416eae997d7880e30a88dfab3a4512b2496a4f69b77ce070ab11dc2d7c0f3eab035517de10e1adc
   languageName: node
   linkType: hard
 
-"@next/swc-android-arm-eabi@npm:13.1.1":
-  version: 13.1.1
-  resolution: "@next/swc-android-arm-eabi@npm:13.1.1"
+"@next/swc-android-arm-eabi@npm:13.1.2":
+  version: 13.1.2
+  resolution: "@next/swc-android-arm-eabi@npm:13.1.2"
   conditions: os=android & cpu=arm
   languageName: node
   linkType: hard
 
-"@next/swc-android-arm64@npm:13.1.1":
-  version: 13.1.1
-  resolution: "@next/swc-android-arm64@npm:13.1.1"
+"@next/swc-android-arm64@npm:13.1.2":
+  version: 13.1.2
+  resolution: "@next/swc-android-arm64@npm:13.1.2"
   conditions: os=android & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-arm64@npm:13.1.1":
-  version: 13.1.1
-  resolution: "@next/swc-darwin-arm64@npm:13.1.1"
+"@next/swc-darwin-arm64@npm:13.1.2":
+  version: 13.1.2
+  resolution: "@next/swc-darwin-arm64@npm:13.1.2"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-x64@npm:13.1.1":
-  version: 13.1.1
-  resolution: "@next/swc-darwin-x64@npm:13.1.1"
+"@next/swc-darwin-x64@npm:13.1.2":
+  version: 13.1.2
+  resolution: "@next/swc-darwin-x64@npm:13.1.2"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@next/swc-freebsd-x64@npm:13.1.1":
-  version: 13.1.1
-  resolution: "@next/swc-freebsd-x64@npm:13.1.1"
+"@next/swc-freebsd-x64@npm:13.1.2":
+  version: 13.1.2
+  resolution: "@next/swc-freebsd-x64@npm:13.1.2"
   conditions: os=freebsd & cpu=x64
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm-gnueabihf@npm:13.1.1":
-  version: 13.1.1
-  resolution: "@next/swc-linux-arm-gnueabihf@npm:13.1.1"
+"@next/swc-linux-arm-gnueabihf@npm:13.1.2":
+  version: 13.1.2
+  resolution: "@next/swc-linux-arm-gnueabihf@npm:13.1.2"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-gnu@npm:13.1.1":
-  version: 13.1.1
-  resolution: "@next/swc-linux-arm64-gnu@npm:13.1.1"
+"@next/swc-linux-arm64-gnu@npm:13.1.2":
+  version: 13.1.2
+  resolution: "@next/swc-linux-arm64-gnu@npm:13.1.2"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-musl@npm:13.1.1":
-  version: 13.1.1
-  resolution: "@next/swc-linux-arm64-musl@npm:13.1.1"
+"@next/swc-linux-arm64-musl@npm:13.1.2":
+  version: 13.1.2
+  resolution: "@next/swc-linux-arm64-musl@npm:13.1.2"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-gnu@npm:13.1.1":
-  version: 13.1.1
-  resolution: "@next/swc-linux-x64-gnu@npm:13.1.1"
+"@next/swc-linux-x64-gnu@npm:13.1.2":
+  version: 13.1.2
+  resolution: "@next/swc-linux-x64-gnu@npm:13.1.2"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-musl@npm:13.1.1":
-  version: 13.1.1
-  resolution: "@next/swc-linux-x64-musl@npm:13.1.1"
+"@next/swc-linux-x64-musl@npm:13.1.2":
+  version: 13.1.2
+  resolution: "@next/swc-linux-x64-musl@npm:13.1.2"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-win32-arm64-msvc@npm:13.1.1":
-  version: 13.1.1
-  resolution: "@next/swc-win32-arm64-msvc@npm:13.1.1"
+"@next/swc-win32-arm64-msvc@npm:13.1.2":
+  version: 13.1.2
+  resolution: "@next/swc-win32-arm64-msvc@npm:13.1.2"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-win32-ia32-msvc@npm:13.1.1":
-  version: 13.1.1
-  resolution: "@next/swc-win32-ia32-msvc@npm:13.1.1"
+"@next/swc-win32-ia32-msvc@npm:13.1.2":
+  version: 13.1.2
+  resolution: "@next/swc-win32-ia32-msvc@npm:13.1.2"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@next/swc-win32-x64-msvc@npm:13.1.1":
-  version: 13.1.1
-  resolution: "@next/swc-win32-x64-msvc@npm:13.1.1"
+"@next/swc-win32-x64-msvc@npm:13.1.2":
+  version: 13.1.2
+  resolution: "@next/swc-win32-x64-msvc@npm:13.1.2"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -3489,11 +3489,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-next@npm:13.1.1":
-  version: 13.1.1
-  resolution: "eslint-config-next@npm:13.1.1"
+"eslint-config-next@npm:13.1.2":
+  version: 13.1.2
+  resolution: "eslint-config-next@npm:13.1.2"
   dependencies:
-    "@next/eslint-plugin-next": 13.1.1
+    "@next/eslint-plugin-next": 13.1.2
     "@rushstack/eslint-patch": ^1.1.3
     "@typescript-eslint/parser": ^5.42.0
     eslint-import-resolver-node: ^0.3.6
@@ -3508,7 +3508,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 098465b42e277433e4f815465b49ab655fc35a62ac016a47f60d7e44248f1b87a70b2dfd2ef090ffbb4cb1a694d409ff0811d2eb64028ce61f535403c7a0f27a
+  checksum: 332ab947d1c4ffb4a18108991c80e161ce37d38df706e3e5c621d12c115f078654d335c0fcd5606ec4c3d07bec143c8fbcdd1f593601458ecbe3b97194a009bf
   languageName: node
   linkType: hard
 
@@ -3670,9 +3670,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:8.31.0":
-  version: 8.31.0
-  resolution: "eslint@npm:8.31.0"
+"eslint@npm:8.32.0":
+  version: 8.32.0
+  resolution: "eslint@npm:8.32.0"
   dependencies:
     "@eslint/eslintrc": ^1.4.1
     "@humanwhocodes/config-array": ^0.11.8
@@ -3715,7 +3715,7 @@ __metadata:
     text-table: ^0.2.0
   bin:
     eslint: bin/eslint.js
-  checksum: 5e5688bb864edc6b12d165849994812eefa67fb3fc44bb26f53659b63edcd8bcc68389d27cc6cc9e5b79ee22f24b6f311fa3ed047bddcafdec7d84c1b5561e4f
+  checksum: 23c8fb3c57291eecd9c1448faf603226a8f885022a2cd96e303459bf72e39b7f54987c6fb948f0f9eecaf7085600e6eb0663482a35ea83da12e9f9141a22b91e
   languageName: node
   linkType: hard
 
@@ -4633,9 +4633,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jotai@npm:^1.13.0":
-  version: 1.13.0
-  resolution: "jotai@npm:1.13.0"
+"jotai@npm:^1.13.1":
+  version: 1.13.1
+  resolution: "jotai@npm:1.13.1"
   peerDependencies:
     "@babel/core": "*"
     "@babel/template": "*"
@@ -4672,7 +4672,7 @@ __metadata:
       optional: true
     jotai-zustand:
       optional: true
-  checksum: ccb301a98c52a32d5ef377b2a479aa67512548a1faacc4b821024c92211721785bbe5f5d035e5f206e5058d2fb4a4d83291eca43c71ea2f3bf3d66f4482d7a31
+  checksum: bc1f88ec1d52dda7c2aa39d278b15c128a6babc91fe9294862feb1b2d8467e47fc37cd193fd1358107212b9a4e5f5a8ae9a5a5ed1e845b74421d4476ce5d9efd
   languageName: node
   linkType: hard
 
@@ -5127,24 +5127,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:13.1.1":
-  version: 13.1.1
-  resolution: "next@npm:13.1.1"
+"next@npm:13.1.2":
+  version: 13.1.2
+  resolution: "next@npm:13.1.2"
   dependencies:
-    "@next/env": 13.1.1
-    "@next/swc-android-arm-eabi": 13.1.1
-    "@next/swc-android-arm64": 13.1.1
-    "@next/swc-darwin-arm64": 13.1.1
-    "@next/swc-darwin-x64": 13.1.1
-    "@next/swc-freebsd-x64": 13.1.1
-    "@next/swc-linux-arm-gnueabihf": 13.1.1
-    "@next/swc-linux-arm64-gnu": 13.1.1
-    "@next/swc-linux-arm64-musl": 13.1.1
-    "@next/swc-linux-x64-gnu": 13.1.1
-    "@next/swc-linux-x64-musl": 13.1.1
-    "@next/swc-win32-arm64-msvc": 13.1.1
-    "@next/swc-win32-ia32-msvc": 13.1.1
-    "@next/swc-win32-x64-msvc": 13.1.1
+    "@next/env": 13.1.2
+    "@next/swc-android-arm-eabi": 13.1.2
+    "@next/swc-android-arm64": 13.1.2
+    "@next/swc-darwin-arm64": 13.1.2
+    "@next/swc-darwin-x64": 13.1.2
+    "@next/swc-freebsd-x64": 13.1.2
+    "@next/swc-linux-arm-gnueabihf": 13.1.2
+    "@next/swc-linux-arm64-gnu": 13.1.2
+    "@next/swc-linux-arm64-musl": 13.1.2
+    "@next/swc-linux-x64-gnu": 13.1.2
+    "@next/swc-linux-x64-musl": 13.1.2
+    "@next/swc-win32-arm64-msvc": 13.1.2
+    "@next/swc-win32-ia32-msvc": 13.1.2
+    "@next/swc-win32-x64-msvc": 13.1.2
     "@swc/helpers": 0.4.14
     caniuse-lite: ^1.0.30001406
     postcss: 8.4.14
@@ -5191,7 +5191,7 @@ __metadata:
       optional: true
   bin:
     next: dist/bin/next
-  checksum: 97a9154d620770388e6a0a84982b094172b851f49b408ac53d83fc4110470dbef63225b9c0008e223c60759b5aa606a547bd909b15d6a166526e168877dfc802
+  checksum: bc9aedfc70b979bb33a2190adca3719f8b0012d345a1bc44a6efac320ff599de1e39ade7ba7bae8e5f0d57ebcffb8c4ecc8b7da55565be6a59574896568f0685
   languageName: node
   linkType: hard
 
@@ -5799,12 +5799,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:^7.42.0":
-  version: 7.42.0
-  resolution: "react-hook-form@npm:7.42.0"
+"react-hook-form@npm:^7.42.1":
+  version: 7.42.1
+  resolution: "react-hook-form@npm:7.42.1"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18
-  checksum: 597e687671bf133c3c0bfb4b48afd59c1ac6c0ad3fcfb9db505f737d535d6fb1f2a1691296e79bed5f837124fde8eae1fe748f38a2553f2fe20ff170fe5b7e86
+  checksum: f0dcf5d7f6f90b4ba5efe58ce14b7adda6f2327c80c444df259c31d8bc785e823c9ec77c27a4f1db5bef70992235ae420acd190b1c767bec2c7fb8d11d639880
   languageName: node
   linkType: hard
 
@@ -6202,11 +6202,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "sinzak-web@workspace:."
   dependencies:
-    "@egjs/flicking-plugins": ^4.5.0
+    "@egjs/flicking-plugins": ^4.6.0
     "@egjs/react-flicking": ^4.10.5
     "@headlessui/react": ^1.7.7
     "@headlessui/tailwindcss": ^0.1.2
-    "@next/font": 13.1.1
+    "@next/font": 13.1.2
     "@radix-ui/react-checkbox": ^1.0.1
     "@stomp/stompjs": ^6.1.2
     "@svgr/webpack": ^6.5.1
@@ -6217,17 +6217,17 @@ __metadata:
     "@types/react-dom": 18.0.10
     autoprefixer: ^10.4.13
     class-variance-authority: ^0.4.0
-    eslint: 8.31.0
-    eslint-config-next: 13.1.1
-    jotai: ^1.13.0
-    next: 13.1.1
+    eslint: 8.32.0
+    eslint-config-next: 13.1.2
+    jotai: ^1.13.1
+    next: 13.1.2
     next-auth: ^4.18.8
     postcss: ^8.4.21
     prettier: ^2.8.3
     prettier-plugin-tailwindcss: ^0.2.1
     react: 18.2.0
     react-dom: 18.2.0
-    react-hook-form: ^7.42.0
+    react-hook-form: ^7.42.1
     react-intersection-observer: ^9.4.1
     react-loading-skeleton: ^3.1.0
     react-textarea-autosize: ^8.4.0

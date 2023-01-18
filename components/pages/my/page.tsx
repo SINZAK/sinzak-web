@@ -1,4 +1,5 @@
 import { createLayout } from "@components/layout/layout";
+
 import Layout from "./layout";
 
 export default function Page() {
@@ -10,7 +11,7 @@ Page.getLayout = createLayout({
   mobileNav: true,
   rawHeader: (
     <>
-      <div className="container relative flex items-center justify-between h-12 bg-white">
+      <div className="container relative flex h-12 items-center justify-between bg-white">
         <span></span>
         <span>
           <img src="/assets/icons/setting.svg" className="h-7" />
