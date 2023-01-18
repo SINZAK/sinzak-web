@@ -1,4 +1,4 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { ItemSimple } from "@types";
 
 import useIsClient from "@lib/hooks/useIsClient";
@@ -7,6 +7,7 @@ import { http } from "@lib/services/http";
 import { Filter } from "../states/filter";
 
 export const useWorkQuery = (filter: Filter) => {
+  const queryClient = useQueryClient();
   const isClient = useIsClient();
   const query = useInfiniteQuery<{
     content: ItemSimple[];
@@ -28,6 +29,11 @@ export const useWorkQuery = (filter: Filter) => {
     keepPreviousData: true,
     getNextPageParam: (data) =>
       data.last ? undefined : data.pageable.pageNumber + 1,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["/users/history"],
+      });
+    },
   });
 
   return query;
