@@ -8,11 +8,13 @@ import { Filter } from "./components/Filter";
 import { ProductsView } from "./components/ProductsView";
 import { CategoryFilter } from "./components/CategoryFilter";
 import { SearchInput } from "./components/SearchInput";
+import { MobileHeader } from "./components/MobileHeader";
 
 export default function Page() {
   return (
     <FilterProvider>
-      <div className="fixed bottom-12 z-50 flex w-full justify-center p-3 md:hidden">
+      <MobileHeader />
+      <div className="fixed bottom-12 z-10 flex w-full justify-center p-3 md:hidden">
         <Link
           href="/build"
           className="bottom-0 right-0 mb-4 block rounded-full bg-red px-8 py-3 text-center font-bold text-white"
@@ -65,17 +67,4 @@ export default function Page() {
 
 Page.getLayout = createLayout({
   mobileNav: true,
-  rawHeader: (
-    <>
-      <div className="container relative flex h-12 items-center justify-between bg-white">
-        <span className="absolute top-0 left-0 flex h-full w-full items-center justify-center font-bold">
-          마켓
-        </span>
-        <span></span>
-        <span>
-          <img src="/assets/icons/search.svg" className="h-6" />
-        </span>
-      </div>
-    </>
-  ),
 });

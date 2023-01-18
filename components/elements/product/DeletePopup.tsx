@@ -13,7 +13,7 @@ export const DeletePopup = ({
   return (
     <Dialog
       as="div"
-      className="relative z-50"
+      className="relative z-30"
       open={isOpen}
       onClose={() => setIsOpen(false)}
     >

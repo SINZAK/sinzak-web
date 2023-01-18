@@ -1,6 +1,8 @@
 import { NextPage } from "next";
 import { AppProps } from "next/app";
 
+export * from "./query";
+
 export type CustomNextPage<T extends {} = {}> = NextPage<T> & {
   getLayout?: (page: React.ReactElement) => React.ReactNode;
   authorized?: boolean;
@@ -24,7 +26,7 @@ export interface UserProfile {
   userId: number;
 }
 
-export interface ProductSimple {
+export interface ItemSimple {
   id: number;
   title: string;
   content: string;
@@ -39,7 +41,7 @@ export interface ProductSimple {
   like: boolean;
 }
 
-export interface ProductDetail {
+export interface MarketItemDetail {
   author: string;
   author_picture: string;
   category: string;
@@ -67,4 +69,31 @@ export interface ProductDetail {
   width: number;
   wish: boolean;
   wishCnt: number;
+}
+
+export interface WorkItemDetail {
+  id: number;
+  userId: number;
+  author: string;
+  author_picture: any;
+  univ: string;
+  cert_uni: boolean;
+  cert_celeb: boolean;
+  followerNum: string;
+  images: string[];
+  title: string;
+  category: string;
+  date: string;
+  content: string;
+  price: number;
+  suggest: boolean;
+  likesCnt: number;
+  views: number;
+  wishCnt: number;
+  chatCnt: number;
+  complete: boolean;
+  employment: boolean;
+  like: boolean;
+  wish: boolean;
+  following: boolean;
 }

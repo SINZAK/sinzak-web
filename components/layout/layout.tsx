@@ -34,12 +34,12 @@ const LayoutWrapper = ({
       <div className="min-h-screen">
         {mobileNav &&
           (typeof mobileNav !== "boolean" ? (
-            <div className="fixed bottom-0 z-50 w-full bg-white md:hidden">
+            <div className="fixed bottom-0 z-30 w-full bg-white md:hidden">
               {mobileNav}
             </div>
           ) : (
-            <nav className="fixed bottom-0 z-50 flex justify-center w-full h-16 bg-white md:hidden">
-              <ul className="grid items-center w-full h-full max-w-xl grid-cols-5 px-2 text-sm">
+            <nav className="fixed bottom-0 z-30 flex h-16 w-full justify-center bg-white md:hidden">
+              <ul className="grid h-full w-full max-w-xl grid-cols-5 items-center px-2 text-sm">
                 <MobileNavLink
                   href="/"
                   exact
@@ -75,10 +75,10 @@ const LayoutWrapper = ({
             </nav>
           ))}
         {rawHeader && (
-          <div className="sticky top-0 z-50 md:hidden">{rawHeader}</div>
+          <div className="sticky top-0 z-30 md:hidden">{rawHeader}</div>
         )}
-        <header className="sticky top-0 z-50 justify-center hidden bg-white md:flex">
-          <div className="container flex items-center justify-between h-16">
+        <header className="sticky top-0 z-30 hidden justify-center bg-white md:flex">
+          <div className="container flex h-16 items-center justify-between">
             <span className="flex items-center">
               <Link href="/">
                 <img alt="logo" src="/assets/logo-type.svg" className="h-7" />
@@ -96,7 +96,7 @@ const LayoutWrapper = ({
                   isLoading ? null : user === null ? (
                     <Link
                       href="/auth/signin"
-                      className="flex items-center justify-center h-8 px-4 font-bold text-white rounded-full bg-red"
+                      className="flex h-8 items-center justify-center rounded-full bg-red px-4 font-bold text-white"
                     >
                       로그인
                     </Link>

@@ -1,6 +1,6 @@
+import { useFollowMutation } from "@lib/queries/follow";
 import { useAuth } from "@lib/services/auth";
 import Link from "next/link";
-import { useFollowMutation } from "../queries/follow";
 
 export const FollowingButton = ({
   isFollowing,
@@ -17,7 +17,7 @@ export const FollowingButton = ({
       <Link
         href="/auth/signin"
         className={
-          "px-4 py-1 font-medium border rounded-full border-red text-red"
+          "rounded-full border border-red px-4 py-1 font-medium text-red"
         }
       >
         팔로우
@@ -37,7 +37,7 @@ export const FollowingButton = ({
           }
           disabled={isLoading}
           className={
-            "px-4 py-1 font-medium text-white border rounded-full border-red bg-red"
+            "rounded-full border border-red bg-red px-4 py-1 font-medium text-white"
           }
         >
           팔로잉
@@ -52,7 +52,7 @@ export const FollowingButton = ({
           }
           disabled={isLoading}
           className={
-            "px-4 py-1 font-medium border rounded-full border-red text-red"
+            "rounded-full border border-red px-4 py-1 font-medium text-red"
           }
         >
           팔로우

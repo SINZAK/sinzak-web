@@ -1,19 +1,19 @@
 import useIsClient from "@lib/hooks/useIsClient";
 import { http } from "@lib/services/http";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { ProductSimple } from "@types";
+import { ItemSimple } from "@types";
 import { Filter } from "../states/filter";
 
 export const useProductQuery = (filter: Filter) => {
   const isClient = useIsClient();
   const query = useInfiniteQuery<{
-    content: ProductSimple[];
+    content: ItemSimple[];
     last: boolean;
     pageable: {
       pageNumber: number;
     };
   }>({
-    queryKey: ["marketTest", filter],
+    queryKey: ["market", filter],
     queryFn: async ({ pageParam = 0 }) => {
       return (
         await http.post.default("/products", { ...filter, page: pageParam })

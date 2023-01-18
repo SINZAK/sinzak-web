@@ -41,7 +41,7 @@ const MarketFilter = () => {
         {({ open }) => (
           <>
             {open && (
-              <div className="fixed top-0 left-0 z-50 w-full h-full bg-black opacity-50 md:hidden" />
+              <div className="fixed top-0 left-0 z-30 h-full w-full bg-black opacity-50 md:hidden" />
             )}
             <div className="relative font-medium text-gray-800">
               <Listbox.Button className="relative block">
@@ -52,8 +52,8 @@ const MarketFilter = () => {
                   </span>
                 )}
               </Listbox.Button>
-              <Listbox.Options className="z-50">
-                <div className="z-50 fixed max-w-lg text-lg md:text-base max-md:bottom-0 max-md:w-full md:absolute mt-2 right-0 max-md:right-1/2 max-md:translate-x-1/2 px-4 py-4 md:py-2 ring-gray-100 ring-1 min-w-[8rem] rounded-t-3xl md:rounded-xl bg-white max-md:divide-y md:space-y-2 shadow-md cursor-pointer">
+              <Listbox.Options className="z-30">
+                <div className="fixed right-0 z-30 mt-2 min-w-[8rem] max-w-lg cursor-pointer rounded-t-3xl bg-white px-4 py-4 text-lg shadow-md ring-1 ring-gray-100 max-md:bottom-0 max-md:right-1/2 max-md:w-full max-md:translate-x-1/2 max-md:divide-y md:absolute md:space-y-2 md:rounded-xl md:py-2 md:text-base">
                   {options.map((option) => (
                     <Listbox.Option
                       className="hover:text-black max-md:py-2"
@@ -79,17 +79,17 @@ export default function Page() {
   return (
     <>
       <div className="container flex flex-col">
-        <div className="pt-3 pb-4 space-y-4 md:hidden">mobile</div>
-        <div className="items-center hidden h-16 md:flex space-x-7 pb-7">
+        <div className="space-y-4 pt-3 pb-4 md:hidden">mobile</div>
+        <div className="hidden h-16 items-center space-x-7 pb-7 md:flex">
           <span className="flex-[0_0_16rem] font-bold"></span>
-          <span className="flex items-center justify-end flex-1 space-x-4">
+          <span className="flex flex-1 items-center justify-end space-x-4">
             <MarketFilter />
           </span>
         </div>
         <div className="flex">
-          <div className="md:block flex-[0_0_16rem] h-screen hidden mr-7 pr-3.5">
+          <div className="mr-7 hidden h-screen flex-[0_0_16rem] pr-3.5 md:block">
             <div className="flex flex-col items-center justify-center space-y-4">
-              <span className="inline-block w-16 h-16 bg-gray-200 rounded-xl" />
+              <span className="inline-block h-16 w-16 rounded-xl bg-gray-200" />
               <div className="text-center">
                 <p className="mb-1 text-xl font-bold leading-tight">
                   {data ? <>{data.name}</> : <Skeleton className="w-12" />}
@@ -133,7 +133,7 @@ export default function Page() {
               </div>
             </div>
           </div>
-          <div className="flex flex-wrap flex-1 gap-x-3 md:gap-x-7 gap-y-7">
+          <div className="flex flex-1 flex-wrap gap-x-3 gap-y-7 md:gap-x-7">
             {/* {(isLoading
               ? Array.from({ length: 16 }, () => undefined)
               : data?.content || []
@@ -157,8 +157,8 @@ Page.getLayout = createLayout({
   mobileNav: true,
   rawHeader: (
     <>
-      <div className="container relative flex items-center justify-between h-12 bg-white">
-        <span className="absolute top-0 left-0 flex items-center justify-center w-full h-full font-bold">
+      <div className="container relative flex h-12 items-center justify-between bg-white">
+        <span className="absolute top-0 left-0 flex h-full w-full items-center justify-center font-bold">
           마켓
         </span>
         <span></span>

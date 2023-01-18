@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { ProductElement } from "@components/elements/product/ProductElement";
 import { ChevronLeftIcon, ChevronRightICon } from "@lib/icons";
-import { ProductSimple } from "@types";
+import { ItemSimple } from "@types";
 import Link from "next/link";
 
 import Flicking from "@egjs/react-flicking";
@@ -11,7 +11,7 @@ export const FeaturedCarousel = ({
   data,
   title,
 }: {
-  data?: ProductSimple[];
+  data?: ItemSimple[];
   title: string;
 }) => {
   const flick = useRef<Flicking>(null);
@@ -49,7 +49,7 @@ export const FeaturedCarousel = ({
           <Link href="/featured">
             <span className="text-gray-800">더보기</span>
           </Link>
-          <span className="items-center hidden space-x-3 font-bold md:flex">
+          <span className="hidden items-center space-x-3 font-bold md:flex">
             <button onClick={onClickPrev}>
               <ChevronLeftIcon className="fill-gray-800" />
             </button>
@@ -68,7 +68,7 @@ export const FeaturedCarousel = ({
       >
         {Array.from({ length: 10 }).map((_, i) => (
           <ProductElement
-            className="w-3/5 mr-3 lg:mr-7 sm:w-48 md:w-56"
+            className="mr-3 w-3/5 sm:w-48 md:w-56 lg:mr-7"
             data={data && data.length >= i ? data[i] : undefined}
             key={i}
           />

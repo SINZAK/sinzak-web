@@ -1,6 +1,6 @@
 import { http } from "@lib/services/http";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
-import { ProductDetail } from "@types";
+import { MarketItemDetail } from "@types";
 
 export const useFollowMutation = () => {
   const queryClient = useQueryClient();
@@ -22,10 +22,10 @@ export const useFollowMutation = () => {
     },
     onSuccess: (_, { userId }) => {
       queryClient.invalidateQueries({
-        queryKey: ["productTest"],
+        queryKey: ["market-item"],
         type: "active",
         predicate: ({ state }) =>
-          (state.data as ProductDetail)?.userId === userId,
+          (state.data as MarketItemDetail)?.userId === userId,
       });
     },
   });

@@ -1,28 +1,56 @@
-import { createLayout } from "@components/layout/layout";
-import Flicking, { ViewportSlot } from "@egjs/react-flicking";
-import { getCategoryText } from "@lib/resources/category";
-import { formatNumber, formatRelativeTime } from "@lib/services/intl/format";
-import Image from "next/image";
-import Skeleton from "react-loading-skeleton";
 import { Fade, Pagination } from "@egjs/flicking-plugins";
-import { useAuth } from "@lib/services/auth";
-import Link from "next/link";
-import { FollowingButton } from "./components/FollowingButton";
-import { LikeButton, LikeButtonPlaceholder } from "./components/LikeButton";
-import { MobileNav } from "./components/MobileNav";
-import { useProductQuery } from "./queries/product";
-
+import Flicking, { ViewportSlot } from "@egjs/react-flicking";
 import "@egjs/react-flicking/dist/flicking.css";
-import { BackIcon, MenuIcon } from "@lib/icons";
-import { useRouter } from "next/router";
+import Image from "next/image";
+import Link from "next/link";
+import Skeleton from "react-loading-skeleton";
+
+import { getCategoryText } from "@lib/resources/category";
+import { useAuth } from "@lib/services/auth";
+import { formatNumber, formatRelativeTime } from "@lib/services/intl/format";
+
+import { createLayout } from "@components/layout/layout";
+
+import { FollowingButton } from "../components/FollowingButton";
+import { LikeButton, LikeButtonPlaceholder } from "../components/LikeButton";
+import { DesktopMenuButton } from "../components/MenuButton/DesktopMenuButton";
+import { MobileHeader } from "../components/MobileHeader";
+import { MobileNav } from "../components/MobileNav";
+import {
+  QueryProvider,
+  WorkQueryContextValue,
+  useQueryContext,
+} from "../states/QueryProvider";
+import { useDeleteWorkItemMutation } from "./queries/delete";
+import { useWorkItemQuery } from "./queries/item";
+import { useLikeWorkItemMutation } from "./queries/like";
 
 const plugins = [new Fade(), new Pagination({ type: "bullet" })];
 export default function Page() {
-  const { data } = useProductQuery();
+  return (
+    <QueryProvider
+      value={{
+        type: "work",
+        useItemQuery: useWorkItemQuery,
+        useDeleteItemMutation: useDeleteWorkItemMutation,
+        useLikeMutation: useLikeWorkItemMutation,
+      }}
+    >
+      <Main />
+    </QueryProvider>
+  );
+}
+
+function Main() {
   const { user } = useAuth();
+
+  const { useItemQuery } = useQueryContext<WorkQueryContextValue>();
+  const { data } = useItemQuery();
 
   return (
     <>
+      <MobileNav />
+      <MobileHeader />
       <div className="bg-gray-100 sm:bg-transparent lg:w-full lg:bg-gray-100 lg:py-7 lg:pt-7">
         <Flicking
           key={data?.images?.length}
@@ -125,9 +153,12 @@ export default function Page() {
                   />
                   <span>거래 문의하기</span>
                 </button>
-                <button className="box-border rounded-full bg-white p-2 text-red ring-1 ring-inset ring-red">
-                  가격 제안하기
-                </button>
+                <div className="flex space-x-3">
+                  <button className="box-border flex-1 rounded-full bg-white p-2 text-red ring-1 ring-inset ring-red">
+                    가격 제안하기
+                  </button>
+                  <DesktopMenuButton />
+                </div>
               </div>
             ) : (
               <div className="flex h-fit space-x-3 text-lg font-bold max-md:hidden">
@@ -139,9 +170,7 @@ export default function Page() {
                   />
                   문의 중인 채팅방 {data?.chatCnt || 0}
                 </button>
-                <button className="flex h-11 w-11 items-center justify-center rounded-full bg-gray-100 text-gray-800">
-                  <MenuIcon />
-                </button>
+                <DesktopMenuButton />
               </div>
             ))}
         </div>
@@ -178,31 +207,6 @@ export default function Page() {
         </div>
         {data ? (
           <>
-            {(typeof data.height === "number" ||
-              typeof data.width === "number") && (
-              <>
-                <hr className="my-5 md:my-7" />
-                <div>
-                  <p className="mb-3 font-bold">상세 사이즈</p>
-                  <div className="grid max-w-xl grid-cols-3">
-                    {typeof data.width === "number" && (
-                      <p className="contents">
-                        <span>가로</span>
-                        <span>{data.width}</span>
-                        <span>cm</span>
-                      </p>
-                    )}
-                    {typeof data.height === "number" && (
-                      <p className="contents">
-                        <span>세로</span>
-                        <span>{data.height}</span>
-                        <span>cm</span>
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </>
-            )}
             <hr className="my-5 md:my-7" />
             <div className="whitespace-pre-wrap text-left">{data?.content}</div>
           </>
@@ -217,22 +221,4 @@ export default function Page() {
   );
 }
 
-const MobileHeader = () => {
-  const router = useRouter();
-  return (
-    <>
-      <div className="container relative flex h-12 items-center justify-between bg-white">
-        <button onClick={() => router.back()}>
-          <BackIcon />
-        </button>
-        <span>
-          <MenuIcon />
-        </span>
-      </div>
-    </>
-  );
-};
-Page.getLayout = createLayout({
-  mobileNav: <MobileNav />,
-  rawHeader: <MobileHeader />,
-});
+Page.getLayout = createLayout();

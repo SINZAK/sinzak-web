@@ -1,6 +1,6 @@
 import React, { useId } from "react";
 import * as Checkbox from "@radix-ui/react-checkbox";
-import { default as CheckIcon } from "@public/assets/icons/check.svg";
+import { CheckIcon } from "@lib/icons";
 
 export const CheckBox = React.forwardRef<
   HTMLButtonElement,
@@ -13,14 +13,14 @@ export const CheckBox = React.forwardRef<
         defaultChecked={defaultChecked ?? false}
         id={id}
         ref={ref}
-        className="rounded-full w-[1.3em] h-[1.3em] text-sm ring-inset ring-gray-800 ring-[1.5px] flex justify-center items-center overflow-hidden"
+        className="flex h-[1.3em] w-[1.3em] items-center justify-center overflow-hidden rounded-full text-sm ring-[1.5px] ring-inset ring-gray-800"
         {...props}
       >
-        <Checkbox.Indicator className="w-full h-full bg-gray-800">
+        <Checkbox.Indicator className="h-full w-full bg-gray-800">
           <CheckIcon className="fill-white" height="100%" width="1.3em" />
         </Checkbox.Indicator>
       </Checkbox.Root>
-      <label htmlFor={id} className="cursor-pointer select-none ml-1.5">
+      <label htmlFor={id} className="ml-1.5 cursor-pointer select-none">
         {children}
       </label>
     </>

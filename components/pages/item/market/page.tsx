@@ -1,33 +1,56 @@
-import { createLayout } from "@components/layout/layout";
-import Flicking, { ViewportSlot } from "@egjs/react-flicking";
-import { getCategoryText } from "@lib/resources/category";
-import { formatNumber, formatRelativeTime } from "@lib/services/intl/format";
-import Image from "next/image";
-import Skeleton from "react-loading-skeleton";
 import { Fade, Pagination } from "@egjs/flicking-plugins";
-import { useAuth } from "@lib/services/auth";
-import Link from "next/link";
-import { FollowingButton } from "./components/FollowingButton";
-import { LikeButton, LikeButtonPlaceholder } from "./components/LikeButton";
-import { MobileNav } from "./components/MobileNav";
-import { useProductQuery } from "./queries/product";
-
+import Flicking, { ViewportSlot } from "@egjs/react-flicking";
 import "@egjs/react-flicking/dist/flicking.css";
-import { BackIcon, MenuIcon } from "@lib/icons";
-import { useRouter } from "next/dist/client/router";
-import { Menu } from "@components/atoms/Menu";
-import { useDeleteMutation } from "./queries/delete";
-import { DeletePopup } from "@components/elements/product/DeletePopup";
-import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import Skeleton from "react-loading-skeleton";
+
+import { getCategoryText } from "@lib/resources/category";
+import { useAuth } from "@lib/services/auth";
+import { formatNumber, formatRelativeTime } from "@lib/services/intl/format";
+
+import { createLayout } from "@components/layout/layout";
+
+import { FollowingButton } from "../components/FollowingButton";
+import { LikeButton, LikeButtonPlaceholder } from "../components/LikeButton";
+import { DesktopMenuButton } from "../components/MenuButton/DesktopMenuButton";
+import { MobileHeader } from "../components/MobileHeader";
+import { MobileNav } from "../components/MobileNav";
+import {
+  MarketQueryContextValue,
+  QueryProvider,
+  useQueryContext,
+} from "../states/QueryProvider";
+import { useDeleteMarketItemMutation } from "./queries/delete";
+import { useMarketItemQuery } from "./queries/item";
+import { useLikeMarketItemMutation } from "./queries/like";
 
 const plugins = [new Fade(), new Pagination({ type: "bullet" })];
 export default function Page() {
-  const { data } = useProductQuery();
+  return (
+    <QueryProvider
+      value={{
+        type: "market",
+        useItemQuery: useMarketItemQuery,
+        useDeleteItemMutation: useDeleteMarketItemMutation,
+        useLikeMutation: useLikeMarketItemMutation,
+      }}
+    >
+      <Main />
+    </QueryProvider>
+  );
+}
+
+function Main() {
   const { user } = useAuth();
-  const { mutate } = useDeleteMutation();
+
+  const { useItemQuery } = useQueryContext<MarketQueryContextValue>();
+  const { data } = useItemQuery();
 
   return (
     <>
+      <MobileNav />
+      <MobileHeader />
       <div className="bg-gray-100 sm:bg-transparent lg:w-full lg:bg-gray-100 lg:py-7 lg:pt-7">
         <Flicking
           key={data?.images?.length}
@@ -223,119 +246,4 @@ export default function Page() {
   );
 }
 
-const DesktopMenuButton = () => {
-  const { data } = useProductQuery();
-  const { user } = useAuth();
-  const { mutate } = useDeleteMutation();
-  const [isOpen, setIsOpen] = useState(false);
-  if (!data || data?.userId !== user?.userId)
-    return (
-      <>
-        <Menu
-          button={
-            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gray-100 text-gray-800">
-              <MenuIcon />
-            </span>
-          }
-        >
-          <Menu.Item as="button">신고하기</Menu.Item>
-          <Menu.Item as="button" className="text-purple">
-            {data?.author}님 차단하기
-          </Menu.Item>
-        </Menu>
-      </>
-    );
-  return (
-    <>
-      <DeletePopup
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        onDelete={() => mutate()}
-      />
-      <Menu
-        button={
-          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gray-100 text-gray-800">
-            <MenuIcon />
-          </span>
-        }
-      >
-        <Menu.Item as="button">수정</Menu.Item>
-        <Menu.Item
-          onClick={() => setIsOpen(true)}
-          as="button"
-          className="text-red"
-        >
-          삭제
-        </Menu.Item>
-      </Menu>
-    </>
-  );
-};
-
-const MobileMenuButton = () => {
-  const { data } = useProductQuery();
-  const { user } = useAuth();
-  const { mutate } = useDeleteMutation();
-  const [isOpen, setIsOpen] = useState(false);
-  if (!data || data?.userId !== user?.userId)
-    return (
-      <>
-        <Menu
-          button={
-            <span>
-              <MenuIcon />
-            </span>
-          }
-        >
-          <Menu.Item as="button">신고하기</Menu.Item>
-          <Menu.Item as="button" className="text-purple">
-            {data?.author}님 차단하기
-          </Menu.Item>
-        </Menu>
-      </>
-    );
-  return (
-    <>
-      <DeletePopup
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        onDelete={() => mutate()}
-      />
-      <Menu
-        button={
-          <span>
-            <MenuIcon />
-          </span>
-        }
-      >
-        <Menu.Item as="button">수정하기</Menu.Item>
-        <Menu.Item
-          onClick={() => setIsOpen(true)}
-          as="button"
-          className="text-red"
-        >
-          삭제하기
-        </Menu.Item>
-      </Menu>
-    </>
-  );
-};
-
-const MobileHeader = () => {
-  const router = useRouter();
-  return (
-    <>
-      <div className="container relative flex h-12 items-center justify-between bg-white">
-        <button onClick={() => router.back()}>
-          <BackIcon />
-        </button>
-        <MobileMenuButton />
-      </div>
-    </>
-  );
-};
-
-Page.getLayout = createLayout({
-  mobileNav: <MobileNav />,
-  rawHeader: <MobileHeader />,
-});
+Page.getLayout = createLayout();

@@ -117,7 +117,6 @@ export default function Page() {
     formState: { errors },
   } = useForm<BuildForm>({
     defaultValues: {
-      type: "sell",
       content: "",
       title: "",
     },
@@ -157,7 +156,7 @@ export default function Page() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="fixed bottom-0 z-50 flex w-full justify-center bg-white p-3 pb-7 md:hidden">
+      <div className="fixed bottom-0 z-30 flex w-full justify-center bg-white p-3 pb-7 md:hidden">
         <Button
           type="submit"
           intent="primary"
@@ -226,130 +225,136 @@ export default function Page() {
               </li>
             </ul>
           </div>
-          <div>
-            <p className="mb-3">카테고리를 선택해주세요.</p>
-            {type === "sell" ? (
-              <Controller
-                shouldUnregister
-                control={control}
-                name="category"
-                rules={{
-                  required: true,
-                }}
-                render={({ field: { onChange } }) => (
-                  <SingleSelect
-                    onChange={onChange}
-                    data={[
-                      "painting",
-                      "orient",
-                      "sculpture",
-                      "print",
-                      "craft",
-                      "other",
-                    ]}
+          {type && (
+            <>
+              <div>
+                <p className="mb-3">카테고리를 선택해주세요.</p>
+                {type === "sell" ? (
+                  <Controller
+                    shouldUnregister
+                    control={control}
+                    name="category"
+                    rules={{
+                      required: true,
+                    }}
+                    render={({ field: { onChange } }) => (
+                      <SingleSelect
+                        onChange={onChange}
+                        data={[
+                          "painting",
+                          "orient",
+                          "sculpture",
+                          "print",
+                          "craft",
+                          "other",
+                        ]}
+                      />
+                    )}
+                  />
+                ) : (
+                  <Controller
+                    shouldUnregister
+                    control={control}
+                    name="category"
+                    rules={{
+                      required: true,
+                    }}
+                    render={({ field: { onChange } }) => (
+                      <SingleSelect
+                        onChange={onChange}
+                        data={[
+                          "portrait",
+                          "illustration",
+                          "logo",
+                          "poster",
+                          "design",
+                          "editorial",
+                          "label",
+                        ]}
+                      />
+                    )}
                   />
                 )}
-              />
-            ) : (
-              <Controller
-                shouldUnregister
-                control={control}
-                name="category"
-                rules={{
-                  required: true,
-                }}
-                render={({ field: { onChange } }) => (
-                  <SingleSelect
-                    onChange={onChange}
-                    data={[
-                      "portrait",
-                      "illustration",
-                      "logo",
-                      "poster",
-                      "design",
-                      "editorial",
-                      "label",
-                    ]}
-                  />
-                )}
-              />
-            )}
-          </div>
-          <div>
-            <p className="mb-3">사진 등록</p>
-            <ImageUpload />
-          </div>
-          <div>
-            <p className="mb-3">제목</p>
-            <input
-              {...register("title", {
-                required: true,
-              })}
-              placeholder="작품 제목"
-              className={twMerge(
-                "w-full rounded-xl bg-gray-100 px-4 py-3 placeholder:text-gray-600",
-                errors.title && "ring-1 !ring-red-500"
-              )}
-            />
-          </div>
-          <div>
-            <p className="mb-3">{type === "sell" ? "가격" : "의뢰비"}</p>
-            <span className="flex items-center space-x-8">
-              <span className="flex flex-1 items-center">
+              </div>
+              <div>
+                <p className="mb-3">사진 등록</p>
+                <ImageUpload />
+              </div>
+              <div>
+                <p className="mb-3">제목</p>
                 <input
-                  {...register("price", {
+                  {...register("title", {
                     required: true,
-                    shouldUnregister: true,
-                    valueAsNumber: true,
                   })}
-                  placeholder={type === "sell" ? "작품 가격" : "제시 의뢰비"}
-                  type="number"
+                  placeholder="작품 제목"
                   className={twMerge(
                     "w-full rounded-xl bg-gray-100 px-4 py-3 placeholder:text-gray-600",
+                    errors.title && "ring-1 !ring-red-500"
+                  )}
+                />
+              </div>
+              <div>
+                <p className="mb-3">{type === "sell" ? "가격" : "의뢰비"}</p>
+                <span className="flex items-center space-x-8">
+                  <span className="flex flex-1 items-center">
+                    <input
+                      {...register("price", {
+                        required: true,
+                        shouldUnregister: true,
+                        valueAsNumber: true,
+                      })}
+                      placeholder={
+                        type === "sell" ? "작품 가격" : "제시 의뢰비"
+                      }
+                      type="number"
+                      className={twMerge(
+                        "w-full rounded-xl bg-gray-100 px-4 py-3 placeholder:text-gray-600",
+                        (errors as any).price && "ring-1 !ring-red-500"
+                      )}
+                    />
+                    <span className="ml-4 text-lg font-bold">원</span>
+                  </span>
+                  {/* {type === "sell" && ( */}
+                  <span className="flex items-center">
+                    <Controller
+                      shouldUnregister
+                      defaultValue={false}
+                      control={control}
+                      name="suggest"
+                      render={({ field: { ref, value, onChange } }) => (
+                        <CheckBox
+                          ref={ref}
+                          checked={value}
+                          onCheckedChange={onChange}
+                        >
+                          가격제안 받기
+                        </CheckBox>
+                      )}
+                    />
+                  </span>
+                  {/* )} */}
+                </span>
+              </div>
+              <div>
+                <p className="mb-3">내용</p>
+                <TextareaAutosize
+                  {...register("content", {
+                    required: true,
+                  })}
+                  placeholder={
+                    type === "sell"
+                      ? "작품 의도, 작업 기간, 재료, 거래 방법 등을 자유롭게 표현해보세요."
+                      : "원하는 의뢰의 형태, 분위기, 재료 등을 자유롭게 설명해주세요!"
+                  }
+                  className={twMerge(
+                    "w-full resize-none rounded-xl bg-gray-100 px-4 py-3 placeholder:text-gray-600",
                     (errors as any).price && "ring-1 !ring-red-500"
                   )}
+                  minRows={3}
                 />
-                <span className="ml-4 text-lg font-bold">원</span>
-              </span>
-              {/* {type === "sell" && ( */}
-              <span className="flex items-center">
-                <Controller
-                  shouldUnregister
-                  defaultValue={false}
-                  control={control}
-                  name="suggest"
-                  render={({ field: { ref, value, onChange } }) => (
-                    <CheckBox
-                      ref={ref}
-                      checked={value}
-                      onCheckedChange={onChange}
-                    >
-                      가격제안 받기
-                    </CheckBox>
-                  )}
-                />
-              </span>
-              {/* )} */}
-            </span>
-          </div>
-          <div>
-            <p className="mb-3">내용</p>
-            <TextareaAutosize
-              {...register("content", {
-                required: true,
-              })}
-              placeholder={
-                type === "sell"
-                  ? "작품 의도, 작업 기간, 재료, 거래 방법 등을 자유롭게 표현해보세요."
-                  : "원하는 의뢰의 형태, 분위기, 재료 등을 자유롭게 설명해주세요!"
-              }
-              className={twMerge(
-                "w-full resize-none rounded-xl bg-gray-100 px-4 py-3 placeholder:text-gray-600",
-                (errors as any).price && "ring-1 !ring-red-500"
-              )}
-              minRows={3}
-            />
-          </div>
+              </div>
+            </>
+          )}
         </div>
         <div className="mt-10">
           <Button

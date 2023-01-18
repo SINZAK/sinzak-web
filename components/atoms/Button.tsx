@@ -1,3 +1,4 @@
+import { forwardRefWithPolymorphic } from "@lib/utils/forwardRefWithPolymorphic";
 import { cva, VariantProps } from "class-variance-authority";
 import React from "react";
 import { twMerge } from "tailwind-merge";
@@ -70,18 +71,36 @@ export const button = cva(
   }
 );
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof button> {}
+export type ButtonVariantProps = VariantProps<typeof button>;
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, outline, intent, size, type, ...props }, ref) => (
-    <button
-      ref={ref}
-      type={type || "button"}
-      className={twMerge(button({ intent, size, outline }), className)}
-      {...props}
-    />
-  )
+const DEFAULT_TAG: React.ElementType = "button";
+
+export const Button = forwardRefWithPolymorphic<
+  typeof DEFAULT_TAG,
+  ButtonVariantProps
+>(
+  (
+    {
+      as: Element = DEFAULT_TAG,
+      // custom props
+      outline,
+      intent,
+      size,
+      // handled props
+      className,
+      type = "button",
+      ...props
+    },
+    ref
+  ) => {
+    return (
+      <Element
+        ref={ref}
+        type={type}
+        className={twMerge(button({ intent, size, outline }), className)}
+        {...props}
+      />
+    );
+  }
 );
 Button.displayName = "Button";

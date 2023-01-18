@@ -1,38 +1,31 @@
-import { LikeIcon, LikeFilledIcon } from "@lib/icons";
+import { LikeFilledIcon, LikeIcon } from "@lib/icons";
 import { useAuth } from "@lib/services/auth";
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
-import { useLikeMutation } from "../queries/like";
+import { useQueryContext } from "../states/QueryProvider";
 
-export const LikeButtonPlaceholder = () => {
-  return (
-    <div className="flex flex-col items-center pr-4">
-      <LikeIcon className="w-8 h-8 fill-gray-600" />
-      <p className="mt-1 text-sm text-gray-600">
-        <Skeleton className="w-8" />
-      </p>
-    </div>
-  );
-};
+export interface LikeButtonProps {
+  likesCnt: number;
+  isLike: boolean;
+  userId: number;
+  id: number;
+}
 
 export const LikeButton = ({
   likesCnt,
   isLike,
   userId,
   id,
-}: {
-  likesCnt: number;
-  isLike: boolean;
-  userId: number;
-  id: number;
-}) => {
-  const { isLoading, mutate } = useLikeMutation();
+}: LikeButtonProps) => {
+  const { useLikeMutation } = useQueryContext();
+  const { mutate, isLoading } = useLikeMutation();
+
   const { user } = useAuth();
 
   if (!user)
     return (
       <Link href="/auth/signin" className="flex flex-col items-center pr-4">
-        <LikeIcon className="w-8 h-8 fill-gray-600" />
+        <LikeIcon className="h-8 w-8 fill-gray-600" />
         <p className="mt-1 text-sm text-gray-600">{likesCnt}</p>
       </Link>
     );
@@ -40,7 +33,7 @@ export const LikeButton = ({
   if (user.userId === userId)
     return (
       <span className="flex flex-col items-center pr-4">
-        <LikeIcon className="w-8 h-8 fill-gray-600" />
+        <LikeIcon className="h-8 w-8 fill-gray-600" />
         <p className="mt-1 text-sm text-gray-600">{likesCnt}</p>
       </span>
     );
@@ -58,12 +51,23 @@ export const LikeButton = ({
         className="flex flex-col items-center pr-4"
       >
         {isLike ? (
-          <LikeFilledIcon className="w-8 h-8 fill-gray-600" />
+          <LikeFilledIcon className="h-8 w-8 fill-gray-600" />
         ) : (
-          <LikeIcon className="w-8 h-8 fill-gray-600" />
+          <LikeIcon className="h-8 w-8 fill-gray-600" />
         )}
         <p className="mt-1 text-sm text-gray-600">{likesCnt}</p>
       </button>
     </>
+  );
+};
+
+export const LikeButtonPlaceholder = () => {
+  return (
+    <div className="flex flex-col items-center pr-4">
+      <LikeIcon className="h-8 w-8 fill-gray-600" />
+      <p className="mt-1 text-sm text-gray-600">
+        <Skeleton className="w-8" />
+      </p>
+    </div>
   );
 };

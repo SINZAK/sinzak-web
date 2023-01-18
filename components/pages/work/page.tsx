@@ -13,7 +13,7 @@ import { SearchInput } from "./components/SearchInput";
 export default function Page() {
   return (
     <FilterProvider>
-      <div className="fixed bottom-12 z-50 flex w-full justify-center p-3 md:hidden">
+      <div className="fixed bottom-12 z-30 flex w-full justify-center p-3 md:hidden">
         <Link
           href="/build"
           className="bottom-0 right-0 mb-4 block rounded-full bg-red px-8 py-3 text-center font-bold text-white"
