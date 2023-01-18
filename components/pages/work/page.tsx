@@ -8,12 +8,14 @@ import { createLayout } from "@components/layout/layout";
 import { CategoryFilter } from "./components/CategoryFilter";
 import { Filter } from "./components/Filter";
 import { ListView } from "./components/ListView";
+import { MobileHeader } from "./components/MobileHeader";
 import { SearchInput } from "./components/SearchInput";
 import { FilterProvider } from "./states/filter";
 
 export default function Page() {
   return (
     <FilterProvider>
+      <MobileHeader />
       <div className="fixed bottom-12 z-30 flex w-full justify-center p-3 md:hidden">
         <Link
           href="/build"
@@ -65,23 +67,6 @@ export default function Page() {
   );
 }
 
-const Header = () => {
-  return (
-    <>
-      <div className="container relative flex h-12 items-center justify-between bg-white">
-        <span className="absolute top-0 left-0 flex h-full w-full items-center justify-center font-bold">
-          의뢰
-        </span>
-        <span></span>
-        <span>
-          <img src="/assets/icons/search.svg" className="h-6" />
-        </span>
-      </div>
-    </>
-  );
-};
-
 Page.getLayout = createLayout({
   mobileNav: true,
-  rawHeader: <Header />,
 });

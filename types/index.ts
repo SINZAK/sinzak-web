@@ -1,7 +1,13 @@
+import { RESET } from "jotai/vanilla/utils";
 import { NextPage } from "next";
 import { AppProps } from "next/app";
 
 export * from "./query";
+
+export type SetStateActionWithReset<Value> =
+  | Value
+  | typeof RESET
+  | ((prev: Value) => Value | typeof RESET);
 
 export type CustomNextPage<T extends {} = {}> = NextPage<T> & {
   getLayout?: (page: React.ReactElement) => React.ReactNode;

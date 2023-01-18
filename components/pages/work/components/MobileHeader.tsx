@@ -11,7 +11,7 @@ export const MobileHeader = () => {
   });
   return (
     <CommonMobileHeader
-      text="마켓"
+      text="의뢰"
       useFilterSearchAtomResult={useFilterSearchAtomResult}
     />
   );
