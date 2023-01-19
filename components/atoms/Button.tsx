@@ -27,9 +27,9 @@ export const button = cva(
         false: [],
       },
       size: {
-        small: ["text-sm", "py-1", "px-2"],
-        medium: ["text-base", "py-1.5", "px-4"],
-        large: ["text-lg", "py-2", "px-5"],
+        small: ["text-sm", "h-9", "px-2"],
+        medium: ["text-base", "h-10", "px-4"],
+        large: ["text-base", "h-11", "px-5"],
       },
     },
     compoundVariants: [

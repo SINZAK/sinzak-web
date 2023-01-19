@@ -1,7 +1,4 @@
-import { Fade, Pagination } from "@egjs/flicking-plugins";
-import Flicking, { ViewportSlot } from "@egjs/react-flicking";
 import "@egjs/react-flicking/dist/flicking.css";
-import Image from "next/image";
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 
@@ -10,6 +7,7 @@ import { getCategoryText } from "@lib/resources/category";
 import { useAuth } from "@lib/services/auth";
 import { formatNumber, formatRelativeTime } from "@lib/services/intl/format";
 
+import { Button } from "@components/atoms/Button";
 import { createLayout } from "@components/layout/layout";
 
 import { FollowingButton } from "../components/FollowingButton";
@@ -103,34 +101,56 @@ function Main() {
   );
 
   const Chat = () =>
-    data?.userId !== user?.userId ? (
-      <div className="flex flex-[0_0_12rem] flex-col space-y-3 text-lg font-bold max-md:hidden">
-        <button className="flex items-center justify-center rounded-full bg-red p-2 align-bottom text-white">
+    user?.userId ? (
+      data?.userId !== user?.userId ? (
+        <div className="flex flex-[0_0_12rem] flex-col space-y-3 font-bold max-md:hidden">
+          <Button intent="primary" size="large">
+            <img
+              alt="ask"
+              src="/assets/icons/ask.svg"
+              className="mr-1 brightness-0 invert"
+            />
+            <span>거래 문의하기</span>
+          </Button>
+          <div className="flex space-x-3">
+            <Button intent="primary" outline size="large">
+              가격 제안하기
+            </Button>
+            <DesktopMenuButton />
+          </div>
+        </div>
+      ) : (
+        <div className="flex h-fit space-x-3 text-lg font-bold max-md:hidden">
+          <Button intent="primary">
+            <img
+              alt="ask"
+              src="/assets/icons/ask.svg"
+              className="mr-1 h-7 brightness-0 invert"
+            />
+            문의 중인 채팅방 {data?.chatCnt || 0}
+          </Button>
+          <DesktopMenuButton />
+        </div>
+      )
+    ) : (
+      <div className="flex flex-[0_0_12rem] flex-col space-y-3 font-bold max-md:hidden">
+        <Button intent="primary" size="large" as={Link} href="/auth/signin">
           <img
             alt="ask"
             src="/assets/icons/ask.svg"
             className="mr-1 brightness-0 invert"
           />
           <span>거래 문의하기</span>
-        </button>
-        <div className="flex space-x-3">
-          <button className="box-border flex-1 rounded-full bg-white p-2 text-red ring-1 ring-inset ring-red">
-            가격 제안하기
-          </button>
-          <DesktopMenuButton />
-        </div>
-      </div>
-    ) : (
-      <div className="flex h-fit space-x-3 text-lg font-bold max-md:hidden">
-        <button className="flex h-11 items-center rounded-full bg-red px-5 text-white">
-          <img
-            alt="ask"
-            src="/assets/icons/ask.svg"
-            className="mr-1 h-7 brightness-0 invert"
-          />
-          문의 중인 채팅방 {data?.chatCnt || 0}
-        </button>
-        <DesktopMenuButton />
+        </Button>
+        <Button
+          intent="primary"
+          outline
+          size="large"
+          as={Link}
+          href="/auth/signin"
+        >
+          가격 제안하기
+        </Button>
       </div>
     );
 

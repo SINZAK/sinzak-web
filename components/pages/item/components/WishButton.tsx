@@ -23,18 +23,18 @@ export const WishButton = ({ isWish, userId, id }: WishButtonProps) => {
     return (
       <Link
         href="/auth/signin"
-        className="-mr-4 flex flex-col items-center px-4"
+        className="-mr-4 flex w-16 flex-col items-center"
       >
         <WishIcon className="h-8 w-8 text-gray-600" />
-        <p className="mt-1 text-sm text-gray-600"></p>
+        <p className="mt-1 text-center text-sm text-gray-600">찜하기</p>
       </Link>
     );
 
   if (user.userId === userId)
     return (
-      <span className="-mr-4 flex flex-col items-center px-4">
+      <span className="-mr-4 flex w-16 flex-col items-center">
         <WishIcon className="h-8 w-8 text-gray-600" />
-        <p className="mt-1 text-sm text-gray-600">찜하기</p>
+        <p className="-mx-4 mt-1 text-sm text-gray-600">찜하기</p>
       </span>
     );
 
@@ -49,7 +49,7 @@ export const WishButton = ({ isWish, userId, id }: WishButtonProps) => {
         }
         disabled={isLoading}
         className={twMerge(
-          "-mr-4 flex flex-col items-center px-4",
+          "-mr-4 flex w-16 flex-col items-center",
           isWish ? "text-red" : "text-gray-600"
         )}
       >
@@ -58,7 +58,7 @@ export const WishButton = ({ isWish, userId, id }: WishButtonProps) => {
         ) : (
           <WishIcon className="h-8 w-8" />
         )}
-        <p className="mt-1 text-sm">찜하기</p>
+        <p className="-mx-4 mt-1 text-sm text-gray-600">찜하기</p>
       </button>
     </>
   );
@@ -66,11 +66,9 @@ export const WishButton = ({ isWish, userId, id }: WishButtonProps) => {
 
 export const WishButtonPlaceholder = () => {
   return (
-    <div className="-mr-4 flex flex-col items-center px-4">
+    <div className="-mr-4 flex w-16 flex-col items-center">
       <WishIcon className="h-8 w-8 text-gray-600" />
-      <p className="mt-1 text-sm text-gray-600">
-        <Skeleton className="w-8" />
-      </p>
+      <p className="-mx-4 mt-1 text-sm text-gray-600">찜하기</p>
     </div>
   );
 };

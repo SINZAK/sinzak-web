@@ -28,7 +28,7 @@ export const LikeButton = ({
     return (
       <Link
         href="/auth/signin"
-        className="-ml-4 flex flex-col items-center px-4"
+        className="-ml-4 flex w-16 flex-col items-center"
       >
         <LikeIcon className="h-8 w-8 fill-gray-600" />
         <p className="mt-1 text-sm text-gray-600">{likesCnt}</p>
@@ -37,7 +37,7 @@ export const LikeButton = ({
 
   if (user.userId === userId)
     return (
-      <span className="-ml-4 flex flex-col items-center px-4">
+      <span className="-ml-4 flex w-16 flex-col items-center">
         <LikeIcon className="h-8 w-8 fill-gray-600" />
         <p className="mt-1 text-sm text-gray-600">{likesCnt}</p>
       </span>
@@ -53,7 +53,7 @@ export const LikeButton = ({
           })
         }
         disabled={isLoading}
-        className="-ml-4 flex flex-col items-center px-4"
+        className="-ml-4 flex w-16 flex-col items-center"
       >
         {isLike ? (
           <LikeFilledIcon className="h-8 w-8 fill-gray-600" />

@@ -27,14 +27,14 @@ export const DeletePopup = ({
             </Dialog.Title>
             <div className="grid grid-cols-2 gap-4">
               <Button
-                className="text-base font-normal text-purple"
+                className="font-normal text-purple"
                 size="large"
                 onClick={() => setIsOpen(false)}
               >
                 아니오
               </Button>
               <Button
-                className="text-base font-normal"
+                className="font-normal"
                 intent="secondary"
                 size="large"
                 onClick={() => {
