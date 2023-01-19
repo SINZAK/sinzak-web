@@ -115,7 +115,6 @@ async function postMultipart<T = any>(
   const requestOptions = merge(
     {
       method: "POST",
-      headers: { "Content-Type": "multipart/form-data" },
       body,
     },
     options

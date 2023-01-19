@@ -1,11 +1,18 @@
+import { UseAtomWithResetResult } from "@types";
 import { RESET } from "jotai/vanilla/utils";
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { CloseIcon } from "@lib/icons";
 
-export type SetSearchStateAction = SetStateAction<
-  string | undefined | typeof RESET
->;
+import { AtomWithHashFilterSearchValue } from "@components/pages/list/states/search";
+
+interface SearchInputProps {
+  value: UseAtomWithResetResult<AtomWithHashFilterSearchValue>[0];
+  setValue: UseAtomWithResetResult<AtomWithHashFilterSearchValue>[1];
+  onSearch?: UseAtomWithResetResult<AtomWithHashFilterSearchValue>[1];
+  autoFocus?: boolean;
+  placeholder?: string;
+}
 
 export const SearchInput = ({
   value,
@@ -13,13 +20,7 @@ export const SearchInput = ({
   onSearch: externalOnSearch,
   autoFocus,
   placeholder,
-}: {
-  value: SetSearchStateAction;
-  setValue: (val: SetSearchStateAction) => void;
-  onSearch?: (val: SetSearchStateAction) => void;
-  autoFocus?: boolean;
-  placeholder?: string;
-}) => {
+}: SearchInputProps) => {
   const [search, setSearch] = useState("");
   const [filterSearch, setFilterSearch] = [value, setValue];
 
@@ -28,7 +29,7 @@ export const SearchInput = ({
   }, [filterSearch]);
 
   const reset = () => (setSearch(""), setFilterSearch(RESET));
-  const onSearch = (val: SetSearchStateAction) => {
+  const onSearch: SearchInputProps["setValue"] = (val) => {
     externalOnSearch && externalOnSearch(val);
     setFilterSearch(val);
   };
@@ -38,7 +39,7 @@ export const SearchInput = ({
     <form
       className="relative max-md:h-full"
       onSubmit={(e) => (
-        e.preventDefault(), isValid ? onSearch(search || RESET) : reset()
+        e.preventDefault(), isValid && onSearch(search || RESET)
       )}
     >
       {(isValid || filterSearch) && (
@@ -56,9 +57,7 @@ export const SearchInput = ({
           if (e.key === "Esc" || e.key === "Escape") reset();
         }}
         value={search}
-        onChange={(e) =>
-          e.target.value !== "" ? setSearch(e.target.value) : reset()
-        }
+        onChange={(e) => setSearch(e.target.value)}
         className="block w-full rounded-full bg-gray-100 placeholder-gray-800 max-md:h-full max-md:px-4 md:px-5 md:py-3"
         placeholder={placeholder}
       />

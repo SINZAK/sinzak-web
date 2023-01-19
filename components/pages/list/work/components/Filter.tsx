@@ -2,12 +2,13 @@ import { useAtom } from "jotai/react";
 import { twMerge } from "tailwind-merge";
 
 import { AlignSelectFilter } from "@components/elements/filter/AlignSelectFilter";
+
 import {
   filterAlignAtom,
   filterEmploymentAtom,
   filterOptions,
   useFilterContext,
-} from "@components/pages/work/states/filter";
+} from "../states/filter";
 
 export const Filter = () => {
   const store = useFilterContext();

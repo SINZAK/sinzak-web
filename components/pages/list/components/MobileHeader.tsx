@@ -1,42 +1,38 @@
-import { useQuery } from "@tanstack/react-query";
-import { SetStateActionWithReset } from "@types";
+import { UseAtomWithResetResult } from "@types";
 import { useAtom } from "jotai/react";
 import { RESET } from "jotai/vanilla/utils";
-import { SetStateAction } from "react";
 
 import { BackIcon, CloseIcon, SearchIcon } from "@lib/icons";
-import { useAuth } from "@lib/services/auth";
 import { http } from "@lib/services/http";
-import { atomWithHash } from "@lib/utils/atomWithHash";
 
-import { SearchInput } from "../../pages/market/components/SearchInput";
+import { SearchInput } from "@components/elements/filter/SearchInput";
 
-const mobileSearchOpenAtom = atomWithHash<boolean | typeof RESET>(
-  "msearch",
-  RESET,
-  {
-    setHash: "nextRouterReplace",
-  }
-);
+import { useSearchHistoryQuery } from "../query/searchHistory";
+import {
+  AtomWithHashFilterSearchValue,
+  AtomWithHashMobileSearchOpenValue,
+  mobileSearchOpenAtom,
+} from "../states/search";
+
+interface MobileHeaderProps {
+  text: string;
+  search: UseAtomWithResetResult<AtomWithHashFilterSearchValue>[0];
+  setSearch: UseAtomWithResetResult<AtomWithHashFilterSearchValue>[1];
+}
 
 export const MobileHeader = ({
   text,
-  useFilterSearchAtomResult,
-}: {
-  text: string;
-  useFilterSearchAtomResult: [
-    string | undefined,
-    (_: SetStateActionWithReset<string | undefined>) => void
-  ];
-}) => {
+  search,
+  setSearch,
+}: MobileHeaderProps) => {
   const [searchOpen, setSearchOpen] = useAtom(mobileSearchOpenAtom);
-  const [search, setSearch] = useFilterSearchAtomResult;
 
   return (
     <>
       {searchOpen !== RESET && (
         <MobileFullpageSearch
-          useFilterSearchAtomResult={useFilterSearchAtomResult}
+          search={search}
+          setSearch={setSearch}
           setSearchOpen={setSearchOpen}
         />
       )}
@@ -81,29 +77,19 @@ export const MobileHeader = ({
   );
 };
 
+interface MobileFullpageSearchProps {
+  search: UseAtomWithResetResult<AtomWithHashFilterSearchValue>[0];
+  setSearchOpen: UseAtomWithResetResult<AtomWithHashMobileSearchOpenValue>[1];
+  setSearch: UseAtomWithResetResult<AtomWithHashFilterSearchValue>[1];
+}
+
 const MobileFullpageSearch = ({
+  search,
   setSearchOpen,
-  useFilterSearchAtomResult,
-}: {
-  setSearchOpen(val: SetStateAction<boolean | typeof RESET>): void;
-  useFilterSearchAtomResult: [
-    string | undefined,
-    (_: SetStateActionWithReset<string | undefined>) => void
-  ];
-}) => {
-  const [, setSearch] = useFilterSearchAtomResult;
-  const { user } = useAuth();
-  const { data, refetch } = useQuery<
-    {
-      [val: number]: string;
-    }[]
-  >({
-    queryKey: ["/users/history"],
-    queryFn: async () => {
-      return (await http.get("/users/history")).data;
-    },
-    enabled: !!user,
-  });
+  setSearch,
+}: MobileFullpageSearchProps) => {
+  const { data, refetch } = useSearchHistoryQuery();
+
   return (
     <div className="fixed inset-0 z-30 flex min-h-0 min-w-0 flex-col bg-white md:hidden">
       <div className="sticky top-0">
@@ -115,7 +101,12 @@ const MobileFullpageSearch = ({
             <BackIcon />
           </button>
           <span className="inline-block h-full flex-1 py-1">
-            <SearchInput autoFocus onSearch={() => setSearchOpen(RESET)} />
+            <SearchInput
+              autoFocus
+              onSearch={() => setSearchOpen(RESET)}
+              value={search}
+              setValue={setSearch}
+            />
           </span>
         </div>
       </div>

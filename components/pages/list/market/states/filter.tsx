@@ -6,6 +6,11 @@ import { Category } from "@lib/resources/category";
 import { atomWithHash } from "@lib/utils/atomWithHash";
 import removeEmptyField from "@lib/utils/removeEmptyField";
 
+import {
+  AtomWithHashFilterSearchValue,
+  filterSearchAtom,
+} from "../../states/search";
+
 export type FilterAlign = "recommend" | "popular" | "recent" | "low" | "high";
 
 export const filterOptions: { id: FilterAlign; name: string }[] = [
@@ -17,16 +22,14 @@ export const filterOptions: { id: FilterAlign; name: string }[] = [
 ];
 
 export interface Filter {
-  search: string | undefined;
+  search: AtomWithHashFilterSearchValue;
   align: FilterAlign;
   categories: Category[];
   sale: boolean;
 }
 
-export const filterSearchAtom = atomWithHash<Filter["search"]>(
-  "search",
-  undefined
-);
+// atom
+
 export const filterAlignAtom = atomWithHash<Filter["align"]>(
   "align",
   "recommend",
@@ -54,6 +57,8 @@ export const filterAtom = atom<Filter>((get) => {
   };
   return removeEmptyField(filter);
 });
+
+// store, context
 
 export const useFilter = () => useAtomValue(filterAtom, { store: filterStore });
 

@@ -2,12 +2,13 @@ import { useAtom } from "jotai/react";
 
 import { CheckBox } from "@components/atoms/CheckBox";
 import { AlignSelectFilter } from "@components/elements/filter/AlignSelectFilter";
+
 import {
   filterAlignAtom,
   filterOptions,
   filterSaleAtom,
   useFilterContext,
-} from "@components/pages/market/states/filter";
+} from "../states/filter";
 
 export const Filter = () => {
   const store = useFilterContext();

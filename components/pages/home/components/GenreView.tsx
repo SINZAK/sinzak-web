@@ -4,7 +4,7 @@ import Link from "next/link";
 import {
   filterCategoriesAtom,
   filterStore,
-} from "@components/pages/market/states/filter";
+} from "@components/pages/list/market/states/filter";
 
 const categories = [
   ["회화\n일반", "painting"],
@@ -31,14 +31,8 @@ export const GenreView = () => {
         {categories.map((_, i) => (
           <Link
             href={`/market#categories=${encodeURIComponent(
-              JSON.stringify(`[${_[1]}]`)
+              JSON.stringify([_[1]])
             )}`}
-            onClick={() => {
-              setTimeout(
-                () => filterStore.set(filterCategoriesAtom, [_[1]]),
-                0
-              );
-            }}
             key={_[1]}
             className="flex aspect-square w-24 items-center justify-center whitespace-pre-line rounded-xl bg-cover text-lg font-bold leading-tight text-white"
             draggable="false"
