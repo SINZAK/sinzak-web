@@ -41,7 +41,7 @@ export default function App({ Component, pageProps }: CustomAppProps) {
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <SkeletonTheme inline baseColor="#eee" highlightColor="#ddd">
-            <main id="main">{getLayout(<Component {...pageProps} />)}</main>
+            <div id="main">{getLayout(<Component {...pageProps} />)}</div>
           </SkeletonTheme>
         </AuthProvider>
       </QueryClientProvider>

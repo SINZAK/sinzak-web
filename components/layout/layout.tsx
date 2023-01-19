@@ -134,12 +134,28 @@ const LayoutWrapper = ({
             </span>
           </div>
         </header>
-        <main>
+        <main className="pb-24">
           <div className="hidden h-12 md:block" />
           {children}
         </main>
       </div>
-      <footer className="container h-32"></footer>
+      <footer className="container border-t max-md:hidden">
+        <div className="flex items-center space-x-8 py-7">
+          <img
+            alt="logo"
+            src="/assets/logo-type.svg"
+            className="h-5 opacity-50 saturate-0"
+          />
+          <p className="flex flex-1 items-center justify-between text-sm text-gray-800">
+            <span className="space-x-4">
+              <span>프로젝트 소개</span>
+              <span>이용약관</span>
+              <span>개인정보처리방침</span>
+            </span>
+            <span>© SINZAK Team. All Rights Reserved.</span>
+          </p>
+        </div>
+      </footer>
     </>
   );
 };
