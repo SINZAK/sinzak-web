@@ -1,8 +1,11 @@
-import Flicking from "@egjs/react-flicking";
+import { Fade, Pagination } from "@egjs/flicking-plugins";
+import Flicking, { ViewportSlot } from "@egjs/react-flicking";
 import "@egjs/react-flicking/dist/flicking.css";
 import { useQuery } from "@tanstack/react-query";
 
 import { http } from "@lib/services/http";
+
+const plugins = [new Fade(), new Pagination({ type: "bullet" })];
 
 export const BannerView = () => {
   const { data } = useQuery<
@@ -17,17 +20,19 @@ export const BannerView = () => {
   });
 
   return (
-    <div className="max-md:container md:pt-7 lg:w-full lg:bg-gray-100 lg:py-7">
+    <div className="bg-gray-100 max-md:container sm:bg-transparent lg:w-full lg:bg-gray-100 lg:py-7 lg:pt-7">
       <Flicking
         circular={true}
         clrcularFallback="bound"
         align="center"
         hideBeforeInit={true}
+        plugins={plugins}
+        className="sm:-mb-[1.125rem] sm:pb-[1.125rem]"
       >
         {data
           ? data?.map((banner, i) => (
               <div
-                className="relative mr-3 aspect-[343/147] w-full rounded-xl bg-white bg-cover bg-center md:aspect-[4/1] md:w-4/5 lg:mr-7 lg:w-lg"
+                className="relative mr-3 aspect-[343/147] w-full rounded-xl border bg-white bg-cover bg-center md:aspect-[4/1] md:w-4/5 lg:mr-7 lg:w-lg"
                 style={{
                   backgroundImage: `url(${banner.imageUrl})`,
                 }}
@@ -47,6 +52,9 @@ export const BannerView = () => {
                 key={i}
               />
             ))}
+        <ViewportSlot>
+          <div className={"flicking-pagination bottom-3 sm:bottom-0"}></div>
+        </ViewportSlot>
       </Flicking>
     </div>
   );

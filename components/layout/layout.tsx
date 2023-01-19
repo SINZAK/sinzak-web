@@ -87,8 +87,8 @@ const LayoutWrapper = ({
               <Link href="/">
                 <img alt="logo" src="/assets/logo-type.svg" className="h-7" />
               </Link>
-              <span className="w-16" />
-              <span className="space-x-8 text-lg font-bold">
+              <span className="w-12" />
+              <span className="space-x-2 text-lg font-bold [&>*]:px-3">
                 <Link href="/">홈</Link>
                 <Link href="/market">마켓</Link>
                 <Link href="/work">의뢰</Link>
@@ -152,7 +152,9 @@ const LayoutWrapper = ({
               <span>이용약관</span>
               <span>개인정보처리방침</span>
             </span>
-            <span>© SINZAK Team. All Rights Reserved.</span>
+            <span className="text-gray-600">
+              © SINZAK Team. All Rights Reserved.
+            </span>
           </p>
         </div>
       </footer>
