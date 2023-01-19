@@ -1,0 +1,12 @@
+.animate {
+  animation: 30s loading 0s cubic-bezier(0, 0, 0, 1) 1;
+}
+@keyframes loading {
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
+}

@@ -19,6 +19,7 @@ import { CheckBox } from "@components/atoms/CheckBox";
 import { createLayout } from "@components/layout/layout";
 
 import { SingleSelect } from "./components/SingleSelect";
+import { UploadPopup } from "./components/UploadPopup";
 
 const ImageUpload = () => {
   const { control } = useFormContext<BuildForm>();
@@ -46,7 +47,7 @@ const ImageUpload = () => {
       control={control}
       name="images"
       rules={{
-        required: true,
+        required: false,
       }}
       render={({ field: { onChange, value } }) => (
         <div className="grid grid-cols-[repeat(auto-fill,minmax(6rem,1fr))] gap-3">
@@ -124,20 +125,6 @@ type BuildForm = BuildFormMode & {
   images: [string, File][];
 };
 
-const uploadImages = async (
-  endpoint: "works" | "products",
-  id: string,
-  images: File[]
-) => {
-  for (let image of images) {
-    console.log("uploading...");
-    console.log(image);
-    const formData = new FormData();
-    formData.append("multipartFile", image);
-    await http.post.multipart(`/${endpoint}/${id}/image`, formData);
-  }
-};
-
 export default function Page() {
   const methods = useForm<BuildForm>({
     defaultValues: {
@@ -156,7 +143,23 @@ export default function Page() {
 
   const router = useRouter();
 
+  const [uploadText, setUploadText] = useState("");
+
+  const uploadImages = async (
+    endpoint: "works" | "products",
+    id: string,
+    images: File[]
+  ) => {
+    const formData = new FormData();
+    for (let image of images) {
+      formData.append("multipartFile", image);
+    }
+    setUploadText("이미지 업로드 중...");
+    await http.post.multipart(`/${endpoint}/${id}/image`, formData);
+  };
+
   const onSubmit = async (data: BuildForm) => {
+    setUploadText("본문 업로드 중...");
     if (data.type === "sell") {
       const { category, content, height, price, suggest, title, images } = data;
       const res = await http.post.json("/products/build", {
@@ -200,6 +203,7 @@ export default function Page() {
 
   return (
     <FormProvider {...methods}>
+      <UploadPopup text={uploadText} isOpen={!!uploadText} />
       <form onSubmit={handleSubmit(onSubmit)}>
         {type && (
           <div className="fixed bottom-0 z-30 flex w-full justify-center bg-white p-3 pb-7 md:hidden">
