@@ -26,7 +26,7 @@ export const tempLogin = async () => {
       refreshToken: string;
       accessTokenExpireDate: number;
     }>("/login", {
-      email: "insi2000@naver.com",
+      email: "sinzakofficial@gmail.com",
     });
     inMemoryJWTManager.setToken(accessToken, accessTokenExpireDate);
     localStorage.setItem("refreshToken", refreshToken);
