@@ -7,7 +7,7 @@ import { http } from "@lib/services/http";
 
 import { SearchInput } from "@components/elements/filter/SearchInput";
 
-import { useSearchHistoryQuery } from "../query/searchHistory";
+import { useSearchHistoryQuery } from "../queries/searchHistory";
 import {
   AtomWithHashFilterSearchValue,
   AtomWithHashMobileSearchOpenValue,
