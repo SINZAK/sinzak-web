@@ -2,13 +2,14 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { CustomAppProps } from "@types";
 import React, { useState } from "react";
 import { SkeletonTheme } from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 
 import { AuthProvider } from "@lib/services/auth";
 import { globalFont } from "@lib/services/font";
 import { createQueryClient } from "@lib/services/queryClient";
 
 import "../styles/globals.css";
+
+import "react-loading-skeleton/dist/skeleton.css";
 
 if (typeof document === "undefined") {
   React.useLayoutEffect = React.useEffect;

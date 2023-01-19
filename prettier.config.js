@@ -5,7 +5,7 @@ module.exports = {
     "^@(pages|public|styles|types)/(.*)$",
     "^@components/(.*)$",
     "^[./]",
-    //"^(.*).css$",
+    "^(.*).css$",
   ],
   plugins: [require("prettier-plugin-tailwindcss")],
   importOrderSeparation: true,

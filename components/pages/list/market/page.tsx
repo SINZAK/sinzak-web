@@ -1,5 +1,4 @@
 import Flicking from "@egjs/react-flicking";
-import "@egjs/react-flicking/dist/flicking.css";
 import Link from "next/link";
 import React from "react";
 
@@ -11,6 +10,8 @@ import { ListView } from "./components/ListView";
 import { MobileHeader } from "./components/MobileHeader";
 import { SearchInput } from "./components/SearchInput";
 import { FilterProvider } from "./states/filter";
+
+import "@egjs/react-flicking/dist/flicking.css";
 
 export default function Page() {
   return (

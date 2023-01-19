@@ -1,4 +1,3 @@
-import "@egjs/react-flicking/dist/flicking.css";
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 
@@ -26,6 +25,8 @@ import { useDeleteWorkItemMutation } from "./queries/delete";
 import { useWorkItemQuery } from "./queries/item";
 import { useLikeWorkItemMutation } from "./queries/like";
 import { useWishWorkItemMutation } from "./queries/wish";
+
+import "@egjs/react-flicking/dist/flicking.css";
 
 export default function Page() {
   return (

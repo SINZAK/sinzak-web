@@ -1,8 +1,9 @@
 import { Fade, Pagination } from "@egjs/flicking-plugins";
 import Flicking, { ViewportSlot } from "@egjs/react-flicking";
-import "@egjs/react-flicking/dist/flicking.css";
 import { MarketItemDetail } from "@types";
 import Image from "next/image";
+
+import "@egjs/react-flicking/dist/flicking.css";
 
 const plugins = [new Fade(), new Pagination({ type: "bullet" })];
 

@@ -1,4 +1,3 @@
-import "@egjs/react-flicking/dist/flicking.css";
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import {
@@ -20,6 +19,8 @@ import { createLayout } from "@components/layout/layout";
 
 import { SingleSelect } from "./components/SingleSelect";
 import { UploadPopup } from "./components/UploadPopup";
+
+import "@egjs/react-flicking/dist/flicking.css";
 
 const ImageUpload = () => {
   const { control } = useFormContext<BuildForm>();

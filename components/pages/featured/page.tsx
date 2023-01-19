@@ -1,7 +1,7 @@
-import "@egjs/react-flicking/dist/flicking.css";
-
 import { ProductElement } from "@components/elements/product/ProductElement";
 import { createLayout } from "@components/layout/layout";
+
+import "@egjs/react-flicking/dist/flicking.css";
 
 export default function Page() {
   return (
