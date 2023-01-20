@@ -112,7 +112,7 @@ function Main() {
             <span>거래 문의하기</span>
           </Button>
           <div className="flex space-x-3">
-            <Button intent="primary" outline size="large">
+            <Button intent="primary" outline size="large" className="flex-1">
               가격 제안하기
             </Button>
             <DesktopMenuButton />

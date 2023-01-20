@@ -119,22 +119,22 @@ const MobileFullpageSearch = ({
           <div className="ml-3">
             {data.map((history) => (
               <p
-                key={Object.keys(history[0])[0]}
+                key={history[0]}
                 className="flex items-center justify-between py-2"
               >
                 <button
                   className="flex-1 text-left"
                   onClick={() => {
                     setSearchOpen(RESET);
-                    setSearch(Object.values(history[0])[0]);
+                    setSearch(history[1]);
                   }}
                 >
-                  {Object.values(history[0])[0]}
+                  {history[1]}
                 </button>
                 <button
                   onClick={async () => {
                     await http.post.json("/users/history", {
-                      id: Object.keys(history[0])[0],
+                      id: history[0],
                     });
                     refetch();
                   }}

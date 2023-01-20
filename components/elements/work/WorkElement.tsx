@@ -51,7 +51,7 @@ const WorkElementSkeleton = React.forwardRef<
 >(({ className }, ref) => {
   return (
     <div ref={ref} className={cx(className, "flex flex-col")}>
-      <Skeleton className="block aspect-4/3 rounded-xl" />
+      <Skeleton inline className="!block aspect-4/3 !rounded-xl" />
       <div className="mt-4">
         <p className="font-medium leading-tight md:text-lg md:leading-tight">
           <Skeleton width="6em" />

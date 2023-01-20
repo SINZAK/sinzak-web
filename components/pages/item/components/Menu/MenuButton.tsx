@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useAuth } from "@lib/services/auth";
 
 import { Menu } from "@components/atoms/Menu";
-import { DeletePopup } from "@components/elements/product/DeletePopup";
+import { DeletePopup } from "@components/pages/item/components/DeletePopup";
 
 import { useQueryContext } from "../../states/QueryProvider";
 

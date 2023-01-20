@@ -1,8 +1,7 @@
 import Link from "next/link";
-import Skeleton from "react-loading-skeleton";
 import { twMerge } from "tailwind-merge";
 
-import { LikeFilledIcon, LikeIcon, WishFilledIcon, WishIcon } from "@lib/icons";
+import { WishFilledIcon, WishIcon } from "@lib/icons";
 import { useAuth } from "@lib/services/auth";
 
 import { useQueryContext } from "../states/QueryProvider";

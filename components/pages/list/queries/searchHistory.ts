@@ -5,11 +5,7 @@ import { http } from "@lib/services/http";
 
 export const useSearchHistoryQuery = () => {
   const { user } = useAuth();
-  return useQuery<
-    {
-      [val: number]: string;
-    }[]
-  >({
+  return useQuery<[number, string][]>({
     queryKey: ["/users/history"],
     queryFn: async () => {
       return (await http.get("/users/history")).data;
