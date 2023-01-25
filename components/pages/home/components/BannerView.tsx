@@ -24,7 +24,7 @@ export const BannerView = () => {
     <div className="bg-gray-100 max-md:container sm:bg-transparent lg:w-full lg:bg-gray-100 lg:py-7 lg:pt-7">
       <Flicking
         circular={true}
-        clrcularFallback="bound"
+        circularFallback="bound"
         align="center"
         hideBeforeInit={true}
         plugins={plugins}
