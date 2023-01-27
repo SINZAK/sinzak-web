@@ -1,6 +1,6 @@
+import React from "react";
 import Flicking from "@egjs/react-flicking";
 import Link from "next/link";
-import React from "react";
 
 import { createLayout } from "@components/layout/layout";
 
@@ -10,6 +10,7 @@ import { ListView } from "./components/ListView";
 import { MobileHeader } from "./components/MobileHeader";
 import { SearchInput } from "./components/SearchInput";
 import { FilterProvider } from "./states/filter";
+
 
 import "@egjs/react-flicking/dist/flicking.css";
 

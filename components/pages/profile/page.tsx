@@ -1,15 +1,14 @@
+import React from "react";
 import { Listbox } from "@headlessui/react";
 import { useQuery } from "@tanstack/react-query";
-import { UserProfile } from "@types";
 import { useRouter } from "next/router";
-import React from "react";
 import Skeleton from "react-loading-skeleton";
-
-import { AlignIcon } from "@lib/icons";
-import { http } from "@lib/services/http";
 
 import { CheckBox } from "@components/atoms/CheckBox";
 import { createLayout } from "@components/layout/layout";
+import { AlignIcon } from "@lib/icons";
+import { http } from "@lib/services/http";
+import { UserProfile } from "@types";
 
 const options = [
   { id: "recommend", name: "신작추천순" },

@@ -1,11 +1,6 @@
 import { tempLogin } from "@lib/services/auth";
 
 export default function Page() {
-  const onClick = async () => {
-    const res = await tempLogin();
-    if (res) location.href = "/";
-  };
-
   return (
     <>
       <div className="fixed h-full w-full bg-cover sm:bg-[url(/assets/login-splash-bg.jpg)]"></div>
@@ -18,17 +13,28 @@ export default function Page() {
             </p>
           </div>
           <div>
-            <p className="mb-3 text-center text-sm">
+            {/* <p className="mb-3 text-center text-sm">
               SNS 계정으로 간편하게 시작하기
-            </p>
+            </p> */}
             <div className="flex flex-col space-y-3 font-medium">
-              <button
-                onClick={onClick}
-                className="rounded-xl bg-red-500 px-6 py-3"
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  const email = (e.target as any)[0].value;
+                  const res = await tempLogin(email);
+                  if (res) location.href = "/";
+                }}
+                className="flex flex-col space-y-3"
               >
-                임시 로그인
-              </button>
-              <a className="rounded-xl bg-gray-100 px-6 py-3">
+                <input
+                  defaultValue="sinzakofficial@gmail.com"
+                  className="rounded-xl px-6 py-3 text-gray-800 ring-1 ring-inset ring-gray-200"
+                />
+                <button className="rounded-xl bg-red-500 px-6 py-3">
+                  임시 로그인
+                </button>
+              </form>
+              {/* <a className="rounded-xl bg-gray-100 px-6 py-3">
                 네이버로 시작하기
               </a>
               <a className="rounded-xl bg-gray-100 px-6 py-3">
@@ -36,7 +42,7 @@ export default function Page() {
               </a>
               <a className="rounded-xl bg-gray-100 px-6 py-3">
                 Google로 시작하기
-              </a>
+              </a> */}
             </div>
           </div>
         </div>

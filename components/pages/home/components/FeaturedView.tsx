@@ -4,6 +4,7 @@ import { http } from "@lib/services/http";
 
 import { FeaturedCarousel } from "./FeaturedCarousel";
 
+
 export const FeaturedView = () => {
   const { data } = useQuery(["featuredTest"], async () => {
     return (await http.post.default("/home/products")).data;

@@ -1,11 +1,11 @@
-import { ItemSimple } from "@types";
+import React from "react";
 import { cx } from "class-variance-authority";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import Skeleton from "react-loading-skeleton";
 
 import { formatNumber, formatRelativeTime } from "@lib/services/intl/format";
+import { ItemSimple } from "@types";
 
 export const ProductElement = React.forwardRef<
   any,

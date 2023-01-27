@@ -4,6 +4,7 @@ import { BannerView } from "./components/BannerView";
 import { FeaturedView } from "./components/FeaturedView";
 import { GenreView } from "./components/GenreView";
 
+
 export default function Page() {
   return (
     <>

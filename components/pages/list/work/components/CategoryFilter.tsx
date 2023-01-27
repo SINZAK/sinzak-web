@@ -4,6 +4,7 @@ import { MultiSelect } from "@components/elements/filter/MultiSelect";
 
 import { filterCategoriesAtom, useFilterContext } from "../states/filter";
 
+
 export const CategoryFilter = () => {
   const store = useFilterContext();
   const [filterCategory, setFilterCategory] = useAtom(filterCategoriesAtom, {

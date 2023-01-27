@@ -1,7 +1,7 @@
-import { AtomValueWithReset } from "@types";
 import { RESET } from "jotai/vanilla/utils";
 
 import { atomWithHash } from "@lib/utils/atomWithHash";
+import { AtomValueWithReset } from "@types";
 
 export type AtomWithHashFilterSearchValue = string | undefined;
 

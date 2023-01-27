@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { MarketItemDetail, WorkItemDetail } from "@types";
 
 import { http } from "@lib/services/http";
+import { MarketItemDetail, WorkItemDetail } from "@types";
 
 export const useFollowMutation = () => {
   const queryClient = useQueryClient();

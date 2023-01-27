@@ -1,14 +1,22 @@
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 
+import { Button } from "@components/atoms/Button";
+import { createLayout } from "@components/layout/layout";
 import { ChatMiniIcon, ScrapMiniIcon, ViewMiniIcon } from "@lib/icons";
 import { getCategoryText } from "@lib/resources/category";
 import { useAuth } from "@lib/services/auth";
 import { formatNumber, formatRelativeTime } from "@lib/services/intl/format";
 
-import { Button } from "@components/atoms/Button";
-import { createLayout } from "@components/layout/layout";
-
+import { useDeleteMarketItemMutation } from "./queries/delete";
+import { useMarketItemQuery } from "./queries/item";
+import { useLikeMarketItemMutation } from "./queries/like";
+import { useWishMarketItemMutation } from "./queries/wish";
+import {
+  ChatButton,
+  ChatButtonPlaceholder,
+  MyChatButton,
+} from "../components/ChatButton";
 import { FollowingButton } from "../components/FollowingButton";
 import { ImageViewer } from "../components/Image/ImageViewer";
 import { LikeButton, LikeButtonPlaceholder } from "../components/LikeButton";
@@ -21,10 +29,7 @@ import {
   QueryProvider,
   useQueryContext,
 } from "../states/QueryProvider";
-import { useDeleteMarketItemMutation } from "./queries/delete";
-import { useMarketItemQuery } from "./queries/item";
-import { useLikeMarketItemMutation } from "./queries/like";
-import { useWishMarketItemMutation } from "./queries/wish";
+
 
 export default function Page() {
   return (
@@ -100,17 +105,10 @@ function Main() {
   );
 
   const Chat = () =>
-    user?.userId ? (
+    data && user?.userId ? (
       data?.userId !== user?.userId ? (
         <div className="flex flex-[0_0_12rem] flex-col space-y-3 font-bold max-md:hidden">
-          <Button intent="primary" size="large">
-            <img
-              alt="ask"
-              src="/assets/icons/ask.svg"
-              className="mr-1 brightness-0 invert"
-            />
-            <span>거래 문의하기</span>
-          </Button>
+          <ChatButton id={data.id} />
           <div className="flex space-x-3">
             <Button intent="primary" outline size="large" className="flex-1">
               가격 제안하기
@@ -120,27 +118,13 @@ function Main() {
         </div>
       ) : (
         <div className="flex h-fit space-x-3 text-lg font-bold max-md:hidden">
-          <Button intent="primary">
-            <img
-              alt="ask"
-              src="/assets/icons/ask.svg"
-              className="mr-1 h-7 brightness-0 invert"
-            />
-            문의 중인 채팅방 {data?.chatCnt || 0}
-          </Button>
+          <MyChatButton chatCnt={data.chatCnt} />
           <DesktopMenuButton />
         </div>
       )
     ) : (
       <div className="flex flex-[0_0_12rem] flex-col space-y-3 font-bold max-md:hidden">
-        <Button intent="primary" size="large" as={Link} href="/auth/signin">
-          <img
-            alt="ask"
-            src="/assets/icons/ask.svg"
-            className="mr-1 brightness-0 invert"
-          />
-          <span>거래 문의하기</span>
-        </Button>
+        <ChatButtonPlaceholder />
         <Button
           intent="primary"
           outline

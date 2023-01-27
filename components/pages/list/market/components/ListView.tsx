@@ -6,6 +6,7 @@ import { ProductElement } from "@components/elements/product/ProductElement";
 import { useProductQuery } from "../queries/product";
 import { useFilter } from "../states/filter";
 
+
 export const ListView = () => {
   const filter = useFilter();
   const { data, isLoading, fetchNextPage } = useProductQuery(filter);

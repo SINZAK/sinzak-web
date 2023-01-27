@@ -1,13 +1,14 @@
-import { UseAtomWithResetResult } from "@types";
 import { useAtom } from "jotai/react";
 
 import { SearchInput as Input } from "@components/elements/filter/SearchInput";
+import { UseAtomWithResetResult } from "@types";
 
 import {
   AtomWithHashFilterSearchValue,
   filterSearchAtom,
 } from "../../states/search";
 import { useFilterContext } from "../states/filter";
+
 
 interface SearchInputProps {
   onSearch?: UseAtomWithResetResult<AtomWithHashFilterSearchValue>[1];

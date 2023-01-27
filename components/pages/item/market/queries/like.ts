@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { LikeMutationVariables } from "@types";
 
 import { http } from "@lib/services/http";
+import { LikeMutationVariables } from "@types";
 
 export const useLikeMarketItemMutation = () => {
   const queryClient = useQueryClient();

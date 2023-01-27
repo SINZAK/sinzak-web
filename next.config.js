@@ -7,6 +7,14 @@ const nextConfig = {
   experimental: {
     scrollRestoration: true,
   },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: "/api/:path((?!stomp).*)*", //api request path
+  //       destination: "http://localhost:8080/api/:path*", //목적 path
+  //     },
+  //   ];
+  // },
   webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/,

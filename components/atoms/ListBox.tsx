@@ -1,5 +1,5 @@
-import { Listbox as HListbox } from "@headlessui/react";
 import React from "react";
+import { Listbox as HListbox } from "@headlessui/react";
 
 export const ListBox = <T extends string>({
   value,

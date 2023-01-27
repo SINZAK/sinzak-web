@@ -1,11 +1,10 @@
-import Flicking from "@egjs/react-flicking";
-import { ItemSimple } from "@types";
-import Link from "next/link";
 import { useRef } from "react";
-
-import { ChevronLeftIcon, ChevronRightICon } from "@lib/icons";
+import Flicking from "@egjs/react-flicking";
+import Link from "next/link";
 
 import { ProductElement } from "@components/elements/product/ProductElement";
+import { ChevronLeftIcon, ChevronRightICon } from "@lib/icons";
+import { ItemSimple } from "@types";
 
 import "@egjs/react-flicking/dist/flicking.css";
 

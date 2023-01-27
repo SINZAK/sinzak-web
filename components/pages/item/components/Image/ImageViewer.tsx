@@ -1,7 +1,8 @@
 import { Fade, Pagination } from "@egjs/flicking-plugins";
 import Flicking, { ViewportSlot } from "@egjs/react-flicking";
-import { MarketItemDetail } from "@types";
 import Image from "next/image";
+
+import { MarketItemDetail } from "@types";
 
 import "@egjs/react-flicking/dist/flicking.css";
 
@@ -17,7 +18,6 @@ export const ImageViewer = ({
           key={images?.length}
           plugins={plugins}
           circular={true}
-          circularFallback="bound"
           align="center"
           hideBeforeInit={true}
           className="sm:-mb-[1.125rem] sm:pb-[1.125rem]"

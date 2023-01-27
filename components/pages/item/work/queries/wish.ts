@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { WishMutationVariables } from "@types";
 
 import { http } from "@lib/services/http";
+import { WishMutationVariables } from "@types";
 
 export const useWishWorkItemMutation = () => {
   const queryClient = useQueryClient();

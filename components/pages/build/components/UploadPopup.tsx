@@ -5,6 +5,7 @@ import { Button } from "@components/atoms/Button";
 
 import styles from "./UploadPopup.module.css";
 
+
 export const UploadPopup = ({
   text,
   isOpen,

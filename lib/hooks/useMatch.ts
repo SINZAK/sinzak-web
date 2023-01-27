@@ -1,6 +1,6 @@
+import { useEffect, useLayoutEffect, useState } from "react";
 import { LinkProps } from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useLayoutEffect, useState } from "react";
 
 const routeStore = new Set<string>();
 

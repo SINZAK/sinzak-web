@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 
+import { Button } from "@components/atoms/Button";
 import { CheckIcon } from "@lib/icons";
 import { Category, getCategoryText } from "@lib/resources/category";
-
-import { Button } from "@components/atoms/Button";
 
 export const SingleSelect = ({
   data,

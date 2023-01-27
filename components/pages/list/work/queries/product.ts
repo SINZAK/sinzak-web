@@ -1,8 +1,9 @@
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
-import { ItemSimple } from "@types";
+
 
 import useIsClient from "@lib/hooks/useIsClient";
 import { http } from "@lib/services/http";
+import { ItemSimple } from "@types";
 
 import { Filter } from "../states/filter";
 

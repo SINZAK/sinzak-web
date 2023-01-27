@@ -2,8 +2,9 @@ import { createLayout } from "@components/layout/layout";
 
 import Layout from "./layout";
 
+
 export default function Page() {
-  return <Layout></Layout>;
+  return <Layout>asdfas</Layout>;
 }
 
 Page.getLayout = createLayout({

@@ -1,14 +1,17 @@
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 
+import { Button } from "@components/atoms/Button";
+import { createLayout } from "@components/layout/layout";
 import { ChatMiniIcon, ScrapMiniIcon, ViewMiniIcon } from "@lib/icons";
 import { getCategoryText } from "@lib/resources/category";
 import { useAuth } from "@lib/services/auth";
 import { formatNumber, formatRelativeTime } from "@lib/services/intl/format";
 
-import { Button } from "@components/atoms/Button";
-import { createLayout } from "@components/layout/layout";
-
+import { useDeleteWorkItemMutation } from "./queries/delete";
+import { useWorkItemQuery } from "./queries/item";
+import { useLikeWorkItemMutation } from "./queries/like";
+import { useWishWorkItemMutation } from "./queries/wish";
 import { FollowingButton } from "../components/FollowingButton";
 import { ImageViewer } from "../components/Image/ImageViewer";
 import { LikeButton, LikeButtonPlaceholder } from "../components/LikeButton";
@@ -21,10 +24,7 @@ import {
   WorkQueryContextValue,
   useQueryContext,
 } from "../states/QueryProvider";
-import { useDeleteWorkItemMutation } from "./queries/delete";
-import { useWorkItemQuery } from "./queries/item";
-import { useLikeWorkItemMutation } from "./queries/like";
-import { useWishWorkItemMutation } from "./queries/wish";
+
 
 import "@egjs/react-flicking/dist/flicking.css";
 

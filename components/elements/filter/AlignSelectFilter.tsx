@@ -1,6 +1,5 @@
-import { AlignIcon } from "@lib/icons";
-
 import { ListBox } from "@components/atoms/ListBox";
+import { AlignIcon } from "@lib/icons";
 
 export const AlignSelectFilter = <T extends string>({
   value,

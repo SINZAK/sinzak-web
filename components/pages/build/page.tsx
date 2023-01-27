@@ -1,5 +1,5 @@
-import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
+import { useRouter } from "next/router";
 import {
   Controller,
   FormProvider,
@@ -9,13 +9,13 @@ import {
 import TextareaAutosize from "react-textarea-autosize";
 import { twMerge } from "tailwind-merge";
 
-import { BackIcon, CloseIcon } from "@lib/icons";
-import { Category } from "@lib/resources/category";
-import { http } from "@lib/services/http";
 
 import { Button } from "@components/atoms/Button";
 import { CheckBox } from "@components/atoms/CheckBox";
 import { createLayout } from "@components/layout/layout";
+import { BackIcon, CloseIcon } from "@lib/icons";
+import { Category } from "@lib/resources/category";
+import { http } from "@lib/services/http";
 
 import { SingleSelect } from "./components/SingleSelect";
 import { UploadPopup } from "./components/UploadPopup";

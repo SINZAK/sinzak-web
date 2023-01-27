@@ -1,7 +1,11 @@
+
+import { API } from "@lib/utils/consts";
+import { isDevEnv } from "@lib/utils/env";
+
 import inMemoryJwtManager from "./auth/inMemoryJwtManager";
 
-const BASE_URL = "https://sinzak.net";
-const BASE_PATH_PREFIX = "/api";
+const BASE_ENDPOINT = isDevEnv ? API.DEV_ENDPOINT : API.PROD_ENDPOINT;
+const BASE_PATH_PREFIX = API.BASE_PATH_PREFIX;
 
 const commonRequestOptions = {
   // security threat: change later
@@ -18,9 +22,14 @@ export const http = {
 };
 
 function getUrl(url: RequestInfo | URL) {
+  if (
+    typeof url === "string" &&
+    (url.startsWith("http://") || url.startsWith("https://"))
+  )
+    return url;
   const _url = (BASE_PATH_PREFIX || "") + url;
-  if (!BASE_URL) return _url;
-  if (typeof url === "string") return new URL(_url, BASE_URL);
+  if (!BASE_ENDPOINT) return _url;
+  if (typeof url === "string") return new URL(_url, BASE_ENDPOINT);
   return url;
 }
 

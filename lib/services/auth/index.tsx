@@ -2,8 +2,8 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 
 import { useEffectOnce } from "@lib/hooks/useEffectOnce";
 
-import { http } from "../http";
 import inMemoryJWTManager from "./inMemoryJwtManager";
+import { http } from "../http";
 
 type User = null | {
   email: string;
@@ -17,7 +17,7 @@ type Auth = {
 
 const AuthContext = createContext<Auth>({ user: null, isLoading: true });
 
-export const tempLogin = async () => {
+export const tempLogin = async (email: string) => {
   try {
     const {
       data: { accessToken, refreshToken, accessTokenExpireDate },
@@ -26,7 +26,7 @@ export const tempLogin = async () => {
       refreshToken: string;
       accessTokenExpireDate: number;
     }>("/login", {
-      email: "sinzakofficial@gmail.com",
+      email,
     });
     inMemoryJWTManager.setToken(accessToken, accessTokenExpireDate);
     localStorage.setItem("refreshToken", refreshToken);

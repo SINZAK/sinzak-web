@@ -1,11 +1,11 @@
-import { UseAtomWithResetResult } from "@types";
 import { useAtom } from "jotai/react";
 import { RESET } from "jotai/vanilla/utils";
 
-import { BackIcon, CloseIcon, SearchIcon } from "@lib/icons";
-import { http } from "@lib/services/http";
 
 import { SearchInput } from "@components/elements/filter/SearchInput";
+import { BackIcon, CloseIcon, SearchIcon } from "@lib/icons";
+import { http } from "@lib/services/http";
+import { UseAtomWithResetResult } from "@types";
 
 import { useSearchHistoryQuery } from "../queries/searchHistory";
 import {

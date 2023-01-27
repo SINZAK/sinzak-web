@@ -1,10 +1,9 @@
-import { UseAtomWithResetResult } from "@types";
-import { RESET } from "jotai/vanilla/utils";
 import { useEffect, useState } from "react";
-
-import { CloseIcon } from "@lib/icons";
+import { RESET } from "jotai/vanilla/utils";
 
 import { AtomWithHashFilterSearchValue } from "@components/pages/list/states/search";
+import { CloseIcon } from "@lib/icons";
+import { UseAtomWithResetResult } from "@types";
 
 interface SearchInputProps {
   value: UseAtomWithResetResult<AtomWithHashFilterSearchValue>[0];

@@ -10,6 +10,7 @@ import {
   useFilterContext,
 } from "../states/filter";
 
+
 export const Filter = () => {
   const store = useFilterContext();
   const [filterAlign, setFilterAlign] = useAtom(filterAlignAtom, { store });

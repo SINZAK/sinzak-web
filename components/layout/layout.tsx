@@ -1,6 +1,7 @@
-import Link from "next/link";
 import React from "react";
+import Link from "next/link";
 
+import { Authenticated } from "@components/atoms/Authenticated";
 import {
   ChatFilledIcon,
   ChatIcon,
@@ -15,8 +16,6 @@ import {
 } from "@lib/icons";
 import { WithAuth } from "@lib/services/auth";
 
-import { Authenticated } from "@components/atoms/Authenticated";
-
 import { MobileNavLink } from "./NavLink";
 
 interface LayoutProps {
@@ -24,6 +23,43 @@ interface LayoutProps {
   rawHeader?: React.ReactNode;
   mobileNav?: boolean | React.ReactNode;
 }
+export const MobileNav = () => (
+  <nav className="fixed bottom-0 z-30 flex h-16 w-full justify-center bg-white md:hidden">
+    <ul className="grid h-full w-full max-w-xl grid-cols-5 items-center px-2 text-sm">
+      <MobileNavLink
+        href="/"
+        exact
+        icon={HomeIcon}
+        activeIcon={HomeFilledIcon}
+        text="홈"
+      />
+      <MobileNavLink
+        href="/market"
+        icon={MarketIcon}
+        activeIcon={MarketFilledIcon}
+        text="마켓"
+      />
+      <MobileNavLink
+        href="/work"
+        icon={TaskIcon}
+        activeIcon={TaskFilledIcon}
+        text="의뢰"
+      />
+      <MobileNavLink
+        href="/chat"
+        icon={ChatIcon}
+        activeIcon={ChatFilledIcon}
+        text="채팅"
+      />
+      <MobileNavLink
+        href="/my"
+        icon={ProfileIcon}
+        activeIcon={ProfileFilledIcon}
+        text="프로필"
+      />
+    </ul>
+  </nav>
+);
 
 const LayoutWrapper = ({
   authenticated,
@@ -42,41 +78,7 @@ const LayoutWrapper = ({
               {mobileNav}
             </div>
           ) : (
-            <nav className="fixed bottom-0 z-30 flex h-16 w-full justify-center bg-white md:hidden">
-              <ul className="grid h-full w-full max-w-xl grid-cols-5 items-center px-2 text-sm">
-                <MobileNavLink
-                  href="/"
-                  exact
-                  icon={HomeIcon}
-                  activeIcon={HomeFilledIcon}
-                  text="홈"
-                />
-                <MobileNavLink
-                  href="/market"
-                  icon={MarketIcon}
-                  activeIcon={MarketFilledIcon}
-                  text="마켓"
-                />
-                <MobileNavLink
-                  href="/work"
-                  icon={TaskIcon}
-                  activeIcon={TaskFilledIcon}
-                  text="의뢰"
-                />
-                <MobileNavLink
-                  href="/chat"
-                  icon={ChatIcon}
-                  activeIcon={ChatFilledIcon}
-                  text="채팅"
-                />
-                <MobileNavLink
-                  href="/my"
-                  icon={ProfileIcon}
-                  activeIcon={ProfileFilledIcon}
-                  text="프로필"
-                />
-              </ul>
-            </nav>
+            <MobileNav />
           ))}
         {rawHeader && (
           <div className="sticky top-0 z-30 md:hidden">{rawHeader}</div>

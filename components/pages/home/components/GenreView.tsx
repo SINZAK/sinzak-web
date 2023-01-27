@@ -1,11 +1,6 @@
 import Flicking from "@egjs/react-flicking";
 import Link from "next/link";
 
-import {
-  filterCategoriesAtom,
-  filterStore,
-} from "@components/pages/list/market/states/filter";
-
 const categories = [
   ["회화\n일반", "painting"],
   ["동양화", "orient"],

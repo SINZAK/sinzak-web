@@ -2,6 +2,7 @@ import { MenuIcon } from "@lib/icons";
 
 import { MenuButton } from "./MenuButton";
 
+
 const Button = () => (
   <span>
     <MenuIcon />

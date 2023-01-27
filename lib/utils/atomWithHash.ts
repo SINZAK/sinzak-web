@@ -1,12 +1,12 @@
 // TODO consider refactoring without atomWithStorage
-import type { WritableAtom } from "jotai/vanilla";
 import {
   unstable_NO_STORAGE_VALUE as NO_STORAGE_VALUE,
   RESET,
   atomWithStorage,
 } from "jotai/vanilla/utils";
-import { Router } from "next/router";
-import NextRouter from "next/router";
+import NextRouter, { Router } from "next/router";
+
+import type { WritableAtom } from "jotai/vanilla";
 
 type SetStateActionWithReset<Value> =
   | Value
