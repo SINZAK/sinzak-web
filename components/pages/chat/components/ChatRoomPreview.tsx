@@ -1,9 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
+import { FormEventHandler } from "react";
+import {
+  UseMutationOptions,
+  useMutation,
+  useQuery,
+} from "@tanstack/react-query";
 import { useAtom, useAtomValue, useSetAtom } from "jotai/react";
 import { RESET } from "jotai/vanilla/utils";
 import Skeleton from "react-loading-skeleton";
 
-import { BackIcon, MenuIcon, PictureFilledIcon } from "@lib/icons";
+import { BackIcon, MenuIcon } from "@lib/icons";
 import { http } from "@lib/services/http";
 import { formatNumber } from "@lib/services/intl/format";
 import { MarketItemDetail } from "@types";
@@ -23,10 +28,46 @@ const useMarketItemQuery = () => {
   );
 };
 
+const useCreateChatRoomMutation = (
+  config?: UseMutationOptions<
+    {
+      roomUuid: string;
+    },
+    unknown,
+    number,
+    unknown
+  >
+) => {
+  return useMutation({
+    mutationFn: async (postId: number) => {
+      const res = await http.post.json<{
+        roomUuid: string;
+      }>("/chat/rooms/create", {
+        postId,
+        postType: "product",
+      });
+      return res.data;
+    },
+    ...config,
+  });
+};
+
 export const ChatRoomPreview = () => {
   const { data } = useMarketItemQuery();
   const [postId, setPostId] = useAtom(postIdAtom);
   const setRoomId = useSetAtom(roomIdAtom);
+
+  const { mutate } = useCreateChatRoomMutation({
+    onSuccess: (data) => {
+      setPostId(RESET);
+      setRoomId(data.roomUuid);
+    },
+  });
+
+  const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault();
+    if (typeof postId === "number") mutate(postId);
+  };
 
   return (
     <div className="flex h-screen flex-col max-md:container max-md:-mb-24 md:h-full md:px-4">
@@ -80,28 +121,10 @@ export const ChatRoomPreview = () => {
         프리뷰
       </div>
       <div className="flex items-center space-x-3 px-4 py-4 max-md:bleed md:-mx-4">
-        <form
-          className="flex-1"
-          onSubmit={async (e) => {
-            e.preventDefault();
-            const res = await http.post.json<{
-              roomUuid: string;
-            }>("/chat/rooms/create", {
-              postId,
-              postType: "product",
-            });
-            console.log(res);
-            setPostId(RESET);
-            setRoomId(res.data.roomUuid);
-          }}
-        >
+        <form className="flex-1" onSubmit={onSubmit}>
           <button className="flex h-12 w-full items-center justify-center rounded-full bg-red px-6 font-medium text-white">
             채팅 시작하기
           </button>
-          {/* <input
-            placeholder="메세지 보내기"
-            className="flex h-12 w-full items-center rounded-full bg-gray-100 px-6 font-medium"
-          /> */}
         </form>
       </div>
     </div>

@@ -1,13 +1,5 @@
 {
-  "settings": {
-    "import/parsers": { "@typescript-eslint/parser": [".ts"] }
-  },
-  "extends": [
-    "next/core-web-vitals",
-    "plugin:import/typescript",
-    "plugin:import/recommended",
-    "prettier"
-  ],
+  "extends": ["next/core-web-vitals", "prettier"],
   "rules": {
     "@next/next/no-img-element": "off",
     "import/order": [

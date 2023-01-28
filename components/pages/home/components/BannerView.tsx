@@ -21,13 +21,13 @@ export const BannerView = () => {
   });
 
   return (
-    <div className="bg-gray-100 max-md:container sm:bg-transparent lg:w-full lg:bg-gray-100 lg:py-7 lg:pt-7">
+    <div className="sm:bg-transparent lg:w-full lg:bg-gray-100 lg:py-7 lg:pt-7">
       <Flicking
         circular={true}
         align="center"
         hideBeforeInit={true}
         plugins={plugins}
-        className="sm:-mb-[1.125rem] sm:pb-[1.125rem]"
+        className="max-md:px-3 sm:-mb-[1.125rem] sm:pb-[1.125rem]"
       >
         {data
           ? data?.map((banner, i) => (

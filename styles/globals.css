@@ -5,6 +5,10 @@
 html {
   scrollbar-gutter: stable;
 }
+html,
+body {
+  height: 100%;
+}
 
 svg {
   @apply block align-top;

@@ -71,7 +71,7 @@ const LayoutWrapper = ({
     authenticated ? Authenticated : React.Fragment,
     {},
     <>
-      <div className="min-h-screen">
+      <div className="md:min-h-screen">
         {mobileNav &&
           (typeof mobileNav !== "boolean" ? (
             <div className="fixed bottom-0 z-30 w-full bg-white md:hidden">

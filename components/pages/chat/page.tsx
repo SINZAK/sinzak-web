@@ -1,10 +1,9 @@
 import { useAtomValue } from "jotai/react";
 import { RESET } from "jotai/vanilla/utils";
-import useBreakpoint from "use-breakpoint";
+import { useBreakpoint } from "use-breakpoint";
 
 import NoSsr from "@components/atoms/NoSsr";
 import { createLayout, MobileNav } from "@components/layout/layout";
-import { atomWithHash } from "@lib/utils/atomWithHash";
 
 import { ChatListView } from "./components/ChatListView";
 import { ChatRoomPreview } from "./components/ChatRoomPreview";
@@ -43,7 +42,7 @@ const Chat = () => {
     return (
       <div className="container">
         <div className="relative mx-auto mt-7 grid h-[80vh] max-w-5xl grid-cols-2 divide-x ring-1 ring-gray-100">
-          <div className="overflow-y-scroll px-4">
+          <div className="overflow-y-scroll overscroll-contain px-4">
             <ChatListView />
           </div>
           <div className="h-full min-h-0">

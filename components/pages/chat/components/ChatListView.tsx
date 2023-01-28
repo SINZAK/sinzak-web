@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useAtom, useSetAtom } from "jotai/react";
+import { useAtom } from "jotai/react";
 import { twMerge } from "tailwind-merge";
 
 import { http } from "@lib/services/http";
@@ -27,7 +27,7 @@ export const ChatListView = () => {
       {data?.map((room, i) => (
         <button
           className={twMerge(
-            "flex items-center justify-between  py-4 max-md:bleed md:-mx-4 md:px-4",
+            "flex items-center justify-between py-4 max-md:bleed md:-mx-4 md:px-4",
             room.roomUuid === roomId && "bg-gray-100"
           )}
           key={i}
