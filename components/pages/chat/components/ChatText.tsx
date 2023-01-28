@@ -1,14 +1,34 @@
 import { twMerge } from "tailwind-merge";
 
-export const ChatText = ({ text, own }: { text: string; own?: boolean }) => {
+export const ChatText = ({
+  text,
+  own,
+  timestamp,
+}: {
+  text: string;
+  own?: boolean;
+  timestamp?: Date;
+}) => {
   return (
-    <div
-      className={twMerge(
-        "rounded-full px-4 py-2",
-        own ? "self-end bg-red text-white" : "self-start bg-gray-100 text-black"
-      )}
-    >
-      {text}
+    <div className={twMerge("relative", own ? "self-end" : "self-start")}>
+      <div
+        className={twMerge(
+          "absolute bottom-0 whitespace-nowrap pb-0.5 text-xs text-gray-600",
+          own
+            ? "left-0 -translate-x-full pr-1.5"
+            : "right-0 translate-x-full pl-1.5"
+        )}
+      >
+        {timestamp?.toLocaleTimeString().slice(0, -3)}
+      </div>
+      <div
+        className={twMerge(
+          "rounded-full px-4 py-2",
+          own ? "bg-red text-white" : "bg-gray-100 text-black"
+        )}
+      >
+        {text}
+      </div>
     </div>
   );
 };

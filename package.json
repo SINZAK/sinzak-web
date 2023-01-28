@@ -13,6 +13,7 @@
     "format": "yarn prettier:fix && yarn lint:fix"
   },
   "dependencies": {
+    "@datastructures-js/priority-queue": "^6.2.0",
     "@egjs/flicking-plugins": "^4.6.0",
     "@egjs/react-flicking": "^4.10.5",
     "@headlessui/react": "^1.7.7",

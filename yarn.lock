@@ -1388,6 +1388,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@datastructures-js/heap@npm:^4.3.1":
+  version: 4.3.1
+  resolution: "@datastructures-js/heap@npm:4.3.1"
+  checksum: 1e526850094af5c4292181ca92e38b652361f28d5a2b50a49cd21c5717bcc65d22f87d61096bfa11803ab4d7391b51a568e87d7044651a7bc2a7522b14380ac4
+  languageName: node
+  linkType: hard
+
+"@datastructures-js/priority-queue@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "@datastructures-js/priority-queue@npm:6.2.0"
+  dependencies:
+    "@datastructures-js/heap": ^4.3.1
+  checksum: 9cbcf64854433c172b731b8c4d1c9ac87e0fe84d53e6f3763e538e00e5742278dae777e0973c4efcd28aeb4e3b648b778492f6d2a93368acdd3806266a43c143
+  languageName: node
+  linkType: hard
+
 "@egjs/agent@npm:^2.2.1":
   version: 2.4.3
   resolution: "@egjs/agent@npm:2.4.3"
@@ -6271,6 +6287,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "sinzak-web@workspace:."
   dependencies:
+    "@datastructures-js/priority-queue": ^6.2.0
     "@egjs/flicking-plugins": ^4.6.0
     "@egjs/react-flicking": ^4.10.5
     "@headlessui/react": ^1.7.7

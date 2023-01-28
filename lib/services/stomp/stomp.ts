@@ -3,7 +3,15 @@ import { Client, StompSubscription } from "@stomp/stompjs";
 
 import useClient from "./client";
 
-const useStomp = (topic: string, callback: (message: any) => void) => {
+const useStomp = ({
+  topic,
+  enabled,
+  callback,
+}: {
+  topic: string;
+  enabled: boolean;
+  callback: (message: any) => void;
+}) => {
   const client = useClient();
 
   const subscribe = useCallback(
@@ -22,12 +30,12 @@ const useStomp = (topic: string, callback: (message: any) => void) => {
   }, []);
 
   return useEffect(() => {
-    if (!client || !callback) return;
+    if (!client || !callback || !enabled) return;
     const subscripton = subscribe(client, callback);
     return () => {
       unSubscribe(subscripton);
     };
-  }, [callback, client, subscribe, unSubscribe]);
+  }, [callback, client, enabled, subscribe, unSubscribe]);
 };
 
 export default useStomp;

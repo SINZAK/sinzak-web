@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { useSetAtom } from "jotai/react";
+import { useAtom, useSetAtom } from "jotai/react";
+import { twMerge } from "tailwind-merge";
 
 import { http } from "@lib/services/http";
 
 import { roomIdAtom } from "../states";
 
-
 export const ChatListView = () => {
-  const setRoomId = useSetAtom(roomIdAtom);
+  const [roomId, setRoomId] = useAtom(roomIdAtom);
   const { data } = useQuery<
     {
       roomUuid: string;
@@ -26,7 +26,10 @@ export const ChatListView = () => {
     <div className="flex flex-col max-md:container">
       {data?.map((room, i) => (
         <button
-          className="flex items-center justify-between py-4 max-md:bleed md:-mx-4 md:px-4"
+          className={twMerge(
+            "flex items-center justify-between  py-4 max-md:bleed md:-mx-4 md:px-4",
+            room.roomUuid === roomId && "bg-gray-100"
+          )}
           key={i}
           onClick={() => setRoomId(room.roomUuid)}
         >
