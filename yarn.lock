@@ -2133,7 +2133,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-virtual@npm:^3.0.0-alpha.0":
+"@tanstack/react-virtual@npm:3.0.0-beta.41":
   version: 3.0.0-beta.41
   resolution: "@tanstack/react-virtual@npm:3.0.0-beta.41"
   dependencies:
@@ -6379,7 +6379,7 @@ __metadata:
     "@stomp/stompjs": ^6.1.2
     "@svgr/webpack": ^6.5.1
     "@tanstack/react-query": ^4.22.0
-    "@tanstack/react-virtual": ^3.0.0-alpha.0
+    "@tanstack/react-virtual": 3.0.0-beta.41
     "@types/node": 18.11.18
     "@types/react": 18.0.26
     "@types/react-dom": 18.0.10

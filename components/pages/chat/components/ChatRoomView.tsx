@@ -1,16 +1,17 @@
 import {
   Dispatch,
-  FormEventHandler,
   MutableRefObject,
   RefObject,
   SetStateAction,
   useCallback,
   useEffect,
+  useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
-import { PriorityQueue } from "@datastructures-js/priority-queue";
 import {
+  InfiniteData,
   useInfiniteQuery,
   useQuery,
   useQueryClient,
@@ -22,6 +23,7 @@ import {
 } from "@tanstack/react-virtual";
 import { useSetAtom } from "jotai/react";
 import { RESET } from "jotai/vanilla/utils";
+import { useInView } from "react-intersection-observer";
 import Skeleton from "react-loading-skeleton";
 import ReactTextareaAutosize from "react-textarea-autosize";
 
@@ -60,30 +62,23 @@ type Message = {
 };
 type MessageQueue = Message[];
 
-const sample = Array(0)
-  .fill(undefined)
-  .map((v, i) => {
-    return {
-      messageId: i,
-      message: i.toString(),
-      sendAt: i,
-      senderId: v,
-      senderName: "test",
-      messageType: null,
-    };
-  });
+let c = 0;
+
+type MessageResponse = {
+  content: MessageQueue;
+  last: boolean;
+  pageable: {
+    pageNumber: number;
+  };
+};
 
 const useChatQuery = (roomId: string) => {
   const { data, ...query } = useInfiniteQuery({
     queryKey: ["prevChat", roomId],
     queryFn: async ({ pageParam = 0 }) => {
-      const { data } = await http.get<{
-        content: MessageQueue;
-        last: boolean;
-        pageable: {
-          pageNumber: number;
-        };
-      }>(`/chat/rooms/${roomId}/message?page=${pageParam}`);
+      const { data } = await http.get<MessageResponse>(
+        `/chat/rooms/${roomId}/message?page=${pageParam}`
+      );
       return data;
     },
     select: ({ pages, pageParams }) => {
@@ -96,7 +91,8 @@ const useChatQuery = (roomId: string) => {
       data.last ? undefined : data.pageable.pageNumber + 1,
   });
   return {
-    data: data?.pages.reverse().flat(),
+    data: data?.pages.flat(),
+    lastPageSize: data?.pages[data?.pages.length - 1]?.length,
     ...query,
   };
 };
@@ -113,19 +109,34 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
   const queryClient = useQueryClient();
   const { data } = useRoomInfoQuery(roomId);
 
-  const { data: messageList, fetchNextPage } = useChatQuery(roomId);
+  const {
+    data: messageList,
+    fetchNextPage,
+    lastPageSize,
+  } = useChatQuery(roomId);
 
   const callback = useCallback(
     (message: any) => {
-      queryClient.setQueryData<MessageQueue>(
+      queryClient.setQueryData<InfiniteData<MessageResponse>>(
         ["prevChat", roomId],
-        (messageList) => {
-          if (!messageList) return messageList;
+        (data) => {
+          if (!data) return data;
+          const { pages, pageParams } = data;
+          const [firstPage, ...restPages] = pages;
+          const { content, ...firstPageData } = firstPage;
           message.sendAt = new Date().toISOString();
           message.messageId = Date.now();
           if (message.senderId === user?.userId) setAutoScroll(true);
-          console.log(message);
-          return [...messageList, message];
+          return {
+            pages: [
+              {
+                content: [message, ...content],
+                ...firstPageData,
+              },
+              ...restPages,
+            ],
+            pageParams,
+          };
         }
       );
     },
@@ -153,20 +164,6 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
       body: JSON.stringify(body),
     });
   };
-
-  // useEffect(() => {
-  //   // event listener which detects if scroll container viewport is near top then calls fetchNextPage from useChatQuery
-  //   const scrollContainer = scrollRef.current;
-  //   if (!scrollContainer) return;
-  //   const onScroll = () => {
-  //     console.log(scrollContainer.scrollTop);
-  //     if (scrollContainer.scrollTop < 1000) {
-  //       fetchNextPage();
-  //     }
-  //   };
-  //   scrollContainer.addEventListener("scroll", onScroll);
-  //   return () => scrollContainer.removeEventListener("scroll", onScroll);
-  // }, [fetchNextPage]);
 
   if (!user) return null;
 
@@ -225,7 +222,6 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
             </p>
           </div>
         </div>
-        {/* <Button onClick={() => fetchNextPage()}>이전페이지</Button> */}
         {messageList?.length ? (
           <VirtualizedChatScroller
             autoScroll={autoScroll}
@@ -235,6 +231,8 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
             inputRef={inputRef}
             userId={user.userId}
             messageList={messageList}
+            lastPageSize={lastPageSize!}
+            fetchNextPage={fetchNextPage}
           />
         ) : (
           <div className="min-h-0 flex-[1_1_auto] max-md:bleed md:-mx-4 md:px-4" />
@@ -269,6 +267,8 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
   );
 };
 
+const itemSize = 120;
+
 const VirtualizedChatScroller = ({
   messageList,
   userId,
@@ -277,6 +277,8 @@ const VirtualizedChatScroller = ({
   autoScroll,
   setAutoScroll,
   programmaticScroll,
+  lastPageSize,
+  fetchNextPage,
 }: {
   messageList: MessageQueue;
   userId: number;
@@ -285,17 +287,49 @@ const VirtualizedChatScroller = ({
   autoScroll: boolean;
   setAutoScroll: Dispatch<SetStateAction<boolean>>;
   programmaticScroll: MutableRefObject<boolean>;
+  lastPageSize: number;
+  fetchNextPage: ReturnType<typeof useChatQuery>["fetchNextPage"];
 }) => {
-  const prevScrollTop = useRef(0);
+  const count = messageList.length;
+  const reverseIndex = useCallback(
+    (index: number) => count - 1 - index,
+    [count]
+  );
+
   const virtualizer = useVirtualizer({
-    count: messageList.length,
     getScrollElement: () => scrollRef.current,
-    estimateSize: () => 44,
-    overscan: 10,
+    count,
+    estimateSize: () => itemSize,
+    getItemKey: useCallback(
+      (index: number) => messageList[reverseIndex(index)].messageId,
+      [messageList, reverseIndex]
+    ),
+    overscan: 4,
+    scrollMargin: 64,
   });
 
-  const items = virtualizer.getVirtualItems();
-  const height = virtualizer.getTotalSize();
+  useMemo(() => {
+    const nextOffset = virtualizer.scrollOffset + lastPageSize * itemSize;
+    virtualizer.scrollToOffset(nextOffset, { align: "start" });
+    virtualizer.scrollOffset = nextOffset;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [virtualizer, virtualizer.options.count]);
+
+  const virtualItems = virtualizer.getVirtualItems();
+
+  const [paddingTop, paddingBottom] =
+    virtualItems.length > 0
+      ? [
+          Math.max(0, virtualItems[0].start - virtualizer.options.scrollMargin),
+          Math.max(
+            0,
+            virtualizer.getTotalSize() -
+              virtualItems[virtualItems.length - 1].end
+          ),
+        ]
+      : [0, 0];
+
+  const prevScrollTop = useRef(0);
 
   const scrollHandler = useCallback(
     (event: React.UIEvent<HTMLDivElement>) => {
@@ -324,32 +358,37 @@ const VirtualizedChatScroller = ({
     }
   });
 
+  const { ref: intersectionRef, inView } = useInView();
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inView]);
+
   return (
-    <div className="relative min-h-0 flex-[1_1_auto] max-md:bleed md:-mx-4 md:px-4">
+    <div className="relative min-h-0 flex-[1_1_auto] max-md:bleed md:-mx-4">
       <div
         onScroll={scrollHandler}
         ref={scrollRef}
-        className="h-full overflow-y-scroll overscroll-contain"
+        className="relative h-full w-full overflow-y-scroll overscroll-contain [overflow-anchor:none]"
       >
+        <div ref={intersectionRef} className="absolute top-32 left-0" />
         <div
-          className="relative"
+          className="md:px-4"
           style={{
-            height: `${height}px`,
+            paddingTop,
+            paddingBottom,
           }}
         >
-          <div
-            className="absolute inset-x-0 top-0 flex w-full flex-col space-y-1"
-            style={{
-              transform: `translateY(${items[0].start}px)`,
-            }}
-          >
-            <ChatRenderer
-              virtualizer={virtualizer}
-              virtualItems={items}
-              userId={userId}
-              messageList={messageList}
-            />
-          </div>
+          <ChatRenderer
+            virtualizer={virtualizer}
+            virtualItems={virtualItems}
+            userId={userId}
+            messageList={messageList}
+            reverseIndex={reverseIndex}
+          />
         </div>
       </div>
       {!autoScroll && (
@@ -418,14 +457,16 @@ const ChatRenderer = ({
   virtualItems,
   messageList,
   userId,
+  reverseIndex,
 }: {
   virtualizer: Virtualizer<HTMLDivElement, Element>;
   virtualItems: VirtualItem[];
   messageList: MessageQueue;
   userId: number;
+  reverseIndex: (index: number) => number;
 }) => {
-  const startIndex = virtualItems[0].index;
-  const endIndex = virtualItems[virtualItems.length - 1].index;
+  const startIndex = reverseIndex(virtualItems[virtualItems.length - 1].index);
+  const endIndex = reverseIndex(virtualItems[0].index);
   const formattedMessageList = messageFormatter(
     messageList.slice(startIndex, endIndex + 1),
     userId
@@ -434,14 +475,18 @@ const ChatRenderer = ({
   return (
     <>
       {virtualItems.map((virtualRow) => {
+        const index = reverseIndex(virtualRow.index);
         const { own, text, timestamp } =
-          formattedMessageList[virtualRow.index - startIndex];
+          formattedMessageList[index - startIndex];
+
         return (
           <div
             key={virtualRow.key}
+            data-key={virtualRow.key}
             data-index={virtualRow.index}
+            data-reverse-index={index}
             ref={virtualizer.measureElement}
-            className="flex w-full flex-col"
+            className="flex w-full flex-col pt-1"
           >
             <ChatText own={own} text={text} timestamp={timestamp} />
           </div>
