@@ -4,12 +4,17 @@ import {
   MutableRefObject,
   RefObject,
   SetStateAction,
-  useLayoutEffect,
+  useCallback,
+  useEffect,
   useRef,
   useState,
 } from "react";
 import { PriorityQueue } from "@datastructures-js/priority-queue";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import {
   useVirtualizer,
   VirtualItem,
@@ -18,6 +23,7 @@ import {
 import { useSetAtom } from "jotai/react";
 import { RESET } from "jotai/vanilla/utils";
 import Skeleton from "react-loading-skeleton";
+import ReactTextareaAutosize from "react-textarea-autosize";
 
 import { Button } from "@components/atoms/Button";
 import { BackIcon, MenuIcon, PictureFilledIcon } from "@lib/icons";
@@ -52,57 +58,88 @@ type Message = {
   senderName: string | null;
   messageType: null;
 };
-type MessageQueue = PriorityQueue<Message>;
+type MessageQueue = Message[];
+
+const sample = Array(0)
+  .fill(undefined)
+  .map((v, i) => {
+    return {
+      messageId: i,
+      message: i.toString(),
+      sendAt: i,
+      senderId: v,
+      senderName: "test",
+      messageType: null,
+    };
+  });
+
+const useChatQuery = (roomId: string) => {
+  const { data, ...query } = useInfiniteQuery({
+    queryKey: ["prevChat", roomId],
+    queryFn: async ({ pageParam = 0 }) => {
+      const { data } = await http.get<{
+        content: MessageQueue;
+        last: boolean;
+        pageable: {
+          pageNumber: number;
+        };
+      }>(`/chat/rooms/${roomId}/message?page=${pageParam}`);
+      return data;
+    },
+    select: ({ pages, pageParams }) => {
+      return {
+        pages: pages.map((page) => page.content),
+        pageParams,
+      };
+    },
+    getNextPageParam: (data) =>
+      data.last ? undefined : data.pageable.pageNumber + 1,
+  });
+  return {
+    data: data?.pages.reverse().flat(),
+    ...query,
+  };
+};
 
 export const ChatRoomView = ({ roomId }: { roomId: string }) => {
   const client = useClient();
   const { user } = useAuth();
   const setRoomId = useSetAtom(roomIdAtom);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const [autoScroll, setAutoScroll] = useState(true);
   const programmaticScroll = useRef(false);
 
   const queryClient = useQueryClient();
   const { data } = useRoomInfoQuery(roomId);
 
-  const { data: messageData } = useQuery<[MessageQueue, number]>({
-    queryKey: ["prevChat", roomId],
-    queryFn: async () => {
-      const { data } = await http.get(`/chat/rooms/${roomId}/message`);
-      const messageQueue = PriorityQueue.fromArray<Message>(
-        data.content,
-        (a, b) => a.messageId - b.messageId
+  const { data: messageList, fetchNextPage } = useChatQuery(roomId);
+
+  const callback = useCallback(
+    (message: any) => {
+      queryClient.setQueryData<MessageQueue>(
+        ["prevChat", roomId],
+        (messageList) => {
+          if (!messageList) return messageList;
+          message.sendAt = new Date().toISOString();
+          message.messageId = Date.now();
+          if (message.senderId === user?.userId) setAutoScroll(true);
+          console.log(message);
+          return [...messageList, message];
+        }
       );
-      return [messageQueue, messageQueue.size()];
     },
-  });
-  const [messageList] = messageData || [];
+    [queryClient, roomId, user?.userId]
+  );
 
   useStomp({
     topic: `/sub/chat/rooms/${roomId}`,
     enabled: !!messageList,
-    callback: (message) => {
-      queryClient.setQueryData<[MessageQueue, number]>(
-        ["prevChat", roomId],
-        (prev) => {
-          const [messageList] = prev || [];
-          if (!messageList) return prev;
-          message.sendAt = new Date().toISOString();
-          message.messageId = Date.now();
-          if (message.senderId === user?.userId) setAutoScroll(true);
-          messageList.enqueue(message);
-          return [messageList, messageList.size()];
-        }
-      );
-    },
+    callback,
   });
 
-  const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
+  const onSubmit = (text: string) => {
     if (!client) return;
-    const text = (e.target as any)[0].value;
-    if (!text) return;
     const body = {
       roomId,
       message: text,
@@ -115,8 +152,21 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
       destination: "/pub/chat/message",
       body: JSON.stringify(body),
     });
-    (e.target as any).reset();
   };
+
+  // useEffect(() => {
+  //   // event listener which detects if scroll container viewport is near top then calls fetchNextPage from useChatQuery
+  //   const scrollContainer = scrollRef.current;
+  //   if (!scrollContainer) return;
+  //   const onScroll = () => {
+  //     console.log(scrollContainer.scrollTop);
+  //     if (scrollContainer.scrollTop < 1000) {
+  //       fetchNextPage();
+  //     }
+  //   };
+  //   scrollContainer.addEventListener("scroll", onScroll);
+  //   return () => scrollContainer.removeEventListener("scroll", onScroll);
+  // }, [fetchNextPage]);
 
   if (!user) return null;
 
@@ -124,7 +174,7 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
     <>
       <div
         className={
-          "absolute flex h-[100dvh] flex-col max-md:container max-md:-mb-24 max-md:pb-20 md:px-4" +
+          "flex h-[100dvh] flex-col max-md:container max-md:absolute max-md:-mb-24 max-md:pb-20 md:h-full md:px-4" +
           " " +
           "h-full"
         }
@@ -175,7 +225,8 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
             </p>
           </div>
         </div>
-        {messageList?.size() ? (
+        {/* <Button onClick={() => fetchNextPage()}>이전페이지</Button> */}
+        {messageList?.length ? (
           <VirtualizedChatScroller
             autoScroll={autoScroll}
             setAutoScroll={setAutoScroll}
@@ -190,19 +241,28 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
         )}
         <div
           className="flex items-center space-x-3 px-4 py-4
-        max-md:fixed max-md:inset-x-0 max-md:bottom-0 max-md:bg-white
-        md:-mx-4"
+            max-md:fixed max-md:inset-x-0 max-md:bottom-0 max-md:bg-white
+            md:-mx-4"
         >
           <span>
             <PictureFilledIcon className="h-10 w-10 fill-gray-600" />
           </span>
-          <form className="flex-1" onSubmit={onSubmit}>
-            <input
+          <span className="flex-1 rounded-[1.5rem] bg-gray-100 py-3 ring-gray-200 focus-within:ring-1">
+            <ReactTextareaAutosize
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  if (e.currentTarget.value.trim() === "") return;
+                  onSubmit(e.currentTarget.value);
+                  e.currentTarget.value = "";
+                }
+              }}
+              maxRows={3}
               ref={inputRef}
               placeholder="메세지 보내기"
-              className="flex h-12 w-full items-center rounded-full bg-gray-100 px-6 font-medium"
+              className="flex w-full resize-none items-center bg-transparent px-6 font-medium scrollbar-hide focus:ring-0"
             />
-          </form>
+          </span>
         </div>
       </div>
     </>
@@ -221,40 +281,43 @@ const VirtualizedChatScroller = ({
   messageList: MessageQueue;
   userId: number;
   scrollRef: RefObject<HTMLDivElement>;
-  inputRef: RefObject<HTMLInputElement>;
+  inputRef: RefObject<HTMLTextAreaElement>;
   autoScroll: boolean;
   setAutoScroll: Dispatch<SetStateAction<boolean>>;
   programmaticScroll: MutableRefObject<boolean>;
 }) => {
   const prevScrollTop = useRef(0);
   const virtualizer = useVirtualizer({
-    count: messageList.size(),
+    count: messageList.length,
     getScrollElement: () => scrollRef.current,
     estimateSize: () => 44,
-    overscan: 4,
+    overscan: 10,
   });
 
   const items = virtualizer.getVirtualItems();
   const height = virtualizer.getTotalSize();
 
-  const scrollHandler = (event: React.UIEvent<HTMLDivElement>) => {
-    const scrollTop = event.currentTarget.scrollTop;
-    const direction = scrollTop <= prevScrollTop.current ? "up" : "down";
-    if (!programmaticScroll.current) {
-      if (
-        scrollTop + event.currentTarget.offsetHeight >=
-        event.currentTarget.scrollHeight - 4
-      ) {
-        setAutoScroll(true);
-      } else if (autoScroll) {
-        if (direction === "up") setAutoScroll(false);
+  const scrollHandler = useCallback(
+    (event: React.UIEvent<HTMLDivElement>) => {
+      const scrollTop = event.currentTarget.scrollTop;
+      const direction = scrollTop <= prevScrollTop.current ? "up" : "down";
+      if (!programmaticScroll.current) {
+        if (
+          scrollTop + event.currentTarget.offsetHeight >=
+          event.currentTarget.scrollHeight - 4
+        ) {
+          setAutoScroll(true);
+        } else if (autoScroll) {
+          if (direction === "up") setAutoScroll(false);
+        }
       }
-    }
-    programmaticScroll.current = false;
-    prevScrollTop.current = scrollTop;
-  };
+      programmaticScroll.current = false;
+      prevScrollTop.current = scrollTop;
+    },
+    [autoScroll, programmaticScroll, setAutoScroll]
+  );
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (autoScroll) {
       programmaticScroll.current = true;
       scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight);
@@ -306,23 +369,8 @@ const VirtualizedChatScroller = ({
   );
 };
 
-const ChatRenderer = ({
-  virtualizer,
-  virtualItems,
-  messageList,
-  userId,
-}: {
-  virtualizer: Virtualizer<HTMLDivElement, Element>;
-  virtualItems: VirtualItem[];
-  messageList: MessageQueue;
-  userId: number;
-}) => {
-  const startIndex = virtualItems[0].index;
-  const endIndex = virtualItems[virtualItems.length - 1].index;
-  const messageListSlice = messageList
-    .toArray()
-    .slice(startIndex, endIndex + 1);
-  const { data: formattedMessageList } = messageListSlice.reverse().reduce(
+const messageFormatter = (messageList: Message[], userId: number) => {
+  const { data: formattedMessageList } = messageList.reverse().reduce(
     (acc, cur) => {
       const time =
         Math.floor(new Date(cur.sendAt).getTime() / (60 * 1000)) * 60 * 1000;
@@ -362,6 +410,26 @@ const ChatRenderer = ({
     }
   );
   formattedMessageList.reverse();
+  return formattedMessageList;
+};
+
+const ChatRenderer = ({
+  virtualizer,
+  virtualItems,
+  messageList,
+  userId,
+}: {
+  virtualizer: Virtualizer<HTMLDivElement, Element>;
+  virtualItems: VirtualItem[];
+  messageList: MessageQueue;
+  userId: number;
+}) => {
+  const startIndex = virtualItems[0].index;
+  const endIndex = virtualItems[virtualItems.length - 1].index;
+  const formattedMessageList = messageFormatter(
+    messageList.slice(startIndex, endIndex + 1),
+    userId
+  );
 
   return (
     <>
