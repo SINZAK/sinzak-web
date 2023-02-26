@@ -9,7 +9,6 @@ import {
 import TextareaAutosize from "react-textarea-autosize";
 import { twMerge } from "tailwind-merge";
 
-
 import { Button } from "@components/atoms/Button";
 import { CheckBox } from "@components/atoms/CheckBox";
 import { createLayout } from "@components/layout/layout";
@@ -97,29 +96,28 @@ type BuildFormMode =
   | {
       type: "sell";
       category: Category;
-      content: string;
-      height: number;
       price: number;
-      suggest: boolean;
       title: string;
-      vertical: number;
+      content: string;
+      suggest: boolean;
       width: number;
+      vertical: number;
+      height: number;
     }
   | {
       type: "workSell";
       category: Category;
-      employment: false;
+      price: number;
       title: string;
       content: string;
-      price: number;
       suggest: boolean;
     }
   | {
       type: "workBuy";
       category: Category;
+      price: number;
       title: string;
       content: string;
-      price: number;
       suggest: boolean;
     };
 type BuildForm = BuildFormMode & {
@@ -160,25 +158,36 @@ export default function Page() {
   };
 
   const onSubmit = async (data: BuildForm) => {
-    setUploadText("본문 업로드 중...");
+    setUploadText("게시글 업로드 중...");
     if (data.type === "sell") {
-      const { category, content, height, price, suggest, title, images } = data;
-      const res = await http.post.json("/products/build", {
+      const {
         category,
         content,
-        height,
         price,
         suggest,
         title,
-        vertical: 150,
-        width: 120,
+        images,
+        vertical,
+        width,
+        height,
+      } = data;
+      const res = await http.post.json("/products/build", {
+        category,
+        content,
+        price,
+        suggest,
+        title,
+        vertical,
+        width,
+        height,
       });
       const id = res.data.id;
-      await uploadImages(
-        "products",
-        id,
-        images.map((x) => x[1])
-      );
+      if (images.length > 0)
+        await uploadImages(
+          "products",
+          id,
+          images.map((x) => x[1])
+        );
       router.push(`/market/${id}`);
     } else {
       const { type, category, content, price, suggest, title, images } = data;
@@ -405,6 +414,44 @@ export default function Page() {
                     minRows={3}
                   />
                 </div>
+                {type === "sell" && (
+                  <div className="space-y-4">
+                    <p className="mb-3">작품 사이즈 (선택)</p>
+                    <p className="flex items-center space-x-4">
+                      <span className="shrink-0 text-lg font-bold">가로</span>
+                      <input
+                        {...register("width", {
+                          valueAsNumber: true,
+                        })}
+                        type="number"
+                        className="flex-1 rounded-xl bg-gray-100 px-4 py-3 placeholder:text-gray-600"
+                      />
+                      <span className="shrink-0 text-lg font-bold">cm</span>
+                    </p>
+                    <p className="flex items-center space-x-4">
+                      <span className="shrink-0 text-lg font-bold">세로</span>
+                      <input
+                        {...register("vertical", {
+                          valueAsNumber: true,
+                        })}
+                        type="number"
+                        className="flex-1 rounded-xl bg-gray-100 px-4 py-3 placeholder:text-gray-600"
+                      />
+                      <span className="shrink-0 text-lg font-bold">cm</span>
+                    </p>
+                    <p className="flex items-center space-x-4">
+                      <span className="shrink-0 text-lg font-bold">높이</span>
+                      <input
+                        {...register("height", {
+                          valueAsNumber: true,
+                        })}
+                        type="number"
+                        className="flex-1 rounded-xl bg-gray-100 px-4 py-3 placeholder:text-gray-600"
+                      />
+                      <span className="shrink-0 text-lg font-bold">cm</span>
+                    </p>
+                  </div>
+                )}
               </>
             )}
           </div>

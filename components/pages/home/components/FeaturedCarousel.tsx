@@ -2,7 +2,7 @@ import { useRef } from "react";
 import Flicking from "@egjs/react-flicking";
 import Link from "next/link";
 
-import { ProductElement } from "@components/elements/product/ProductElement";
+import { ProductElement } from "@components/elements/ProductElement";
 import { ChevronLeftIcon, ChevronRightICon } from "@lib/icons";
 import { ItemSimple } from "@types";
 
@@ -69,6 +69,7 @@ export const FeaturedCarousel = ({
       >
         {Array.from({ length: 10 }).map((_, i) => (
           <ProductElement
+            type="market"
             className="mr-3 w-3/5 sm:w-48 md:w-56 lg:mr-7"
             data={data && data.length >= i ? data[i] : undefined}
             key={i}

@@ -1,4 +1,4 @@
-import { ProductElement } from "@components/elements/product/ProductElement";
+import { ProductElement } from "@components/elements/ProductElement";
 import { createLayout } from "@components/layout/layout";
 
 import "@egjs/react-flicking/dist/flicking.css";
@@ -16,6 +16,7 @@ export default function Page() {
           <div className="flex flex-1 flex-wrap gap-x-3 gap-y-7 md:gap-x-7">
             {Array.from({ length: 20 }).map((_, i) => (
               <ProductElement
+                type="market"
                 className="flex-[1_1_40%] sm:flex-[1_1_200px]"
                 key={i}
               />

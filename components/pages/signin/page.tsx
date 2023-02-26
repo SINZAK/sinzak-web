@@ -40,10 +40,13 @@ export default function Page() {
                   임시 로그인
                 </button>
               </form>
-              {/* <a className="rounded-xl bg-gray-100 px-6 py-3">
-                네이버로 시작하기
+              <a
+                href={`https://accounts.google.com/o/oauth2/v2/auth?client_id=782966145872-6shnmrvqi0q4sihr8etu9nrvh9jv43dh.apps.googleusercontent.com&redirect_uri=http://localhost:8080/api/login/oauth2/code/google&response_type=code&scope=profile%20email&include_granted_scopes=true`}
+                className="rounded-xl bg-gray-100 px-6 py-3"
+              >
+                Google로 시작하기
               </a>
-              <a className="rounded-xl bg-gray-100 px-6 py-3">
+              {/* <a className="rounded-xl bg-gray-100 px-6 py-3">
                 카카오로 시작하기
               </a>
               <a className="rounded-xl bg-gray-100 px-6 py-3">

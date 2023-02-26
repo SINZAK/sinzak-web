@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-query";
 import { useAtom, useAtomValue, useSetAtom } from "jotai/react";
 import { RESET } from "jotai/vanilla/utils";
+import { useRouter } from "next/router";
 import Skeleton from "react-loading-skeleton";
 
 import { BackIcon, MenuIcon } from "@lib/icons";
@@ -56,6 +57,7 @@ export const ChatRoomPreview = () => {
   const { data } = useMarketItemQuery();
   const [postId, setPostId] = useAtom(postIdAtom);
   const setRoomId = useSetAtom(roomIdAtom);
+  const router = useRouter();
 
   const { mutate } = useCreateChatRoomMutation({
     onSuccess: (data) => {
@@ -75,12 +77,9 @@ export const ChatRoomPreview = () => {
         <span className="absolute inset-y-0 left-1/2 grid -translate-x-1/2 place-items-center font-bold">
           {data?.author}
         </span>
-        <button onClick={() => setRoomId(RESET)}>
+        <button onClick={() => router.back()}>
           <BackIcon />
         </button>
-        <span>
-          <MenuIcon />
-        </span>
       </div>
       <div className="flex space-x-4 px-2 py-4">
         <span className="inline-block h-10 w-10 rounded-xl bg-gray-200" />
@@ -117,8 +116,11 @@ export const ChatRoomPreview = () => {
           </p>
         </div>
       </div>
-      <div className="flex min-h-0 flex-[1_1_auto] flex-col space-y-1 overflow-y-scroll max-md:bleed md:-mx-4 md:px-4">
-        프리뷰
+      <div className="grid flex-1 place-items-center">
+        <div className="text-center text-gray-800">
+          <p>채팅 시작하기 버튼을 눌러</p>
+          <p>상대방과 대화해 보세요</p>
+        </div>
       </div>
       <div className="flex items-center space-x-3 px-4 py-4 max-md:bleed md:-mx-4">
         <form className="flex-1" onSubmit={onSubmit}>

@@ -3,10 +3,14 @@ import { Listbox } from "@headlessui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import Skeleton from "react-loading-skeleton";
+import { twMerge } from "tailwind-merge";
 
+import { Button } from "@components/atoms/Button";
 import { CheckBox } from "@components/atoms/CheckBox";
+import { FollowingButton } from "@components/elements/FollowingButton";
+import { ProductElement } from "@components/elements/ProductElement";
 import { createLayout } from "@components/layout/layout";
-import { AlignIcon } from "@lib/icons";
+import { AlignIcon, MenuIcon } from "@lib/icons";
 import { http } from "@lib/services/http";
 import { UserProfile } from "@types";
 
@@ -18,16 +22,14 @@ const options = [
   { id: "high", name: "높은가격순" },
 ];
 
-export const useUserProfileQuery = () => {
-  const router = useRouter();
-
+export const useUserProfileQuery = (userId: number) => {
   return useQuery<UserProfile>(
-    ["userProfileTest", Number(router.query.slug)],
+    ["user-profile", userId],
     async () => {
-      return (await http.get(`/users/${router.query.slug}/profile`)).data;
+      return (await http.get(`/users/${userId}/profile`)).data;
     },
     {
-      enabled: !!router.query.slug,
+      enabled: !!userId,
     }
   );
 };
@@ -74,97 +76,127 @@ const MarketFilter = () => {
   );
 };
 
+const useUserId = () => {
+  const router = useRouter();
+  return Number(router.query.slug);
+};
+
 export default function Page() {
-  const { data, isLoading } = useUserProfileQuery();
+  const userId = useUserId();
+  const { data, isLoading } = useUserProfileQuery(userId);
 
   return (
-    <>
-      <div className="container flex flex-col">
-        <div className="space-y-4 pt-3 pb-4 md:hidden">mobile</div>
-        <div className="hidden h-16 items-center space-x-7 pb-7 md:flex">
-          <span className="flex-[0_0_16rem] font-bold"></span>
-          <span className="flex flex-1 items-center justify-end space-x-4">
-            <MarketFilter />
-          </span>
-        </div>
-        <div className="flex">
-          <div className="mr-7 hidden h-screen flex-[0_0_16rem] pr-3.5 md:block">
-            <div className="flex flex-col items-center justify-center space-y-4">
-              <span className="inline-block h-16 w-16 rounded-xl bg-gray-200" />
-              <div className="text-center">
-                <p className="mb-1 text-xl font-bold leading-tight">
-                  {data ? <>{data.name}</> : <Skeleton className="w-12" />}
-                </p>
-                <p>
-                  {data ? (
-                    <>{data.univ} verified</>
-                  ) : (
-                    <Skeleton className="w-28" />
-                  )}
-                </p>
-                <p className="my-3 space-x-6">
-                  <span className="inline-flex items-center text-lg">
-                    {data ? (
-                      <>
-                        <span className="mr-2 font-bold">
-                          {data?.followerNumber}
-                        </span>
-                        <span className="text-base">팔로워</span>
-                      </>
-                    ) : (
-                      <Skeleton className="w-16" />
-                    )}
-                  </span>
-                  <span className="inline-flex items-center text-lg">
-                    {data ? (
-                      <>
-                        <span className="mr-2 font-bold">
-                          {data?.followerNumber}
-                        </span>
-                        <span className="text-base">팔로잉</span>
-                      </>
-                    ) : (
-                      <Skeleton className="w-16" />
-                    )}
-                  </span>
-                </p>
-                <p className="whitespace-pre-line">
-                  {data?.introduction || "자기소개 미작성"}
-                </p>
-              </div>
-            </div>
+    <div className="container max-w-4xl">
+      <div className="grid grid-cols-[3rem,1fr] gap-x-4 border-b pb-4">
+        {data ? (
+          <img
+            alt="프로필"
+            src={data.profile.imageUrl}
+            className="h-12 w-12 rounded-xl bg-gray-100"
+          />
+        ) : (
+          <Skeleton className="block h-12 w-12 rounded-xl" />
+        )}
+        <div className="flex items-center space-x-4">
+          <div className="flex-1">
+            <p className="text-lg font-bold leading-snug">
+              {data ? <>{data.profile.name}</> : <Skeleton className="w-12" />}
+            </p>
+            {data?.profile.cert_uni && (
+              <p className="text-sm leading-snug">
+                {data.profile.cert_uni} verified
+              </p>
+            )}
           </div>
-          <div className="flex flex-1 flex-wrap gap-x-3 gap-y-7 md:gap-x-7">
-            {/* {(isLoading
-              ? Array.from({ length: 16 }, () => undefined)
-              : data?.content || []
-            ).map((_, i) => (
-              <ProductElement
-                data={_}
-                className="flex-[1_1_40%] sm:flex-[1_1_240px]"
-                key={i}
+          <div className="flex space-x-2">
+            {data && (
+              <FollowingButton
+                isFollowing={data.profile.follow}
+                userId={userId}
               />
-            ))} */}
-            {Array.from({ length: 2 }).map((_, i) => (
-              <div className="flex-[1_1_40%] sm:flex-[1_1_240px]" key={i} />
-            ))}
+            )}
+            <Button className="aspect-square rounded-full px-0 text-gray-800">
+              <MenuIcon />
+            </Button>
           </div>
+        </div>
+        <div></div>
+        <div>
+          <p className="my-3 space-x-6">
+            <span className="inline-flex items-center">
+              {data ? (
+                <>
+                  <span className="mr-2 font-bold tabular-nums">
+                    {data.profile.followerNumber}
+                  </span>
+                  <span className="text-sm">팔로워</span>
+                </>
+              ) : (
+                <Skeleton className="w-16" />
+              )}
+            </span>
+            <span className="inline-flex items-center">
+              {data ? (
+                <>
+                  <span className="mr-2 font-bold tabular-nums">
+                    {data.profile.followingNumber}
+                  </span>
+                  <span className="text-sm">팔로잉</span>
+                </>
+              ) : (
+                <Skeleton className="w-16" />
+              )}
+            </span>
+          </p>
+          <p
+            className={twMerge(
+              "whitespace-pre-line text-sm",
+              !data?.profile.introduction && " text-gray-600"
+            )}
+          >
+            {data?.profile.introduction || "자기소개 미작성"}
+          </p>
         </div>
       </div>
-    </>
+      {!!data?.products.length && (
+        <>
+          <div className="mb-6 mt-10 text-2xl font-bold">작품 목록</div>
+          <div className="grid grid-cols-2 sm:grid-cols-3">
+            {data?.products.map((product) => (
+              <React.Fragment key={product.id}>
+                <ProductElement
+                  type="market"
+                  showPrice={false}
+                  data={product}
+                />
+              </React.Fragment>
+            ))}
+          </div>
+        </>
+      )}
+      {!!data?.works.length && (
+        <>
+          <div className="mb-6 mt-10 text-2xl font-bold">의뢰 목록</div>
+          <div className="grid grid-cols-2 sm:grid-cols-3">
+            {data?.works.map((product) => (
+              <React.Fragment key={product.id}>
+                <ProductElement type="work" showPrice={false} data={product} />
+              </React.Fragment>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
   );
 }
+
 Page.getLayout = createLayout({
   mobileNav: true,
   rawHeader: (
     <>
       <div className="container relative flex h-12 items-center justify-between bg-white">
         <span className="absolute top-0 left-0 flex h-full w-full items-center justify-center font-bold">
-          마켓
-        </span>
-        <span></span>
-        <span>
-          <img src="/assets/icons/search.svg" className="h-6" />
+          프로필
         </span>
       </div>
     </>

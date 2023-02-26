@@ -1,5 +1,4 @@
-
-import { ProductElement } from "@components/elements/product/ProductElement";
+import { ProductElement } from "@components/elements/ProductElement";
 import { createLayout } from "@components/layout/layout";
 
 import Layout from "../layout";
@@ -15,6 +14,7 @@ export default function Page() {
         <div className="flex flex-wrap gap-x-3 gap-y-7 md:gap-x-7">
           {Array.from({ length: 10 }).map((_, i) => (
             <ProductElement
+              type="market"
               className="flex-[1_1_40%] sm:flex-[1_1_240px]"
               key={i}
             />

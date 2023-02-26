@@ -1,7 +1,6 @@
 import { useAtom } from "jotai/react";
 import { RESET } from "jotai/vanilla/utils";
 
-
 import { SearchInput } from "@components/elements/filter/SearchInput";
 import { BackIcon, CloseIcon, SearchIcon } from "@lib/icons";
 import { http } from "@lib/services/http";
@@ -114,7 +113,14 @@ const MobileFullpageSearch = ({
         <div className="container overflow-y-auto pb-3 scrollbar-hide">
           <div className="flex justify-between py-3 text-sm text-gray-800">
             <span>최근 검색어</span>
-            <span>전체 삭제</span>
+            <button
+              onClick={async () => {
+                await http.post.default("/users/deletehistories");
+                refetch();
+              }}
+            >
+              전체 삭제
+            </button>
           </div>
           <div className="ml-3">
             {data.map((history) => (

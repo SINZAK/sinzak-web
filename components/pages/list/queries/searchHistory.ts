@@ -11,5 +11,7 @@ export const useSearchHistoryQuery = () => {
       return (await http.get("/users/history")).data;
     },
     enabled: !!user,
+    cacheTime: 0,
+    staleTime: 0,
   });
 };

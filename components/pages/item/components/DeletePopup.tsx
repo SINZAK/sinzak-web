@@ -1,22 +1,16 @@
+import NiceModal, { useModal } from "@ebay/nice-modal-react";
 import { Dialog } from "@headlessui/react";
 
 import { Button } from "@components/atoms/Button";
 
-export const DeletePopup = ({
-  isOpen,
-  setIsOpen,
-  onDelete,
-}: {
-  isOpen: boolean;
-  setIsOpen: (value: boolean) => void;
-  onDelete: () => any;
-}) => {
+export const DeletePopup = NiceModal.create(({ onOk }: { onOk: () => any }) => {
+  const modal = useModal();
   return (
     <Dialog
       as="div"
       className="relative z-30"
-      open={isOpen}
-      onClose={() => setIsOpen(false)}
+      open={modal.visible}
+      onClose={() => modal.remove()}
     >
       <div className="fixed inset-0 overflow-y-auto">
         <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm" />
@@ -29,7 +23,7 @@ export const DeletePopup = ({
               <Button
                 className="font-normal text-purple"
                 size="large"
-                onClick={() => setIsOpen(false)}
+                onClick={() => modal.remove()}
               >
                 아니오
               </Button>
@@ -38,8 +32,8 @@ export const DeletePopup = ({
                 intent="secondary"
                 size="large"
                 onClick={() => {
-                  onDelete();
-                  setIsOpen(false);
+                  onOk();
+                  modal.remove();
                 }}
               >
                 네, 삭제할게요
@@ -50,4 +44,4 @@ export const DeletePopup = ({
       </div>
     </Dialog>
   );
-};
+});

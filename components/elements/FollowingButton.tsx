@@ -1,35 +1,41 @@
 import Link from "next/link";
 
+import { Button } from "@components/atoms/Button";
 import { useFollowMutation } from "@lib/queries/follow";
 import { useAuth } from "@lib/services/auth";
 
 export const FollowingButton = ({
   isFollowing,
   userId,
+  size,
 }: {
   isFollowing: boolean;
   userId: number;
+  size?: React.ComponentProps<typeof Button>["size"];
 }) => {
   const { isLoading, mutate } = useFollowMutation();
   const { user } = useAuth();
 
   if (!user)
     return (
-      <Link
+      <Button
+        size={size}
+        intent="primary"
+        outline
+        as={Link}
         href="/auth/signin"
-        className={
-          "rounded-full border border-red px-4 py-1 font-medium text-red"
-        }
       >
         팔로우
-      </Link>
+      </Button>
     );
   if (user.userId === userId) return null;
 
   return (
     <>
       {isFollowing ? (
-        <button
+        <Button
+          size={size}
+          intent="primary"
           onClick={() =>
             mutate({
               mode: "unfollow",
@@ -37,14 +43,14 @@ export const FollowingButton = ({
             })
           }
           disabled={isLoading}
-          className={
-            "rounded-full border border-red bg-red px-4 py-1 font-medium text-white"
-          }
         >
           팔로잉
-        </button>
+        </Button>
       ) : (
-        <button
+        <Button
+          size={size}
+          intent="primary"
+          outline
           onClick={() =>
             mutate({
               mode: "follow",
@@ -52,12 +58,9 @@ export const FollowingButton = ({
             })
           }
           disabled={isLoading}
-          className={
-            "rounded-full border border-red px-4 py-1 font-medium text-red"
-          }
         >
           팔로우
-        </button>
+        </Button>
       )}
     </>
   );

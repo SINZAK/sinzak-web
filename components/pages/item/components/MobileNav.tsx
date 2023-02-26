@@ -3,6 +3,7 @@ import { useAuth } from "@lib/services/auth";
 
 import { ChatButton, MyChatButton } from "./ChatButton";
 import { LikeButton, LikeButtonPlaceholder } from "./LikeButton";
+import { SuggestPriceButton } from "./SuggestPriceButton";
 import { WishButton, WishButtonPlaceholder } from "./WishButton";
 import { useQueryContext } from "../states/QueryProvider";
 
@@ -35,9 +36,16 @@ export const MobileNav = () => {
           data?.userId !== user?.userId ? (
             <div className="flex flex-1 flex-col">
               <ChatButton id={data.id} />
-              <button className="-pb-1 py-1 text-sm font-bold text-purple">
-                가격 제안하기
-              </button>
+              <SuggestPriceButton
+                render={(props) => (
+                  <button
+                    {...props}
+                    className="-pb-1 py-1 text-sm font-bold text-purple"
+                  >
+                    가격 제안하기
+                  </button>
+                )}
+              />
             </div>
           ) : (
             <div className="flex flex-1 flex-col">

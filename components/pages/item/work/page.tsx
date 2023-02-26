@@ -2,6 +2,7 @@ import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 
 import { Button } from "@components/atoms/Button";
+import { FollowingButton } from "@components/elements/FollowingButton";
 import { createLayout } from "@components/layout/layout";
 import { ChatMiniIcon, ScrapMiniIcon, ViewMiniIcon } from "@lib/icons";
 import { getCategoryText } from "@lib/resources/category";
@@ -11,22 +12,21 @@ import { formatNumber, formatRelativeTime } from "@lib/services/intl/format";
 import { useDeleteWorkItemMutation } from "./queries/delete";
 import { useWorkItemQuery } from "./queries/item";
 import { useLikeWorkItemMutation } from "./queries/like";
+import { useSuggestPriceWorkItemMutation } from "./queries/suggest";
 import { useWishWorkItemMutation } from "./queries/wish";
-import { FollowingButton } from "../components/FollowingButton";
 import { ImageViewer } from "../components/Image/ImageViewer";
 import { LikeButton, LikeButtonPlaceholder } from "../components/LikeButton";
 import { DesktopMenuButton } from "../components/Menu/DesktopMenuButton";
 import { MobileHeader } from "../components/MobileHeader";
 import { MobileNav } from "../components/MobileNav";
+import { SuggestPriceButton } from "../components/SuggestPriceButton";
 import { WishButton, WishButtonPlaceholder } from "../components/WishButton";
+import "@egjs/react-flicking/dist/flicking.css";
 import {
   QueryProvider,
-  WorkQueryContextValue,
   useQueryContext,
+  WorkQueryContextValue,
 } from "../states/QueryProvider";
-
-
-import "@egjs/react-flicking/dist/flicking.css";
 
 export default function Page() {
   return (
@@ -37,6 +37,7 @@ export default function Page() {
         useDeleteItemMutation: useDeleteWorkItemMutation,
         useWishMutation: useWishWorkItemMutation,
         useLikeMutation: useLikeWorkItemMutation,
+        useSuggestPriceMutation: useSuggestPriceWorkItemMutation,
       }}
     >
       <Main />
@@ -114,15 +115,23 @@ function Main() {
             <span>거래 문의하기</span>
           </Button>
           <div className="flex space-x-3">
-            <Button intent="primary" outline size="large" className="flex-1">
-              가격 제안하기
-            </Button>
+            <SuggestPriceButton
+              render={({ onClick }) => (
+                <Button
+                  onClick={onClick}
+                  intent="primary"
+                  outline
+                  size="large"
+                  className="flex-1"
+                />
+              )}
+            />
             <DesktopMenuButton />
           </div>
         </div>
       ) : (
         <div className="flex h-fit space-x-3 text-lg font-bold max-md:hidden">
-          <Button intent="primary">
+          <Button as={Link} href="/chat" intent="primary">
             <img
               alt="ask"
               src="/assets/icons/ask.svg"

@@ -9,12 +9,17 @@ import { ItemSimple } from "@types";
 
 export const ProductElement = React.forwardRef<
   any,
-  { className?: string; data?: ItemSimple }
->(({ className, data }, ref) => {
+  {
+    type: "market" | "work";
+    showPrice?: boolean;
+    className?: string;
+    data?: Partial<ItemSimple>;
+  }
+>(({ className, data, type, showPrice }, ref) => {
   if (!data) return <ProductElementSkeleton ref={ref} className={className} />;
   return (
     <Link
-      href={`/market/${data.id}`}
+      href={`/${type}/${data.id}`}
       ref={ref}
       draggable="false"
       className={cx(className, "flex flex-col")}
@@ -34,9 +39,11 @@ export const ProductElement = React.forwardRef<
         <p className="font-medium leading-tight md:text-lg md:leading-tight">
           {data.title}
         </p>
-        <p className="font-bold leading-tight md:text-lg md:leading-tight">
-          {formatNumber(data.price)}원
-        </p>
+        {(showPrice ?? type === "market") && (
+          <p className="font-bold leading-tight md:text-lg md:leading-tight">
+            {formatNumber(data.price)}원
+          </p>
+        )}
         <p className="mt-1 flex space-x-1 text-xs md:text-sm">
           <span>{data.author} 작가</span>
           <span className="text-gray-600">·</span>

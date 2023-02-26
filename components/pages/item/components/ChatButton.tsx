@@ -25,7 +25,7 @@ export const ChatButtonPlaceholder = () => {
 
 export const MyChatButton = ({ chatCnt }: MyChatButtonProps) => {
   return (
-    <Button intent="primary">
+    <Button as={Link} href="/chat" intent="primary">
       <img
         alt="ask"
         src="/assets/icons/ask.svg"

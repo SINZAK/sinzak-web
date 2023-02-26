@@ -9,6 +9,8 @@ export const button = cva(
   [
     "button",
     "hover:bg-opacity-80",
+    "disabled:hover:bg-opacity-50",
+    "disabled:bg-opacity-50",
     "rounded-full",
     "flex",
     "justify-center",

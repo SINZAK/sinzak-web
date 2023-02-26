@@ -2,6 +2,7 @@ import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 
 import { Button } from "@components/atoms/Button";
+import { FollowingButton } from "@components/elements/FollowingButton";
 import { createLayout } from "@components/layout/layout";
 import { ChatMiniIcon, ScrapMiniIcon, ViewMiniIcon } from "@lib/icons";
 import { getCategoryText } from "@lib/resources/category";
@@ -11,25 +12,25 @@ import { formatNumber, formatRelativeTime } from "@lib/services/intl/format";
 import { useDeleteMarketItemMutation } from "./queries/delete";
 import { useMarketItemQuery } from "./queries/item";
 import { useLikeMarketItemMutation } from "./queries/like";
+import { useSuggestPriceMarketItemMutation } from "./queries/suggest";
 import { useWishMarketItemMutation } from "./queries/wish";
 import {
   ChatButton,
   ChatButtonPlaceholder,
   MyChatButton,
 } from "../components/ChatButton";
-import { FollowingButton } from "../components/FollowingButton";
 import { ImageViewer } from "../components/Image/ImageViewer";
 import { LikeButton, LikeButtonPlaceholder } from "../components/LikeButton";
 import { DesktopMenuButton } from "../components/Menu/DesktopMenuButton";
 import { MobileHeader } from "../components/MobileHeader";
 import { MobileNav } from "../components/MobileNav";
+import { SuggestPriceButton } from "../components/SuggestPriceButton";
 import { WishButton, WishButtonPlaceholder } from "../components/WishButton";
 import {
   MarketQueryContextValue,
   QueryProvider,
   useQueryContext,
 } from "../states/QueryProvider";
-
 
 export default function Page() {
   return (
@@ -40,6 +41,7 @@ export default function Page() {
         useDeleteItemMutation: useDeleteMarketItemMutation,
         useWishMutation: useWishMarketItemMutation,
         useLikeMutation: useLikeMarketItemMutation,
+        useSuggestPriceMutation: useSuggestPriceMarketItemMutation,
       }}
     >
       <Main />
@@ -110,9 +112,17 @@ function Main() {
         <div className="flex flex-[0_0_12rem] flex-col space-y-3 font-bold max-md:hidden">
           <ChatButton id={data.id} />
           <div className="flex space-x-3">
-            <Button intent="primary" outline size="large" className="flex-1">
-              가격 제안하기
-            </Button>
+            <SuggestPriceButton
+              render={(props) => (
+                <Button
+                  {...props}
+                  intent="primary"
+                  outline
+                  size="large"
+                  className="flex-1"
+                />
+              )}
+            />
             <DesktopMenuButton />
           </div>
         </div>
@@ -143,7 +153,15 @@ function Main() {
         href={data ? `/profile/${data.userId}` : "#"}
         className="flex flex-1 items-center space-x-4"
       >
-        <span className="inline-block h-12 w-12 rounded-xl bg-gray-100" />
+        {data?.author_picture ? (
+          <img
+            alt="사진"
+            src={data.author_picture}
+            className="inline-block h-12 w-12 rounded-xl bg-gray-200"
+          />
+        ) : (
+          <span className="inline-block h-12 w-12 rounded-xl bg-gray-200" />
+        )}
         <div>
           <p className="text-lg font-bold leading-tight">
             {data ? <>{data.author}</> : <Skeleton className="w-16" />}
@@ -181,9 +199,16 @@ function Main() {
                 <span>cm</span>
               </p>
             )}
-            {typeof data.height === "number" && (
+            {typeof data.vertical === "number" && (
               <p className="contents">
                 <span>세로</span>
+                <span>{data.vertical}</span>
+                <span>cm</span>
+              </p>
+            )}
+            {typeof data.height === "number" && (
+              <p className="contents">
+                <span>높이</span>
                 <span>{data.height}</span>
                 <span>cm</span>
               </p>

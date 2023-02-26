@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
+import { twMerge } from "tailwind-merge";
 
 import NoSsr from "@components/atoms/NoSsr";
-import { logout, useAuth } from "@lib/services/auth";
+import { logout } from "@lib/services/auth";
 import { http } from "@lib/services/http";
 
 const Layout = ({ children }: { children?: React.ReactNode }) => {
@@ -18,10 +18,10 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
       introduction: string;
       followingNumber: string;
       followerNumber: string;
-      imageUrl: any;
-      univ: any;
+      imageUrl: string;
+      univ: string | null;
       cert_uni: boolean;
-      ifFollow: boolean;
+      isFollow: boolean;
     };
   }>(["profileTest"], async () => {
     return (await http.get(`/users/my-profile`)).data;
@@ -29,20 +29,30 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
 
   const { profile, products } = data || {};
 
-  console.log(profile);
-
   return (
     <NoSsr>
       <div className="container flex flex-col md:hidden">
         <div className="flex flex-col items-center justify-center space-y-4 py-7">
-          <span className="inline-block h-16 w-16 rounded-xl bg-gray-200" />
+          {profile ? (
+            <img
+              alt="프로필 사진"
+              src={profile?.imageUrl}
+              className="block h-16 w-16 rounded-xl bg-gray-200"
+            />
+          ) : (
+            <Skeleton className="block h-16 w-16 rounded-xl" />
+          )}
           <div className="text-center">
             <p className="mb-1 text-xl font-bold leading-tight">
               {profile ? <>{profile.name}</> : <Skeleton className="w-12" />}
             </p>
             <p>
               {profile ? (
-                <>{profile.univ} verified</>
+                profile.cert_uni && (
+                  <p className="text-sm leading-snug">
+                    {profile.cert_uni} verified
+                  </p>
+                )
               ) : (
                 <Skeleton className="w-28" />
               )}
@@ -90,7 +100,15 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
         <div className="flex flex-col border-b pb-7">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <span className="inline-block h-14 w-14 rounded-xl bg-gray-100" />
+              {profile ? (
+                <img
+                  alt="프로필 사진"
+                  src={profile?.imageUrl}
+                  className="block h-14 w-14 rounded-xl bg-gray-200"
+                />
+              ) : (
+                <Skeleton className="block h-14 w-14 rounded-xl" />
+              )}
               <div>
                 <p className="text-xl font-bold leading-tight">
                   {profile ? (
@@ -101,7 +119,11 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
                 </p>
                 <p className="flex space-x-1">
                   {profile ? (
-                    <span>{profile?.univ} verified</span>
+                    profile.cert_uni && (
+                      <p className="text-sm leading-snug">
+                        {profile.cert_uni} verified
+                      </p>
+                    )
                   ) : (
                     <Skeleton className="w-28" />
                   )}
@@ -114,35 +136,40 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
           </div>
           <div className="flex items-center space-x-4">
             <span className="inline-block h-14 w-14" />
-            <div className="mt-5 flex flex-col space-y-3">
-              <p className="space-x-6">
-                <span className="inline-flex items-center text-lg">
-                  {profile ? (
+            <div>
+              <p className="my-3 space-x-6">
+                <span className="inline-flex items-center">
+                  {data ? (
                     <>
                       <span className="mr-2 font-bold">
-                        {profile?.followerNumber}
+                        {data.profile.followerNumber}
                       </span>
-                      <span className="text-base">팔로워</span>
+                      <span className="text-sm">팔로워</span>
                     </>
                   ) : (
                     <Skeleton className="w-16" />
                   )}
                 </span>
-                <span className="inline-flex items-center text-lg">
+                <span className="inline-flex items-center">
                   {data ? (
                     <>
                       <span className="mr-2 font-bold">
-                        {profile?.followingNumber}
+                        {data.profile.followerNumber}
                       </span>
-                      <span className="text-base">팔로잉</span>
+                      <span className="text-sm">팔로잉</span>
                     </>
                   ) : (
                     <Skeleton className="w-16" />
                   )}
                 </span>
               </p>
-              <p className="whitespace-pre-line">
-                {profile?.introduction || "자기소개 미작성"}
+              <p
+                className={twMerge(
+                  "whitespace-pre-line text-sm",
+                  !data?.profile.introduction && " text-gray-600"
+                )}
+              >
+                {data?.profile.introduction || "자기소개 미작성"}
               </p>
             </div>
           </div>

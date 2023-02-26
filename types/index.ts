@@ -16,16 +16,32 @@ export type CustomAppProps = AppProps & {
 };
 
 export interface UserProfile {
-  cert_uni: boolean;
-  followerNumber: string;
-  followingNumber: string;
-  ifFollow: boolean;
-  imageUrl: string;
-  introduction: string;
-  myProfile: boolean;
-  name: string;
-  univ: string;
-  userId: number;
+  profile: {
+    userId: number;
+    myProfile: boolean;
+    name: string;
+    introduction: string;
+    followingNumber: string;
+    followerNumber: string;
+    imageUrl: any;
+    univ: string;
+    cert_uni: boolean;
+    follow: boolean;
+  };
+  products: {
+    id: number;
+    thumbnail: string;
+    title: string;
+    date: string;
+    complete: boolean;
+  }[];
+  works: {
+    id: number;
+    thumbnail: string;
+    title: string;
+    date: string;
+    complete: boolean;
+  }[];
 }
 
 export interface ItemSimple {

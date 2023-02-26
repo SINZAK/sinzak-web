@@ -1,11 +1,12 @@
-import { useState } from "react";
-
+import { useCallback, useState } from "react";
+import NiceModal from "@ebay/nice-modal-react";
 
 import { Menu } from "@components/atoms/Menu";
 import { DeletePopup } from "@components/pages/item/components/DeletePopup";
 import { useAuth } from "@lib/services/auth";
 
 import { useQueryContext } from "../../states/QueryProvider";
+import { ReportPopup } from "../ReportPopup";
 
 export const MenuButton = ({
   button: MenuButton,
@@ -16,9 +17,16 @@ export const MenuButton = ({
 
   const { useItemQuery, useDeleteItemMutation } = useQueryContext();
   const { data } = useItemQuery();
-  const { mutate } = useDeleteItemMutation();
+  const { mutate: mutateDelete } = useDeleteItemMutation();
 
-  const [isOpen, setIsOpen] = useState(false);
+  const showReportPopup = useCallback(() => {
+    NiceModal.show(ReportPopup, {
+      userId: data?.userId,
+    });
+  }, [data?.userId]);
+  const showDeletePopup = useCallback(() => {
+    NiceModal.show(DeletePopup, { onOk: () => mutateDelete() });
+  }, [mutateDelete]);
 
   if (!data) return <MenuButton />;
 
@@ -26,24 +34,19 @@ export const MenuButton = ({
     return (
       <>
         <Menu button={<MenuButton />}>
-          <Menu.Item>신고하기</Menu.Item>
-          <Menu.Item className="text-purple">
+          <Menu.Item onClick={showReportPopup}>신고하기</Menu.Item>
+          {/* <Menu.Item className="text-purple">
             {data?.author}님 차단하기
-          </Menu.Item>
+          </Menu.Item> */}
         </Menu>
       </>
     );
 
   return (
     <>
-      <DeletePopup
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        onDelete={() => mutate()}
-      />
       <Menu button={<MenuButton />}>
         <Menu.Item>수정</Menu.Item>
-        <Menu.Item onClick={() => setIsOpen(true)} className="text-red">
+        <Menu.Item onClick={showDeletePopup} className="text-red">
           삭제
         </Menu.Item>
       </Menu>

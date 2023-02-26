@@ -9,6 +9,7 @@ import { CustomAppProps } from "@types";
 
 import "react-loading-skeleton/dist/skeleton.css";
 import "../styles/globals.css";
+import NiceModal from "@ebay/nice-modal-react";
 
 if (typeof document === "undefined") {
   React.useLayoutEffect = React.useEffect;
@@ -39,11 +40,13 @@ export default function App({ Component, pageProps }: CustomAppProps) {
         }
       `}</style>
       <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <SkeletonTheme inline baseColor="#eee" highlightColor="#ddd">
-            <div id="main">{getLayout(<Component {...pageProps} />)}</div>
-          </SkeletonTheme>
-        </AuthProvider>
+        <NiceModal.Provider>
+          <AuthProvider>
+            <SkeletonTheme inline baseColor="#eee" highlightColor="#ddd">
+              <div id="main">{getLayout(<Component {...pageProps} />)}</div>
+            </SkeletonTheme>
+          </AuthProvider>
+        </NiceModal.Provider>
       </QueryClientProvider>
     </>
   );
