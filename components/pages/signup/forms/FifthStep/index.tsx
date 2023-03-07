@@ -4,6 +4,7 @@ import { Button } from "@components/atoms/Button";
 import { CheckIcon } from "@lib/icons";
 
 import { MailVerify } from "./MailVerify";
+import { PhotoVerify } from "./PhotoVerify";
 
 export const FifthStep = () => {
   const [verifyType, setVerifyType] = useState<"mail" | "photo">("mail");
