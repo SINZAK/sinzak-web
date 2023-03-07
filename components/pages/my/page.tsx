@@ -1,10 +1,15 @@
 import { createLayout } from "@components/layout/layout";
+import useBreakpoint from "@lib/hooks/useBreakpoint";
 
+import { DesktopMy } from "./components/DesktopMy";
+import { MobileMy } from "./components/MobileMy";
 import Layout from "./layout";
 
-
 export default function Page() {
-  return <Layout>asdfas</Layout>;
+  const { breakpoint } = useBreakpoint();
+
+  if (breakpoint === "narrow") return <MobileMy />;
+  return <DesktopMy />;
 }
 
 Page.getLayout = createLayout({

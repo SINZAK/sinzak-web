@@ -8,9 +8,9 @@ import { forwardRefWithPolymorphic } from "@lib/utils/forwardRefWithPolymorphic"
 export const button = cva(
   [
     "button",
-    "hover:bg-opacity-80",
-    "disabled:hover:bg-opacity-50",
-    "disabled:bg-opacity-50",
+    "hover:opacity-80",
+    "disabled:hover:opacity-50",
+    "disabled:opacity-50",
     "rounded-full",
     "flex",
     "justify-center",

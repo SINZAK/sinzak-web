@@ -1,21 +1,20 @@
 import { useAtomValue } from "jotai/react";
 import { RESET } from "jotai/vanilla/utils";
-import { useBreakpoint } from "use-breakpoint";
 
 import NoSsr from "@components/atoms/NoSsr";
 import { createLayout, MobileNav } from "@components/layout/layout";
+import useBreakpoint from "@lib/hooks/useBreakpoint";
 
 import { ChatListView } from "./components/ChatListView";
 import { ChatRoomPreview } from "./components/ChatRoomPreview";
 import { ChatRoomView } from "./components/ChatRoomView";
 import { postIdAtom, roomIdAtom } from "./states";
 
-const BREAKPOINTS = { narrow: 0, wide: 960 };
-
 const Chat = () => {
   const roomId = useAtomValue(roomIdAtom);
   const postId = useAtomValue(postIdAtom);
-  const { breakpoint } = useBreakpoint(BREAKPOINTS);
+  const { breakpoint } = useBreakpoint();
+
   if (breakpoint === "narrow")
     return (
       <>

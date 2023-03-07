@@ -1,30 +1,88 @@
+import { useAtomValue } from "jotai/react";
+
 import { ProductElement } from "@components/elements/ProductElement";
 import { createLayout } from "@components/layout/layout";
+import useBreakpoint from "@lib/hooks/useBreakpoint";
 
+import { Filter } from "./components/Filter";
+import {
+  filterAtom,
+  FilterProvider,
+  filterSaleAtom,
+  filterTypeAtom,
+  useFilter,
+} from "./states/filter";
 import Layout from "../layout";
+import { useMyWishQuery } from "../queries/useMyWishQuery";
 
-export default function Page() {
+const PageContent = () => {
+  const { data } = useMyWishQuery();
+  const filter = useFilter();
+  console.log(filter.type);
+
+  const filteredItems = data
+    ? filter.type === "market"
+      ? data.productWishes
+      : data.workWishes
+    : null;
+
   return (
     <>
-      <Layout>
-        <p className="mb-7 flex items-center justify-between">
-          <span className="text-2xl font-bold">스크랩 목록</span>
-          <span>판매중 작품만 보기</span>
-        </p>
-        <div className="flex flex-wrap gap-x-3 gap-y-7 md:gap-x-7">
-          {Array.from({ length: 10 }).map((_, i) => (
-            <ProductElement
-              type="market"
-              className="flex-[1_1_40%] sm:flex-[1_1_240px]"
-              key={i}
-            />
-          ))}
-          {Array.from({ length: 2 }).map((_, i) => (
-            <div className="flex-[1_1_40%] sm:flex-[1_1_240px]" key={i} />
-          ))}
-        </div>
-      </Layout>
+      <Filter />
+      <div className="mt-7 flex flex-wrap gap-x-3 gap-y-7 md:gap-x-7">
+        {data ? (
+          <>
+            {filteredItems?.map(({ thumbnail, ...rest }, i) => (
+              <ProductElement
+                data={{
+                  thumbnail: thumbnail || undefined,
+                  ...rest,
+                }}
+                showPrice={filter.type === "market"}
+                type="market"
+                className="flex-[1_1_40%] sm:flex-[1_1_240px]"
+                key={i}
+              />
+            ))}
+            {Array.from({ length: 2 }).map((_, i) => (
+              <div className="flex-[1_1_40%] sm:flex-[1_1_240px]" key={i} />
+            ))}
+          </>
+        ) : (
+          <>
+            {Array.from({ length: 10 }).map((_, i) => (
+              <ProductElement
+                showPrice={false}
+                type="market"
+                className="flex-[1_1_40%] sm:flex-[1_1_240px]"
+                key={i}
+              />
+            ))}
+            {Array.from({ length: 2 }).map((_, i) => (
+              <div className="flex-[1_1_40%] sm:flex-[1_1_240px]" key={i} />
+            ))}
+          </>
+        )}
+      </div>
     </>
+  );
+};
+
+export default function Page() {
+  const { breakpoint } = useBreakpoint();
+
+  if (breakpoint === "narrow")
+    return (
+      <FilterProvider>
+        <PageContent />
+      </FilterProvider>
+    );
+  return (
+    <FilterProvider>
+      <Layout>
+        <PageContent />
+      </Layout>
+    </FilterProvider>
   );
 }
 

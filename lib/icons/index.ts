@@ -1,6 +1,7 @@
 export { default as ViewMiniIcon } from "@public/assets/icons/view-mini.svg";
 export { default as ChatMiniIcon } from "@public/assets/icons/chat-mini.svg";
 export { default as ScrapMiniIcon } from "@public/assets/icons/scrap-mini.svg";
+export { default as CameraIcon } from "@public/assets/icons/camera.svg";
 
 export { default as CheckIcon } from "@public/assets/icons/check.svg";
 
@@ -15,7 +16,7 @@ export { default as MenuIcon } from "@public/assets/icons/menu.svg";
 export { default as CloseIcon } from "@public/assets/icons/close.svg";
 
 export { default as ChevronLeftIcon } from "@public/assets/icons/chevron-left.svg";
-export { default as ChevronRightICon } from "@public/assets/icons/chevron-right.svg";
+export { default as ChevronRightIcon } from "@public/assets/icons/chevron-right.svg";
 
 export { default as PictureIcon } from "@public/assets/icons/picture.svg";
 export { default as PictureFilledIcon } from "@public/assets/icons/picture-filled.svg";

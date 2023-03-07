@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
-
 import { WishFilledIcon, WishIcon } from "@lib/icons";
 import { useAuth } from "@lib/services/auth";
 
@@ -11,9 +10,15 @@ export interface WishButtonProps {
   isWish: boolean;
   userId: number;
   id: number;
+  wishCnt: number;
 }
 
-export const WishButton = ({ isWish, userId, id }: WishButtonProps) => {
+export const WishButton = ({
+  isWish,
+  userId,
+  id,
+  wishCnt,
+}: WishButtonProps) => {
   const { useWishMutation } = useQueryContext();
   const { mutate, isLoading } = useWishMutation();
 
@@ -34,7 +39,7 @@ export const WishButton = ({ isWish, userId, id }: WishButtonProps) => {
     return (
       <span className="-mr-4 flex w-16 flex-col items-center">
         <WishIcon className="h-8 w-8 text-gray-600" />
-        <p className="-mx-4 mt-1 text-sm text-gray-600">찜하기</p>
+        <p className="-mx-4 mt-1 text-sm text-gray-600">{wishCnt}</p>
       </span>
     );
 

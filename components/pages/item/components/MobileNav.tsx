@@ -27,7 +27,12 @@ export const MobileNav = () => {
             <LikeButtonPlaceholder />
           )}
           {data ? (
-            <WishButton id={data.id} userId={data.userId} isWish={data.wish} />
+            <WishButton
+              id={data.id}
+              userId={data.userId}
+              isWish={data.wish}
+              wishCnt={data.wishCnt}
+            />
           ) : (
             <WishButtonPlaceholder />
           )}

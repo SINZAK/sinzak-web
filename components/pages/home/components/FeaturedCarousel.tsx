@@ -3,7 +3,7 @@ import Flicking from "@egjs/react-flicking";
 import Link from "next/link";
 
 import { ProductElement } from "@components/elements/ProductElement";
-import { ChevronLeftIcon, ChevronRightICon } from "@lib/icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@lib/icons";
 import { ItemSimple } from "@types";
 
 import "@egjs/react-flicking/dist/flicking.css";
@@ -55,7 +55,7 @@ export const FeaturedCarousel = ({
               <ChevronLeftIcon className="fill-gray-800" />
             </button>
             <button onClick={onClickNext}>
-              <ChevronRightICon className="fill-gray-800" />
+              <ChevronRightIcon className="fill-gray-800" />
             </button>
           </span>
         </span>

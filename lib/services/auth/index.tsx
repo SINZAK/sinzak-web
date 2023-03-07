@@ -17,6 +17,25 @@ type Auth = {
 
 const AuthContext = createContext<Auth>({ user: null, isLoading: true });
 
+export const login = async ({
+  accessToken,
+  refreshToken,
+  accessTokenExpireDate,
+}: {
+  accessToken: string;
+  refreshToken: string;
+  accessTokenExpireDate: number;
+}) => {
+  try {
+    inMemoryJWTManager.setToken(accessToken, accessTokenExpireDate);
+    localStorage.setItem("refreshToken", refreshToken);
+    return true;
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+};
+
 export const tempLogin = async (email: string) => {
   try {
     const {
@@ -36,6 +55,7 @@ export const tempLogin = async (email: string) => {
     return false;
   }
 };
+
 export const logout = async () => {
   try {
     localStorage.removeItem("refreshToken");
@@ -70,11 +90,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffectOnce(() => {
     const accessToken = inMemoryJWTManager.getToken();
     if (accessToken === null) {
+      localStorage.removeItem("refreshToken");
       setIsLoading(false);
       return;
     }
     const refreshToken = localStorage.getItem("refreshToken");
     if (!refreshToken) {
+      inMemoryJWTManager.eraseToken();
       setIsLoading(false);
       return;
     }

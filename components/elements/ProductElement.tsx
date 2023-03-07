@@ -16,7 +16,16 @@ export const ProductElement = React.forwardRef<
     data?: Partial<ItemSimple>;
   }
 >(({ className, data, type, showPrice }, ref) => {
-  if (!data) return <ProductElementSkeleton ref={ref} className={className} />;
+  showPrice = showPrice ?? type === "market";
+
+  if (!data)
+    return (
+      <ProductElementSkeleton
+        showPrice={showPrice}
+        ref={ref}
+        className={className}
+      />
+    );
   return (
     <Link
       href={`/${type}/${data.id}`}
@@ -39,14 +48,18 @@ export const ProductElement = React.forwardRef<
         <p className="font-medium leading-tight md:text-lg md:leading-tight">
           {data.title}
         </p>
-        {(showPrice ?? type === "market") && (
+        {showPrice && (
           <p className="font-bold leading-tight md:text-lg md:leading-tight">
             {formatNumber(data.price)}원
           </p>
         )}
         <p className="mt-1 flex space-x-1 text-xs md:text-sm">
-          <span>{data.author} 작가</span>
-          <span className="text-gray-600">·</span>
+          {data.author !== undefined && (
+            <>
+              <span>{data.author} 작가</span>
+              <span className="text-gray-600">·</span>
+            </>
+          )}
           <span className="text-gray-600">{formatRelativeTime(data.date)}</span>
         </p>
       </div>
@@ -57,8 +70,8 @@ ProductElement.displayName = "ProductElement";
 
 const ProductElementSkeleton = React.forwardRef<
   HTMLDivElement,
-  { className?: string }
->(({ className }, ref) => {
+  { className?: string; showPrice: boolean }
+>(({ className, showPrice }, ref) => {
   return (
     <div ref={ref} className={cx(className, "flex flex-col")}>
       <Skeleton inline className="!block aspect-4/3 !rounded-xl" />
@@ -66,9 +79,11 @@ const ProductElementSkeleton = React.forwardRef<
         <p className="font-medium leading-tight md:text-lg md:leading-tight">
           <Skeleton width="6em" />
         </p>
-        <p className="font-bold leading-tight md:text-lg md:leading-tight">
-          <Skeleton width="9em" />
-        </p>
+        {showPrice && (
+          <p className="font-bold leading-tight md:text-lg md:leading-tight">
+            <Skeleton width="9em" />
+          </p>
+        )}
         <p className="mt-1 flex space-x-1 text-xs md:text-sm">
           <Skeleton width="10em" />
         </p>

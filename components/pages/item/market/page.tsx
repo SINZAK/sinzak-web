@@ -99,7 +99,12 @@ function Main() {
         <LikeButtonPlaceholder />
       )}
       {data ? (
-        <WishButton id={data.id} userId={data.userId} isWish={data.wish} />
+        <WishButton
+          id={data.id}
+          userId={data.userId}
+          isWish={data.wish}
+          wishCnt={data.wishCnt}
+        />
       ) : (
         <WishButtonPlaceholder />
       )}
@@ -169,8 +174,12 @@ function Main() {
           <p className="flex space-x-1 text-sm">
             {data ? (
               <>
-                <span>{data?.univ}</span>
-                <span>·</span>
+                {data?.univ && (
+                  <>
+                    <span>{data.univ}</span>
+                    <span>·</span>
+                  </>
+                )}
                 <span>팔로우 {data?.followerNum || 0}</span>
               </>
             ) : (

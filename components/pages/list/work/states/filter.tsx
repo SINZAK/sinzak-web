@@ -2,7 +2,6 @@ import { createContext, useContext } from "react";
 import { useAtomValue } from "jotai/react";
 import { atom, createStore } from "jotai/vanilla";
 
-
 import { Category } from "@lib/resources/category";
 import { atomWithHash } from "@lib/utils/atomWithHash";
 import removeEmptyField from "@lib/utils/removeEmptyField";
@@ -44,7 +43,7 @@ export const filterCategoriesAtom = atomWithHash<Filter["categories"]>(
 );
 export const filterEmploymentAtom = atomWithHash<Filter["employment"]>(
   "employment",
-  true,
+  false,
   {
     setHash: "nextRouterReplace",
   }

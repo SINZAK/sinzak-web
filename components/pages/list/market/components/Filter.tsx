@@ -1,6 +1,5 @@
 import { useAtom } from "jotai/react";
 
-
 import { CheckBox } from "@components/atoms/CheckBox";
 import { AlignSelectFilter } from "@components/elements/filter/AlignSelectFilter";
 
@@ -18,10 +17,7 @@ export const Filter = () => {
   return (
     <span className="flex h-6 flex-1 items-center justify-between max-md:px-0.5">
       <span className="inline-flex items-center font-medium text-gray-800">
-        <CheckBox
-          checked={filterSale}
-          onCheckedChange={(_) => setFilterSale(!!_)}
-        >
+        <CheckBox checked={filterSale} onChange={(_) => setFilterSale(!!_)}>
           판매중 작품만 보기
         </CheckBox>
       </span>
