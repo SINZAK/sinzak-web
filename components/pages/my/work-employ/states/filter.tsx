@@ -5,22 +5,17 @@ import { atom, createStore } from "jotai/vanilla";
 import { atomWithHash } from "@lib/utils/atomWithHash";
 import removeEmptyField from "@lib/utils/removeEmptyField";
 export interface Filter {
-  type: "market" | "work";
   sale: boolean;
 }
 
 // atom
 
-export const filterTypeAtom = atomWithHash<Filter["type"]>("type", "market", {
-  setHash: "nextRouterReplace",
-});
 export const filterSaleAtom = atomWithHash<Filter["sale"]>("sale", false, {
   setHash: "nextRouterReplace",
 });
 
 export const filterAtom = atom<Filter>((get) => {
   const filter = {
-    type: get(filterTypeAtom),
     sale: get(filterSaleAtom),
   };
   return removeEmptyField(filter);

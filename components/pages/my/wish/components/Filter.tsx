@@ -17,7 +17,7 @@ export const Filter = () => {
   const [filterSale, setFilterSale] = useAtom(filterSaleAtom, { store });
 
   return (
-    <span className="flex h-6 flex-1 items-center justify-between max-md:px-0.5">
+    <span className="mt-3 flex h-6 flex-1 items-center justify-between max-md:px-0.5">
       <span className="space-x-4 text-base font-bold text-gray-800 md:text-xl">
         <button
           onClick={() => setFilterType("market")}

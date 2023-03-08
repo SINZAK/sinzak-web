@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import NiceModal from "@ebay/nice-modal-react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { SkeletonTheme } from "react-loading-skeleton";
 
@@ -9,7 +10,6 @@ import { CustomAppProps } from "@types";
 
 import "react-loading-skeleton/dist/skeleton.css";
 import "../styles/globals.css";
-import NiceModal from "@ebay/nice-modal-react";
 
 if (typeof document === "undefined") {
   React.useLayoutEffect = React.useEffect;

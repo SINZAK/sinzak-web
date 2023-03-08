@@ -7,17 +7,13 @@ import { BackIcon } from "@lib/icons";
 import { Filter } from "./components/Filter";
 import { FilterProvider, useFilter } from "./states/filter";
 import Layout from "../Layout";
-import { useMyWishQuery } from "../queries/useMyWishQuery";
+import { useMyProfileQuery } from "../queries/useMyProfileQuery";
 
 const PageContent = () => {
-  const { data } = useMyWishQuery();
-  const filter = useFilter();
+  const { data } = useMyProfileQuery();
+  const { profile, products, works: items, workEmploys } = data || {};
 
-  const filteredItems = data
-    ? filter.type === "market"
-      ? data.productWishes
-      : data.workWishes
-    : null;
+  const filter = useFilter();
 
   return (
     <>
@@ -25,14 +21,13 @@ const PageContent = () => {
       <div className="mt-7 flex flex-wrap gap-x-3 gap-y-7 md:gap-x-7">
         {data ? (
           <>
-            {filteredItems?.map(({ thumbnail, ...rest }, i) => (
+            {items?.map(({ thumbnail, ...rest }, i) => (
               <ProductElement
                 data={{
                   thumbnail: thumbnail || undefined,
                   ...rest,
                 }}
-                showPrice={filter.type === "market"}
-                type={filter.type}
+                type={"market"}
                 className="flex-[1_1_40%] sm:flex-[1_1_240px]"
                 key={i}
               />
@@ -46,7 +41,7 @@ const PageContent = () => {
             {Array.from({ length: 10 }).map((_, i) => (
               <ProductElement
                 showPrice={false}
-                type={filter.type}
+                type={"market"}
                 className="flex-[1_1_40%] sm:flex-[1_1_240px]"
                 key={i}
               />
@@ -80,7 +75,7 @@ const MobileHeader = () => {
           <BackIcon />
         </button>
         <span className="absolute left-1/2 flex h-full -translate-x-1/2 items-center font-bold">
-          스크랩 목록
+          내 작업해요
         </span>
       </div>
     </>

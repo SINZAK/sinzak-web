@@ -2,17 +2,17 @@ import { ProductElement } from "@components/elements/ProductElement";
 import { FeaturedCarousel } from "@components/pages/home/components/FeaturedCarousel";
 
 import { ProductsCarousel } from "./ProductsCarousel";
-import Layout from "../layout";
+import DesktopLayout from "../DesktopLayout";
 import { useMyProfileQuery } from "../queries/useMyProfileQuery";
 
 export const DesktopMy = () => {
   const { data } = useMyProfileQuery();
 
-  if (!data) return <Layout />;
+  if (!data) return <DesktopLayout />;
   const { products, works, workEmploys } = data;
 
   return (
-    <Layout>
+    <DesktopLayout>
       <div className="flex flex-col space-y-10">
         {products.length > 0 && (
           <ProductsCarousel type="market" title="판매 작품" data={products} />
@@ -24,6 +24,6 @@ export const DesktopMy = () => {
           <ProductsCarousel type="work" title="작업해요" data={workEmploys} />
         )}
       </div>
-    </Layout>
+    </DesktopLayout>
   );
 };

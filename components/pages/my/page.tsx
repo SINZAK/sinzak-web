@@ -3,7 +3,6 @@ import useBreakpoint from "@lib/hooks/useBreakpoint";
 
 import { DesktopMy } from "./components/DesktopMy";
 import { MobileMy } from "./components/MobileMy";
-import Layout from "./layout";
 
 export default function Page() {
   const { breakpoint } = useBreakpoint();

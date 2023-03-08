@@ -1,14 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
+import { useCallback } from "react";
+import NiceModal from "@ebay/nice-modal-react";
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 
-import { http } from "@lib/services/http";
+import { Button } from "@components/atoms/Button";
 
+import { EditProfilePopup } from "./EditProfilePopup";
 import { useMyProfileQuery } from "../queries/useMyProfileQuery";
 
 export const MobileMy = () => {
   const { data } = useMyProfileQuery();
-  const { profile, products, works, workEmploys } = data || {};
+  const { profile } = data || {};
+
+  const showEditProfilePopup = useCallback(() => {
+    NiceModal.show(EditProfilePopup, {
+      initialProfile: data?.profile,
+    });
+  }, [data?.profile]);
 
   return (
     <div className="container flex flex-col md:hidden">
@@ -67,12 +75,15 @@ export const MobileMy = () => {
             {profile?.introduction || "자기소개 미작성"}
           </p>
         </div>
+        <Button onClick={showEditProfilePopup} intent="primary" outline>
+          프로필 편집
+        </Button>
       </div>
       <div className="flex flex-col divide-y text-lg font-bold [&>*]:py-4">
         <Link href="/my/wish">스크랩 목록</Link>
-        <Link href="/">의뢰해요</Link>
-        <Link href="/">판매 작품</Link>
-        <Link href="/">작업해요</Link>
+        <Link href="/my/market">내 판매 작품</Link>
+        <Link href="/my/work-employ">내 의뢰해요</Link>
+        <Link href="/my/work">내 작업해요</Link>
       </div>
     </div>
   );
