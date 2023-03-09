@@ -3,7 +3,7 @@ import { NextRouter, useRouter } from "next/router";
 import NoSsr from "@components/atoms/NoSsr";
 import { useEffectOnce } from "@lib/hooks/useEffectOnce";
 import { login } from "@lib/services/auth";
-import inMemoryJwtManager from "@lib/services/auth/inMemoryJwtManager";
+import jwtManager from "@lib/services/auth/inMemoryJwtManager";
 import { http } from "@lib/services/http";
 
 const oauthFn = {
@@ -54,7 +54,7 @@ const Main = ({ router }: { router: NextRouter }) => {
         login({ accessToken, accessTokenExpireDate, refreshToken });
         router.replace("/");
       } else {
-        inMemoryJwtManager.setToken(accessToken, accessTokenExpireDate);
+        jwtManager.setToken(accessToken, accessTokenExpireDate);
         router.replace("/auth/signup");
       }
     })();

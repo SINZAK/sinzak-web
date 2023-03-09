@@ -1,8 +1,7 @@
-
 import { API } from "@lib/utils/consts";
 import { isDevEnv } from "@lib/utils/env";
 
-import inMemoryJwtManager from "./auth/inMemoryJwtManager";
+import jwtManager from "./auth/inMemoryJwtManager";
 
 const BASE_ENDPOINT = isDevEnv ? API.DEV_ENDPOINT : API.PROD_ENDPOINT;
 const BASE_PATH_PREFIX = API.BASE_PATH_PREFIX;
@@ -43,8 +42,8 @@ async function common<T = any>(
       merge(
         {
           headers: {
-            ...(inMemoryJwtManager.getToken() && {
-              Authorization: inMemoryJwtManager.getToken()!,
+            ...(jwtManager.getAccessToken() && {
+              Authorization: jwtManager.getAccessToken()!,
             }),
           },
         },

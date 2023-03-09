@@ -1,8 +1,14 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 import { useEffectOnce } from "@lib/hooks/useEffectOnce";
 
-import inMemoryJWTManager from "./inMemoryJwtManager";
+import jwtManager from "./inMemoryJwtManager";
 import { http } from "../http";
 
 type User = null | {
@@ -13,9 +19,14 @@ type User = null | {
 type Auth = {
   user: User;
   isLoading: boolean;
+  renew: () => void;
 };
 
-const AuthContext = createContext<Auth>({ user: null, isLoading: true });
+const AuthContext = createContext<Auth>({
+  user: null,
+  isLoading: true,
+  renew: () => {},
+});
 
 export const login = async ({
   accessToken,
@@ -27,8 +38,7 @@ export const login = async ({
   accessTokenExpireDate: number;
 }) => {
   try {
-    inMemoryJWTManager.setToken(accessToken, accessTokenExpireDate);
-    localStorage.setItem("refreshToken", refreshToken);
+    jwtManager.setToken({ accessToken, refreshToken, accessTokenExpireDate });
     return true;
   } catch (e) {
     console.error(e);
@@ -47,8 +57,7 @@ export const tempLogin = async (email: string) => {
     }>("/login", {
       email,
     });
-    inMemoryJWTManager.setToken(accessToken, accessTokenExpireDate);
-    localStorage.setItem("refreshToken", refreshToken);
+    jwtManager.setToken({ accessToken, accessTokenExpireDate, refreshToken });
     return true;
   } catch (e) {
     console.error(e);
@@ -58,8 +67,7 @@ export const tempLogin = async (email: string) => {
 
 export const logout = async () => {
   try {
-    localStorage.removeItem("refreshToken");
-    inMemoryJWTManager.eraseToken();
+    jwtManager.eraseToken();
     location.href = "/";
   } catch (e) {
     console.error(e);
@@ -87,16 +95,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<User>(null);
 
-  useEffectOnce(() => {
-    const accessToken = inMemoryJWTManager.getToken();
-    if (accessToken === null) {
-      localStorage.removeItem("refreshToken");
-      setIsLoading(false);
-      return;
-    }
-    const refreshToken = localStorage.getItem("refreshToken");
-    if (!refreshToken) {
-      inMemoryJWTManager.eraseToken();
+  const renew = useCallback(() => {
+    const { accessToken, refreshToken } = jwtManager.getToken();
+    if (!accessToken || !refreshToken) {
       setIsLoading(false);
       return;
     }
@@ -113,8 +114,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       )
       .then(
         ({ data: { accessToken, refreshToken, accessTokenExpireDate } }) => {
-          inMemoryJWTManager.setToken(accessToken, accessTokenExpireDate);
-          localStorage.setItem("refreshToken", refreshToken);
+          jwtManager.setToken({
+            accessToken,
+            accessTokenExpireDate,
+            refreshToken,
+          });
           const payload = parseJwt(accessToken);
           setUser({
             email: payload.sub,
@@ -127,10 +131,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         console.error(e);
         setIsLoading(false);
       });
-  });
+  }, []);
+
+  useEffectOnce(renew);
 
   return (
-    <AuthContext.Provider value={{ user, isLoading }}>
+    <AuthContext.Provider value={{ user, isLoading, renew }}>
       {children}
     </AuthContext.Provider>
   );

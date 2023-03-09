@@ -4,7 +4,7 @@ import { FormProvider, useForm } from "react-hook-form";
 
 import { useEffectOnce } from "@lib/hooks/useEffectOnce";
 import { ChevronLeftIcon } from "@lib/icons";
-import inMemoryJwtManager from "@lib/services/auth/inMemoryJwtManager";
+import jwtManager from "@lib/services/auth/inMemoryJwtManager";
 import Splash from "@public/assets/login-splash-bg.jpg?inline";
 
 import { FifthStep } from "./forms/FifthStep";
@@ -54,7 +54,7 @@ export default function Page() {
   const router = useRouter();
 
   useEffectOnce(() => {
-    if (inMemoryJwtManager.getToken()) setValid(true);
+    if (jwtManager.getAccessToken()) setValid(true);
     else router.push("/auth/signin");
   });
 
