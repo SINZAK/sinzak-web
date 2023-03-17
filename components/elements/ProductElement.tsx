@@ -38,6 +38,7 @@ export const ProductElement = React.forwardRef<
           <Image
             src={data.thumbnail}
             fill
+            sizes="480px"
             className="object-cover"
             alt=""
             draggable="false"
