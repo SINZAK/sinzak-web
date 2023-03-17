@@ -20,8 +20,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          outputs: type=local,dest=./web-client.tar
-          tags: web-client:${{ github.sha }}
+          outputs: type=tar,dest=./web-client.tar
+          tags: sinzak-web
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -35,3 +35,18 @@ jobs:
           source: "./web-client.tar"
           target: "/home/ec2-user/deploy-web"
           strip_components: 0
+
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        id: deploy-prod
+        with:
+          host: ${{ secrets.HOST_DEV }}
+          username: ec2-user
+          key: ${{ secrets.SSH_PEM_KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+          port: 22
+          script: |
+            cd ./deploy-web
+            docker load --image ./web-client.tar
+            docker container stop sinzak-web
+            docker run -d --rm -p 8080:8080 --name sinzak-web sinzak-web
