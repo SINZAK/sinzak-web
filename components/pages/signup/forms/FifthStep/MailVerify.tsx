@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { Button } from "@components/atoms/Button";
@@ -12,35 +12,46 @@ export const MailVerify = () => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [isSent, setIsSent] = useState(false);
-  const valid = new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}").test(email);
-  const { mutateAsync: mutateSendAsync, isLoading: isSendLoading } =
+
+  const { mutate: mutateSend, isLoading: isSendLoading } =
     useSendMailCertifyMutation();
-  const { mutateAsync: mutateCheckAsync, isLoading: isCheckLoading } =
+  const { mutate: mutateCheck, isLoading: isCheckLoading } =
     useCheckMailCertifyMutation();
   const [_, setStep] = useStepContext();
 
-  const sendMailCertify = async () => {
+  const valid = useMemo(
+    () => new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}").test(email),
+    [email]
+  );
+
+  const sendMailCertify = () => {
     const univName = globalForm.getValues("univName");
-    const result = await mutateSendAsync({
-      univName,
-      email,
-    });
-    if (result.success) setIsSent(true);
+    mutateSend(
+      {
+        univName,
+        email,
+      },
+      {
+        onSuccess: () => setIsSent(true),
+        onError: (e: any) => alert(e.message),
+      }
+    );
   };
 
-  const checkMailCertify: React.FormEventHandler<HTMLFormElement> = async (
-    e
-  ) => {
+  const checkMailCertify: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const univName = globalForm.getValues("univName");
-    const result = await mutateCheckAsync({
-      univName,
-      email,
-      code: parseInt(code),
-    });
-    if (!result.success) return;
-    globalForm.setValue("email", email);
-    console.log(globalForm.getValues());
+    mutateCheck(
+      {
+        univName,
+        email,
+        code: parseInt(code),
+      },
+      {
+        onSuccess: () => setStep(5),
+        onError: (e: any) => alert(e.message),
+      }
+    );
   };
 
   return (

@@ -11,7 +11,7 @@ import { useMyProfileQuery } from "../queries/useMyProfileQuery";
 
 const PageContent = () => {
   const { data } = useMyProfileQuery();
-  const { profile, products: items, works, workEmploys } = data || {};
+  const { products: items } = data || {};
 
   const filter = useFilter();
 
@@ -28,6 +28,7 @@ const PageContent = () => {
                   ...rest,
                 }}
                 type={"market"}
+                showPrice={false}
                 className="flex-[1_1_40%] sm:flex-[1_1_240px]"
                 key={i}
               />
@@ -40,8 +41,8 @@ const PageContent = () => {
           <>
             {Array.from({ length: 10 }).map((_, i) => (
               <ProductElement
-                showPrice={false}
                 type={"market"}
+                showPrice={false}
                 className="flex-[1_1_40%] sm:flex-[1_1_240px]"
                 key={i}
               />

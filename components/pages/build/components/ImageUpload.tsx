@@ -1,6 +1,6 @@
 import { useFormContext, Controller } from "react-hook-form";
 
-import { CloseIcon } from "@lib/icons";
+import { CloseIcon, PlusBorderFilledIcon, PlusBorderIcon } from "@lib/icons";
 
 import { BuildForm } from "../types";
 
@@ -45,9 +45,12 @@ export const ImageUpload = () => {
             />
             <label
               htmlFor="input-file"
-              className="flex aspect-square h-full w-full cursor-pointer items-center justify-center whitespace-pre-line rounded-xl bg-gray-100"
+              className="flex aspect-square h-full w-full cursor-pointer flex-col items-center justify-center whitespace-pre-line rounded-xl bg-gray-100"
             >
-              업로드
+              <span className="inline-block h-12 py-1">
+                <PlusBorderIcon className="h-10 w-10 text-red" />
+              </span>
+              <span className="text-lg font-bold">업로드</span>
             </label>
           </span>
           {value

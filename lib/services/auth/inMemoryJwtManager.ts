@@ -47,8 +47,10 @@ const jwtManager = () => {
     };
   };
 
-  const getAccessToken = () => {
-    const { accessToken } = getRawToken();
+  const getAccessToken = (options?: { ignoreIntegrity?: boolean }) => {
+    const accessToken = !options?.ignoreIntegrity
+      ? getRawToken().accessToken
+      : localStorage.getItem("accessToken");
     const expire = Number(localStorage.getItem("accessTokenExpireDate"));
     if (expire < Date.now()) {
       eraseToken();

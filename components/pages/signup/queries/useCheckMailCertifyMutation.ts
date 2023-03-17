@@ -14,9 +14,15 @@ export const useCheckMailCertifyMutation = () => {
       code: number;
     }) => {
       return (
-        await http.post.json<{
-          success: boolean;
-        }>(`/certify/mail/receive`, {
+        await http.post.json<
+          | {
+              success: true;
+            }
+          | {
+              success: false;
+              message?: string;
+            }
+        >(`/certify/mail/receive`, {
           code,
           univName,
           univ_email: email,

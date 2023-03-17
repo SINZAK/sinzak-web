@@ -151,8 +151,16 @@ const LayoutWrapper = ({
           <p className="flex flex-1 items-center justify-between text-sm text-gray-800">
             <span className="space-x-4">
               <span>프로젝트 소개</span>
-              <span>이용약관</span>
-              <span>개인정보처리방침</span>
+              <span>
+                <a target="_blank" href="/docs/terms.html">
+                  이용약관
+                </a>
+              </span>
+              <span>
+                <a target="_blank" href="/docs/privacy.html">
+                  개인정보처리방침
+                </a>
+              </span>
             </span>
             <span className="text-gray-600">
               © SINZAK Team. All Rights Reserved.

@@ -54,7 +54,12 @@ export default function Page() {
   const router = useRouter();
 
   useEffectOnce(() => {
-    if (jwtManager.getAccessToken()) setValid(true);
+    if (
+      jwtManager.getAccessToken({
+        ignoreIntegrity: true,
+      })
+    )
+      setValid(true);
     else router.push("/auth/signin");
   });
 

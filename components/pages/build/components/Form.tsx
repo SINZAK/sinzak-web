@@ -72,9 +72,12 @@ export const Form = () => {
                 />
                 <label
                   htmlFor="type-sell"
-                  className="flex aspect-square w-full cursor-pointer items-center justify-center rounded-xl bg-gray-100 peer-checked:border peer-checked:border-red"
+                  className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center rounded-xl bg-gray-100 peer-checked:border-2 peer-checked:border-red"
                 >
-                  작품 판매
+                  <span className="inline-block h-12">
+                    <img src="/assets/images/heart-dynamic-color.png" />
+                  </span>
+                  <span className="text-lg font-bold">작품 판매</span>
                 </label>
               </li>
               <li>
@@ -88,9 +91,12 @@ export const Form = () => {
                 />
                 <label
                   htmlFor="type-workSell"
-                  className="flex aspect-square w-full cursor-pointer items-center justify-center rounded-xl bg-gray-100 peer-checked:border peer-checked:border-red"
+                  className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center rounded-xl bg-gray-100 peer-checked:border-2 peer-checked:border-red"
                 >
-                  의뢰해요
+                  <span className="inline-block h-12">
+                    <img src="/assets/images/link-dynamic-color.png" />
+                  </span>
+                  <span className="text-lg font-bold">의뢰해요</span>
                 </label>
               </li>
               <li>
@@ -104,9 +110,12 @@ export const Form = () => {
                 />
                 <label
                   htmlFor="type-workBuy"
-                  className="flex aspect-square w-full cursor-pointer items-center justify-center rounded-xl bg-gray-100 peer-checked:border peer-checked:border-red"
+                  className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center rounded-xl bg-gray-100 peer-checked:border-2 peer-checked:border-red"
                 >
-                  작업해요
+                  <span className="inline-block h-12">
+                    <img src="/assets/images/bucket-dynamic-color.png" />
+                  </span>
+                  <span className="text-lg font-bold">작업해요</span>
                 </label>
               </li>
             </ul>

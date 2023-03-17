@@ -15,6 +15,8 @@ export { default as MenuIcon } from "@public/assets/icons/menu.svg";
 
 export { default as CloseIcon } from "@public/assets/icons/close.svg";
 
+export { default as SettingIcon } from "@public/assets/icons/setting.svg";
+
 export { default as ChevronLeftIcon } from "@public/assets/icons/chevron-left.svg";
 export { default as ChevronRightIcon } from "@public/assets/icons/chevron-right.svg";
 
@@ -41,3 +43,6 @@ export { default as ProfileFilledIcon } from "@public/assets/icons/profile-fille
 
 export { default as WishIcon } from "@public/assets/icons/wish.svg";
 export { default as WishFilledIcon } from "@public/assets/icons/wish-filled.svg";
+
+export { default as PlusBorderIcon } from "@public/assets/icons/plus-border.svg";
+export { default as PlusBorderFilledIcon } from "@public/assets/icons/plus-border-filled.svg";

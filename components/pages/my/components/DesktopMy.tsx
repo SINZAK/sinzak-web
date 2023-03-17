@@ -1,6 +1,3 @@
-import { ProductElement } from "@components/elements/ProductElement";
-import { FeaturedCarousel } from "@components/pages/home/components/FeaturedCarousel";
-
 import { ProductsCarousel } from "./ProductsCarousel";
 import DesktopLayout from "../DesktopLayout";
 import { useMyProfileQuery } from "../queries/useMyProfileQuery";

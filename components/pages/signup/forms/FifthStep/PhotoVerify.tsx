@@ -1,19 +1,31 @@
+import { useFormContext } from "react-hook-form";
+
 import { Button } from "@components/atoms/Button";
 import { useSubmitImage } from "@lib/hooks/useUploadImage";
 import { CameraIcon } from "@lib/icons";
-import { http } from "@lib/services/http";
 
+import { useSubmitPhotoCertifyMutation } from "../../queries/useSubmitPhotoCertifyMutation";
 import { useStepContext } from "../../states";
 
 export const PhotoVerify = () => {
   const [_, setStep] = useStepContext();
   const { imageFile, imageString, selectFile } = useSubmitImage();
+  const { mutate, isLoading } = useSubmitPhotoCertifyMutation();
+  const globalForm = useFormContext();
 
   const onSubmit = async () => {
     if (!imageFile) return;
-    const formData = new FormData();
-    formData.append("multipartFile", imageFile);
-    await http.post.multipart(`/certify/${123}/image`, formData);
+    mutate(
+      {
+        univName: globalForm.getValues("univName"),
+        email: "",
+        imageFile,
+      },
+      {
+        onSuccess: () => setStep(5),
+        onError: (e: any) => alert(e.message),
+      }
+    );
     setStep(5);
   };
 

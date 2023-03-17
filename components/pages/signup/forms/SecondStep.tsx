@@ -11,11 +11,13 @@ export const SecondStep = () => {
   const [_, setStep] = useStepContext();
   const [isValid, setIsValid] = useState<null | boolean>(null);
   const [name, setName] = useState("");
-  const { mutateAsync, isLoading } = useCheckNicknameMutation();
+  const { mutate, isLoading } = useCheckNicknameMutation();
 
-  const onCheck = async () => {
-    const data = await mutateAsync(name);
-    if (data.success) setIsValid(true);
+  const onCheck = () => {
+    mutate(name, {
+      onSuccess: () => setIsValid(true),
+      onError: (e: any) => alert(e.message),
+    });
   };
 
   const disabled = !name.length || isLoading;

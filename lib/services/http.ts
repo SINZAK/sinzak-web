@@ -42,9 +42,9 @@ async function common<T = any>(
       merge(
         {
           headers: {
-            ...(jwtManager.getAccessToken() && {
-              Authorization: jwtManager.getAccessToken()!,
-            }),
+            Authorization: jwtManager.getAccessToken({
+              ignoreIntegrity: true,
+            })!,
           },
         },
         requestOptions
@@ -57,8 +57,12 @@ async function common<T = any>(
     else if (contentType && contentType.includes("application/json")) {
       data = await response.json();
       if (data.hasOwnProperty("success") && data.success === false)
-        throw Error();
-      if (data.hasOwnProperty("success") && data.hasOwnProperty("data"))
+        throw Error(data.message);
+      if (
+        data.hasOwnProperty("success") &&
+        data.hasOwnProperty("data") &&
+        Object.keys(data).length === 2
+      )
         data = data.data;
     } else data = await response.text();
     return {

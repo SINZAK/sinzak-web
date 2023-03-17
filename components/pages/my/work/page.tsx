@@ -27,7 +27,8 @@ const PageContent = () => {
                   thumbnail: thumbnail || undefined,
                   ...rest,
                 }}
-                type={"market"}
+                type={"work"}
+                showPrice={false}
                 className="flex-[1_1_40%] sm:flex-[1_1_240px]"
                 key={i}
               />
@@ -40,8 +41,8 @@ const PageContent = () => {
           <>
             {Array.from({ length: 10 }).map((_, i) => (
               <ProductElement
+                type={"work"}
                 showPrice={false}
-                type={"market"}
                 className="flex-[1_1_40%] sm:flex-[1_1_240px]"
                 key={i}
               />
