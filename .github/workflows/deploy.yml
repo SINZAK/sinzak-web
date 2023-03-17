@@ -20,7 +20,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          tags: "web-client:$IMAGE_TAG"
+          tags: web-client:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
