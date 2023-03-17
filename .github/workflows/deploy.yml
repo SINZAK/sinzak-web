@@ -47,6 +47,6 @@ jobs:
           port: 22
           script: |
             cd ./deploy-web
-            docker load --image ./web-client.tar
+            docker load --i ./web-client.tar
             docker container stop sinzak-web
             docker run -d --rm -p 8080:8080 --name sinzak-web sinzak-web
