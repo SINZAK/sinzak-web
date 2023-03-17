@@ -43,7 +43,9 @@ export default function App({ Component, pageProps }: CustomAppProps) {
         <NiceModal.Provider>
           <AuthProvider>
             <SkeletonTheme inline baseColor="#eee" highlightColor="#ddd">
-              <div id="main">{getLayout(<Component {...pageProps} />)}</div>
+              <div id="main" className="h-full">
+                {getLayout(<Component {...pageProps} />)}
+              </div>
             </SkeletonTheme>
           </AuthProvider>
         </NiceModal.Provider>

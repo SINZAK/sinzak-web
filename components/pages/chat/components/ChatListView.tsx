@@ -26,7 +26,7 @@ export const ChatListView = () => {
   });
 
   return (
-    <div className="flex h-full flex-col max-md:container">
+    <div className="flex flex-1 flex-col max-md:container">
       {data && data.length > 0 ? (
         data?.map((room, i) => (
           <div
@@ -73,7 +73,7 @@ export const ChatListView = () => {
           </div>
         ))
       ) : (
-        <div className="grid h-full place-items-center text-gray-600">
+        <div className="grid flex-1 place-items-center text-gray-600">
           <p className="text-center">아직 시작한 채팅이 없어요</p>
         </div>
       )}

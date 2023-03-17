@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <>
       <div
-        className={`fixed h-full w-full bg-cover`}
+        className={`fixed h-full w-full bg-cover max-sm:hidden`}
         style={{
           backgroundImage: `url("${Splash}")`,
         }}

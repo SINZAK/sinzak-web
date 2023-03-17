@@ -71,7 +71,7 @@ const LayoutWrapper = ({
     authenticated ? Authenticated : React.Fragment,
     {},
     <>
-      <div className="md:min-h-screen">
+      <div className="flex min-h-screen flex-col">
         {mobileNav &&
           (typeof mobileNav !== "boolean" ? (
             <div className="fixed bottom-0 z-30 w-full bg-white md:hidden">
@@ -136,7 +136,7 @@ const LayoutWrapper = ({
             </span>
           </div>
         </header>
-        <main className="pb-24">
+        <main className="flex flex-1 flex-col pb-24">
           <div className="hidden h-12 md:block" />
           {children}
         </main>

@@ -27,9 +27,12 @@ const Main = ({ router }: { router: NextRouter }) => {
 
   useEffectOnce(() => {
     (async () => {
-      if (typeof provider !== "string") return;
-      if (!oauthProvider.includes(provider)) return;
-      if (typeof code !== "string") return;
+      if (
+        typeof provider !== "string" ||
+        !oauthProvider.includes(provider) ||
+        typeof code !== "string"
+      )
+        throw Error();
 
       const oauth = await http.get<{
         access_token: string;
@@ -40,17 +43,20 @@ const Main = ({ router }: { router: NextRouter }) => {
           redirect_uri: `${API.BASE_URI}/oauth/${provider}`,
         })}`
       );
-      const auth = await http.post.json<{
-        accessToken: string;
-        accessTokenExpireDate: number;
-        joined: boolean;
-        refreshToken: string;
-      }>("/oauth/get", {
-        accessToken: oauth.data.access_token,
-        idToken: oauth.data.id_token,
-        origin: provider,
-      });
-      console.log(auth);
+      const auth = await http.post
+        .json<{
+          accessToken: string;
+          accessTokenExpireDate: number;
+          joined: boolean;
+          refreshToken: string;
+        }>("/oauth/get", {
+          accessToken: oauth.data.access_token,
+          idToken: oauth.data.id_token,
+          origin: provider,
+        })
+        .catch((e) => {
+          throw Error(e);
+        });
       const { accessToken, accessTokenExpireDate, refreshToken } = auth.data;
       if (auth.data.joined) {
         login({ accessToken, accessTokenExpireDate, refreshToken });
@@ -59,13 +65,34 @@ const Main = ({ router }: { router: NextRouter }) => {
         jwtManager.setToken({ accessToken, accessTokenExpireDate });
         router.replace("/auth/signup");
       }
-    })();
+    })().catch(() => router.replace("/"));
   });
 
   return (
-    <>
-      {provider} {code}
-    </>
+    <div className="grid h-screen w-full place-items-center">
+      <div className="flex-0 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-purple">
+        <svg
+          className="h-8 w-8 animate-spin text-white"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          ></circle>
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+      </div>
+    </div>
   );
 };
 
