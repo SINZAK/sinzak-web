@@ -58,7 +58,7 @@ export default function Page() {
                 Google로 시작하기
               </a>
               <a
-                href={`https://kauth.kakao.com/oauth/authorize?client_id=3201538a34f65dfa0fb2e96b0d268ca7&redirect_uri=${`${API.BASE_URI}/oauth/kakao`}&response_type=code`}
+                href={`https://kauth.kakao.com/oauth/authorize?client_id=e5ae2058984fe7b6c47373dbfb7bf7b1&redirect_uri=${`${API.BASE_URI}/oauth/kakao`}&response_type=code`}
                 className="rounded-xl bg-gray-100 px-6 py-3"
               >
                 카카오로 시작하기

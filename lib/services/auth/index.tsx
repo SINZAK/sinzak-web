@@ -82,13 +82,13 @@ const parseJwt = (jwt: string) => {
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<User>(null);
+
   const renew = useCallback(() => {
     const { accessToken, refreshToken } = jwtManager.getToken();
     if (!accessToken || !refreshToken) {
       setIsLoading(false);
       return;
     }
-
     http.post
       .json<{
         accessToken: string;
@@ -146,7 +146,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     [renew]
   );
 
-  useEffectOnce(renew);
+  useEffectOnce(() => {
+    renew();
+    const interval = setInterval(() => {
+      renew();
+    }, 5 * 60 * 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  });
 
   return (
     <AuthContext.Provider value={{ user, isLoading, renew, login }}>

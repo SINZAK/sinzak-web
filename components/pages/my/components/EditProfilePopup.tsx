@@ -109,7 +109,11 @@ export const EditProfilePopup = NiceModal.create(
                     className="hidden"
                     onChange={selectFile}
                   />
-                  <Button as="label" htmlFor="input-file">
+                  <Button
+                    as="label"
+                    htmlFor="input-file"
+                    className="cursor-pointer"
+                  >
                     프로필 사진 변경
                   </Button>
                 </div>
