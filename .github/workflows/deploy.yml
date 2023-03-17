@@ -1,0 +1,38 @@
+name: deploy
+
+on:
+  push:
+    branches: ["production"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🗃️ Checkout
+        uses: actions/checkout@v3
+
+      - name: 📦 Build image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          tags: "web-client:$IMAGE_TAG"
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: 📦 Save image to tar archive
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker save web-client:$IMAGE_TAG > web-client.tar
+
+      - name: 📦 Ship image archive to remote server
+        uses: appleboy/scp-action@master
+        with:
+          username: ec2-user
+          host: ${{ secrets.HOST_DEV }}
+          key: ${{ secrets.SSH_PEM_KEY }}
+          source: "./web-client.tar"
+          target: "/home/ec2-user/deploy-web"
+          strip_components: 0

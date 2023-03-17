@@ -2,7 +2,7 @@ name: sync
 
 on:
   push:
-    branches: [main]
+    branches: ["staging"]
   workflow_dispatch:
 
 jobs:
