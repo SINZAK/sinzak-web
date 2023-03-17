@@ -67,16 +67,17 @@ const jwtManager = () => {
     refreshToken,
     accessTokenExpireDate,
   }: {
-    accessToken: string;
-    refreshToken: string;
-    accessTokenExpireDate: number;
+    accessToken?: string;
+    refreshToken?: string;
+    accessTokenExpireDate?: number;
   }) => {
-    localStorage.setItem(
-      "accessTokenExpireDate",
-      String(Date.now() + accessTokenExpireDate)
-    );
-    localStorage.setItem("accessToken", accessToken);
-    localStorage.setItem("refreshToken", refreshToken);
+    if (accessTokenExpireDate)
+      localStorage.setItem(
+        "accessTokenExpireDate",
+        String(Date.now() + accessTokenExpireDate)
+      );
+    if (accessToken) localStorage.setItem("accessToken", accessToken);
+    if (refreshToken) localStorage.setItem("refreshToken", refreshToken);
     return true;
   };
 

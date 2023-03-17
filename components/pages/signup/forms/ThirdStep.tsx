@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 
 import { Button } from "@components/atoms/Button";
 import { Category } from "@lib/resources/category";
-import { login } from "@lib/services/auth";
+import { useAuth } from "@lib/services/auth";
 
 import { MultiSelect } from "../components/MultiSelect";
 import { useJoinMutation } from "../queries/useJoinMutation";
@@ -15,6 +15,7 @@ export const ThirdStep = () => {
   const [firstCate, setFirstCate] = useState<Category[]>([]);
   const [secondCate, setSecondCate] = useState<Category[]>([]);
   const { mutateAsync } = useJoinMutation();
+  const { login } = useAuth();
 
   return (
     <form

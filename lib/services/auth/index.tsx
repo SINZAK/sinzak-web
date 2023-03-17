@@ -20,31 +20,19 @@ type Auth = {
   user: User;
   isLoading: boolean;
   renew: () => void;
+  login: (args: {
+    accessToken: string;
+    refreshToken: string;
+    accessTokenExpireDate: number;
+  }) => void;
 };
 
 const AuthContext = createContext<Auth>({
   user: null,
   isLoading: true,
   renew: () => {},
+  login: () => {},
 });
-
-export const login = async ({
-  accessToken,
-  refreshToken,
-  accessTokenExpireDate,
-}: {
-  accessToken: string;
-  refreshToken: string;
-  accessTokenExpireDate: number;
-}) => {
-  try {
-    jwtManager.setToken({ accessToken, refreshToken, accessTokenExpireDate });
-    return true;
-  } catch (e) {
-    console.error(e);
-    return false;
-  }
-};
 
 export const tempLogin = async (email: string) => {
   try {
@@ -94,7 +82,6 @@ const parseJwt = (jwt: string) => {
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<User>(null);
-
   const renew = useCallback(() => {
     const { accessToken, refreshToken } = jwtManager.getToken();
     if (!accessToken || !refreshToken) {
@@ -133,10 +120,36 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       });
   }, []);
 
+  const login = useCallback(
+    async ({
+      accessToken,
+      refreshToken,
+      accessTokenExpireDate,
+    }: {
+      accessToken: string;
+      refreshToken: string;
+      accessTokenExpireDate: number;
+    }) => {
+      try {
+        jwtManager.setToken({
+          accessToken,
+          refreshToken,
+          accessTokenExpireDate,
+        });
+        renew();
+        return true;
+      } catch (e) {
+        console.error(e);
+        return false;
+      }
+    },
+    [renew]
+  );
+
   useEffectOnce(renew);
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, renew }}>
+    <AuthContext.Provider value={{ user, isLoading, renew, login }}>
       {children}
     </AuthContext.Provider>
   );
