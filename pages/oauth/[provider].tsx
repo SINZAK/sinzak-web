@@ -5,6 +5,7 @@ import { useEffectOnce } from "@lib/hooks/useEffectOnce";
 import { useAuth } from "@lib/services/auth";
 import jwtManager from "@lib/services/auth/inMemoryJwtManager";
 import { http } from "@lib/services/http";
+import { API } from "@lib/utils/consts";
 
 const oauthFn = {
   naver: async () => {},
@@ -36,7 +37,7 @@ const Main = ({ router }: { router: NextRouter }) => {
       }>(
         `/web/${provider}?${new URLSearchParams({
           code,
-          redirect_uri: `http://localhost:3000/oauth/${provider}`,
+          redirect_uri: `${API.BASE_URI}/oauth/${provider}`,
         })}`
       );
       const auth = await http.post.json<{
