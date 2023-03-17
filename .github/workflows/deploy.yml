@@ -31,6 +31,7 @@ jobs:
           username: ec2-user
           host: ${{ secrets.HOST_DEV }}
           key: ${{ secrets.SSH_PEM_KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
           source: "./web-client.tar"
           target: "/home/ec2-user/deploy-web"
           strip_components: 0
