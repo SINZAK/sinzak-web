@@ -49,4 +49,4 @@ jobs:
             cd ./deploy-web
             docker load --input ./web-client.tar
             docker container stop sinzak-web
-            docker run -d --rm -p 8080:8080 --name sinzak-web sinzak-web
+            docker run -d --rm -p 3000:3000 --name sinzak-web sinzak-web
