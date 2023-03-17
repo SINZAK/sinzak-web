@@ -20,15 +20,10 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
+          outputs: type=local,dest=./web-client.tar
           tags: web-client:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-      - name: 📦 Save image to tar archive
-        env:
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          docker save web-client:$IMAGE_TAG > web-client.tar
 
       - name: 📦 Ship image archive to remote server
         uses: appleboy/scp-action@master
