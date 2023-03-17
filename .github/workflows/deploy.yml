@@ -20,7 +20,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          outputs: type=tar,dest=./web-client.tar
+          outputs: type=docker,dest=./web-client.tar
           tags: sinzak-web
           cache-from: type=gha
           cache-to: type=gha,mode=max
