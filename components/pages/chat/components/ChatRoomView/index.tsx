@@ -19,6 +19,15 @@ import { useRoomInfoQuery } from "../../queries/roomInfo";
 import { roomIdAtom } from "../../states";
 import { MessageResponse } from "../../types";
 
+const test = Array.from({ length: 30 }, (_, i) => ({
+  messageId: i,
+  message: "asdf ".repeat(Math.ceil(Math.random() * 10)),
+  sendAt: new Date().toISOString(),
+  senderId: Math.round(Math.random()) ? 357 : 1,
+  senderName: "test",
+  messageType: null,
+}));
+
 export const ChatRoomView = ({ roomId }: { roomId: string }) => {
   const client = useClient();
   const { user } = useAuth();
@@ -89,6 +98,8 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
   };
 
   if (!user) return null;
+
+  console.log(messageList);
 
   return (
     <>

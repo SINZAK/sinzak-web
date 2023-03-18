@@ -26,7 +26,7 @@ export const ChatListView = () => {
   });
 
   return (
-    <div className="flex flex-1 flex-col max-md:container">
+    <div className="flex flex-col max-md:container max-md:flex-1 md:h-full">
       {data && data.length > 0 ? (
         data?.map((room, i) => (
           <div

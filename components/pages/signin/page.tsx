@@ -45,34 +45,35 @@ export default function Page() {
                   임시 로그인
                 </button>
               </form>
-              <Link
-                href="/auth/signup"
-                className="rounded-xl bg-gray-100 px-6 py-3"
-              >
-                테스트 회원가입
-              </Link>
               <a
                 href={`https://accounts.google.com/o/oauth2/v2/auth?client_id=782966145872-6shnmrvqi0q4sihr8etu9nrvh9jv43dh.apps.googleusercontent.com&redirect_uri=${`${API.BASE_URI}/oauth/google`}&response_type=code&scope=profile%20email&include_granted_scopes=true`}
-                className="rounded-xl bg-gray-100 px-6 py-3"
+                className="flex items-center gap-4 rounded-xl px-4 py-3 ring-1 ring-inset ring-gray-100"
               >
+                <img
+                  src="/assets/images/google-login.png"
+                  className="h-5 w-5"
+                />
                 Google로 시작하기
               </a>
               <a
                 href={`https://kauth.kakao.com/oauth/authorize?client_id=e5ae2058984fe7b6c47373dbfb7bf7b1&redirect_uri=${`${API.BASE_URI}/oauth/kakao`}&response_type=code`}
-                className="rounded-xl bg-gray-100 px-6 py-3"
+                className="flex items-center gap-4 rounded-xl bg-[#FEE500] px-4 py-3"
               >
+                <img src="/assets/images/kakao-login.png" className="h-5 w-5" />
                 카카오로 시작하기
               </a>
               <a
                 href={`https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=DwXMEfKZq0tmkrsn6kLk&state=STATE_STRING&redirect_uri=${`${API.BASE_URI}/oauth/naver`}`}
-                className="rounded-xl bg-gray-100 px-6 py-3"
+                className="flex items-center gap-4 rounded-xl bg-[#03C75A] px-4 py-3 text-white"
               >
+                <img src="/assets/images/naver-login.png" className="h-5 w-5" />
                 네이버로 시작하기
               </a>
               <a
                 href={`https://appleid.apple.com/auth/authorize?client_id=net.sinzak.sinzak&redirect_uri=${`${API.BASE_URI}/oauth/apple`}&response_type=code&id_token&response_mode=form_post`}
-                className="rounded-xl bg-gray-100 px-6 py-3"
+                className="flex items-center gap-4 rounded-xl bg-black px-4 py-3 text-white"
               >
+                <img src="/assets/images/apple-login.png" className="h-5 w-5" />
                 Apple로 시작하기
               </a>
               {/* <a className="rounded-xl bg-gray-100 px-6 py-3">

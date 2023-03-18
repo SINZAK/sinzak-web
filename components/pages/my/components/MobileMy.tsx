@@ -13,10 +13,8 @@ export const MobileMy = () => {
   const { profile } = data || {};
 
   const showEditProfilePopup = useCallback(() => {
-    NiceModal.show(EditProfilePopup, {
-      initialProfile: data?.profile,
-    });
-  }, [data?.profile]);
+    NiceModal.show(EditProfilePopup);
+  }, []);
 
   return (
     <div className="container flex flex-col md:hidden">

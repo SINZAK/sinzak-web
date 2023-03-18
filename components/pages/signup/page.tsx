@@ -25,21 +25,26 @@ const Container = ({ children }: React.PropsWithChildren<{}>) => (
   </>
 );
 
-const StepForm = ({ children }: React.PropsWithChildren<{}>) => {
+const StepForm = ({
+  children,
+  hideBack,
+}: React.PropsWithChildren<{ hideBack?: boolean }>) => {
   const router = useRouter();
   const [step, setStep] = useStepContext();
 
   return (
     <>
-      <div className="w-full">
-        <button
-          onClick={() => {
-            if (step === 0) router.push("/auth/signin");
-            else setStep((step) => step - 1);
-          }}
-        >
-          <ChevronLeftIcon />
-        </button>
+      <div className="h-7 w-full">
+        {!hideBack && (
+          <button
+            onClick={() => {
+              if (step === 0) router.push("/auth/signin");
+              else setStep((step) => step - 1);
+            }}
+          >
+            <ChevronLeftIcon />
+          </button>
+        )}
       </div>
       {children}
     </>
@@ -87,7 +92,7 @@ export default function Page() {
               <FinalStep />
             ) : (
               <FormProvider {...methods}>
-                <StepForm>{page[step]}</StepForm>
+                <StepForm hideBack={step === 3}>{page[step]}</StepForm>
               </FormProvider>
             )}
           </StepProvider>
