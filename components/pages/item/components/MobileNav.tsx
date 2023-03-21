@@ -16,7 +16,7 @@ export const MobileNav = () => {
     <div className="fixed bottom-0 z-30 h-[5.25rem] w-full bg-white md:hidden">
       <div className="flex w-full items-start space-x-2 px-3 py-2">
         <div className="mt-1.5 flex divide-x px-4 text-lg">
-          {data ? (
+          {data?.userId ? (
             <LikeButton
               id={data.id}
               userId={data.userId}
@@ -26,7 +26,7 @@ export const MobileNav = () => {
           ) : (
             <LikeButtonPlaceholder />
           )}
-          {data ? (
+          {data?.userId ? (
             <WishButton
               id={data.id}
               userId={data.userId}

@@ -14,18 +14,18 @@ import { useWishWorkItemMutation } from "../work/queries/wish";
 export type MarketQueryContextValue = {
   type: "market";
   useLikeMutation: typeof useLikeMarketItemMutation;
-  useDeleteItemMutation: typeof useDeleteMarketItemMutation;
+  useDeleteItemMutation: () => ReturnType<typeof useDeleteMarketItemMutation>;
   useWishMutation: typeof useWishMarketItemMutation;
-  useItemQuery: typeof useMarketItemQuery;
+  useItemQuery: () => ReturnType<typeof useMarketItemQuery>;
   useSuggestPriceMutation: typeof useSuggestPriceMarketItemMutation;
 };
 
 export type WorkQueryContextValue = {
   type: "work";
   useLikeMutation: typeof useLikeWorkItemMutation;
-  useDeleteItemMutation: typeof useDeleteWorkItemMutation;
+  useDeleteItemMutation: () => ReturnType<typeof useDeleteWorkItemMutation>;
   useWishMutation: typeof useWishWorkItemMutation;
-  useItemQuery: typeof useWorkItemQuery;
+  useItemQuery: () => ReturnType<typeof useWorkItemQuery>;
   useSuggestPriceMutation: typeof useSuggestPriceWorkItemMutation;
 };
 
