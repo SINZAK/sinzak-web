@@ -6,10 +6,10 @@ import { http } from "@lib/services/http";
 import { ProductType } from "@types";
 
 export const useChangeProductCompleteMutation = (
-  ...args: Parameters<typeof editUserMutation>
+  ...args: Parameters<typeof mutation>
 ) => {
   const queryClient = useQueryClient();
-  const editUserMutation = useMemo(
+  const mutation = useMemo(
     () =>
       createMutation({
         mutationFn: async ({ type, id }: { type: ProductType; id: number }) => {
@@ -27,5 +27,5 @@ export const useChangeProductCompleteMutation = (
       }),
     [queryClient]
   );
-  return editUserMutation(...args);
+  return mutation(...args);
 };

@@ -1,9 +1,10 @@
-import { RESET } from "jotai/vanilla/utils";
+
 import { NextPage } from "next";
 import { AppProps } from "next/app";
 
 export * from "./query";
 export * from "./state";
+export * from "./utils";
 
 export type CustomNextPage<T extends {} = {}> = NextPage<T> & {
   getLayout?: (page: React.ReactElement) => React.ReactNode;

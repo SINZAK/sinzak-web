@@ -8,7 +8,11 @@ import { useFilter } from "../states/filter";
 
 export const ListView = () => {
   const filter = useFilter();
-  const { data, isLoading, fetchNextPage } = useWorkQuery(filter);
+  const { data, isLoading, fetchNextPage } = useWorkQuery({
+    variables: {
+      filter,
+    },
+  });
   const [ref, inView] = useInView();
 
   useEffect(() => {

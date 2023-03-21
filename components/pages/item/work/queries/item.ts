@@ -7,9 +7,9 @@ export const useWorkItemQuery = createQuery<
   WorkItemDetail,
   { id: number | undefined }
 >({
-  primaryKey: "/works",
+  primaryKey: "/works/",
   queryFn: async ({ queryKey: [primaryKey, variables] }) => {
-    return (await http.post.default(`${primaryKey}/${variables.id}`)).data;
+    return (await http.post.default(`${primaryKey}${variables.id}`)).data;
   },
   enabled: (_, { id }) => !!id,
 });

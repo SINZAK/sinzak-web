@@ -11,7 +11,6 @@ import { MobileHeader } from "./components/MobileHeader";
 import { SearchInput } from "./components/SearchInput";
 import { FilterProvider } from "./states/filter";
 
-
 import "@egjs/react-flicking/dist/flicking.css";
 
 export default function Page() {
@@ -36,7 +35,7 @@ export default function Page() {
             cameraClass="[&>*]:mr-3"
             renderOnSameKey
           >
-            {CategoryFilter()}
+            {CategoryFilter("small")}
           </Flicking>
           <span className="flex justify-between text-sm">
             <Filter />

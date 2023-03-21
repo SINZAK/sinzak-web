@@ -5,10 +5,10 @@ import { createMutation } from "react-query-kit";
 import { http } from "@lib/services/http";
 
 export const useEditCategoryMutation = (
-  ...args: Parameters<typeof editUserMutation>
+  ...args: Parameters<typeof mutation>
 ) => {
   const queryClient = useQueryClient();
-  const editUserMutation = useMemo(
+  const mutation = useMemo(
     () =>
       createMutation({
         mutationFn: async ({ category }: { category: string[] }) => {
@@ -23,5 +23,5 @@ export const useEditCategoryMutation = (
       }),
     [queryClient]
   );
-  return editUserMutation(...args);
+  return mutation(...args);
 };

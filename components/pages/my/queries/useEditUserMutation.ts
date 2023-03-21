@@ -4,11 +4,9 @@ import { createMutation } from "react-query-kit";
 
 import { http } from "@lib/services/http";
 
-export const useEditUserMutation = (
-  ...args: Parameters<typeof editUserMutation>
-) => {
+export const useEditUserMutation = (...args: Parameters<typeof mutation>) => {
   const queryClient = useQueryClient();
-  const editUserMutation = useMemo(
+  const mutation = useMemo(
     () =>
       createMutation({
         mutationFn: async ({
@@ -16,7 +14,7 @@ export const useEditUserMutation = (
           name,
           imageFile,
         }: {
-          introduction: string;
+          introduction?: string;
           name: string;
           imageFile?: File;
         }) => {
@@ -37,5 +35,5 @@ export const useEditUserMutation = (
       }),
     [queryClient]
   );
-  return editUserMutation(...args);
+  return mutation(...args);
 };

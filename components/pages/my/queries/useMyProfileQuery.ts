@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { createQuery } from "react-query-kit";
 
 import { http } from "@lib/services/http";
 
@@ -29,8 +29,9 @@ export interface MyProfile {
   works: SimpleProduct[];
 }
 
-export const useMyProfileQuery = () => {
-  return useQuery<MyProfile>(["/users/my-profile"], async () => {
-    return (await http.get(`/users/my-profile`)).data;
-  });
-};
+export const useMyProfileQuery = createQuery<MyProfile>({
+  primaryKey: "/users/my-profile",
+  queryFn: async ({ queryKey: [primaryKey] }) => {
+    return (await http.get(primaryKey)).data;
+  },
+});

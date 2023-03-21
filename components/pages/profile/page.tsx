@@ -1,6 +1,5 @@
 import React from "react";
 import { Listbox } from "@headlessui/react";
-import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import Skeleton from "react-loading-skeleton";
 import { twMerge } from "tailwind-merge";
@@ -11,8 +10,8 @@ import { FollowingButton } from "@components/elements/FollowingButton";
 import { ProductElement } from "@components/elements/ProductElement";
 import { createLayout } from "@components/layout/layout";
 import { AlignIcon, MenuIcon } from "@lib/icons";
-import { http } from "@lib/services/http";
-import { UserProfile } from "@types";
+
+import { useUserProfileQuery } from "./queries/useUserProfileQuery";
 
 const options = [
   { id: "recommend", name: "신작추천순" },
@@ -21,18 +20,6 @@ const options = [
   { id: "low", name: "낮은가격순" },
   { id: "high", name: "높은가격순" },
 ];
-
-export const useUserProfileQuery = (userId: number) => {
-  return useQuery<UserProfile>(
-    ["user-profile", userId],
-    async () => {
-      return (await http.get(`/users/${userId}/profile`)).data;
-    },
-    {
-      enabled: !!userId,
-    }
-  );
-};
 
 const MarketFilter = () => {
   return (
@@ -83,7 +70,9 @@ const useUserId = () => {
 
 export default function Page() {
   const userId = useUserId();
-  const { data, isLoading } = useUserProfileQuery(userId);
+  const { data, isLoading } = useUserProfileQuery({
+    variables: { userId },
+  });
 
   return (
     <div className="container max-w-4xl">

@@ -7,9 +7,9 @@ export const useMarketItemQuery = createQuery<
   MarketItemDetail,
   { id: number | undefined }
 >({
-  primaryKey: "/products",
+  primaryKey: "/products/",
   queryFn: async ({ queryKey: [primaryKey, variables] }) => {
-    return (await http.post.default(`${primaryKey}/${variables.id}`)).data;
+    return (await http.post.default(`${primaryKey}${variables.id}`)).data;
   },
   enabled: (_, { id }) => !!id,
 });

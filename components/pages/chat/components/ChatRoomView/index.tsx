@@ -41,7 +41,11 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const queryClient = useQueryClient();
-  const { data } = useRoomInfoQuery(roomId);
+  const { data } = useRoomInfoQuery({
+    variables: {
+      roomId,
+    },
+  });
 
   useLayoutEffect(() => {
     setAutoScroll(true);

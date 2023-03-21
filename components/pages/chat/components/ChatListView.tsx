@@ -19,7 +19,7 @@ export const ChatListView = () => {
       univ: string;
     }[]
   >({
-    queryKey: ["chat-rooms"],
+    queryKey: ["/chat/rooms"],
     queryFn: async () => {
       return (await http.post.default("/chat/rooms")).data;
     },

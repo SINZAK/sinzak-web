@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import { createQuery } from "react-query-kit";
 
 import { http } from "@lib/services/http";
@@ -11,14 +10,14 @@ export interface SimpleProduct {
   title: string;
 }
 
-export interface MyProfile {
+export interface MyWish {
   productWishes: SimpleProduct[];
   workWishes: SimpleProduct[];
 }
 
-export const useMyWishQuery = createQuery<MyProfile>({
+export const useMyWishQuery = createQuery<MyWish>({
   primaryKey: "/users/wish",
-  queryFn: async () => {
-    return (await http.get(`/users/wish`)).data;
+  queryFn: async ({ queryKey: [primaryKey] }) => {
+    return (await http.get(primaryKey)).data;
   },
 });

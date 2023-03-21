@@ -1,14 +1,16 @@
-import { useCallback, useEffect, useState } from "react";
+import { ComponentProps, useCallback, useEffect, useState } from "react";
 
 import { Button } from "@components/atoms/Button";
 import { CheckIcon } from "@lib/icons";
 import { Category, getCategoryText } from "@lib/resources/category";
 
 export const MultiSelect = <T extends Category>({
+  size,
   data,
   value,
   onChange,
 }: {
+  size?: ComponentProps<typeof Button>["size"];
   data: T[];
   value: T[];
   onChange(value: T[]): void;
@@ -35,6 +37,7 @@ export const MultiSelect = <T extends Category>({
 
   return [
     <Button
+      size={size}
       outline
       key="reset"
       onClick={() => setSelectState([])}
@@ -45,6 +48,7 @@ export const MultiSelect = <T extends Category>({
     </Button>,
     ...data.map((_, i) => (
       <Button
+        size={size}
         outline
         onClick={() => onClick(_)}
         key={i}

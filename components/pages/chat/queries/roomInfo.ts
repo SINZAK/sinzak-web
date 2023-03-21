@@ -1,17 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
+import { createQuery } from "react-query-kit";
 
 import { http } from "@lib/services/http";
 
-export const useRoomInfoQuery = (roomId: string) => {
-  return useQuery<{
-    roomName: string;
-    productId: number;
-    productName: string;
-    price: number;
-    thumbnail: string;
-    complete: boolean;
-    suggest: boolean;
-  }>(["useRoomInfoStompQuery", roomId], async () => {
-    return (await http.post.default(`/chat/rooms/${roomId}`)).data;
-  });
+type Response = {
+  roomName: string;
+  productId: number;
+  productName: string;
+  price: number;
+  thumbnail: string;
+  complete: boolean;
+  suggest: boolean;
 };
+
+type Variables = { roomId: string };
+
+export const useRoomInfoQuery = createQuery<Response, Variables>({
+  primaryKey: "/chat/rooms/",
+  queryFn: async ({ queryKey: [primaryKey, { roomId }] }) => {
+    return (await http.post.default(`${primaryKey}${roomId}`)).data;
+  },
+});
