@@ -40,8 +40,12 @@ export default function Page() {
   return (
     <QueryProvider
       value={{
+        id,
         type: "market",
-        useItemQuery: () => useMarketItemQuery(id),
+        useItemQuery: () =>
+          useMarketItemQuery({
+            variables: { id },
+          }),
         useDeleteItemMutation: () => useDeleteMarketItemMutation(id),
         useWishMutation: useWishMarketItemMutation,
         useLikeMutation: useLikeMarketItemMutation,

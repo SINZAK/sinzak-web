@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import NiceModal from "@ebay/nice-modal-react";
+import { useRouter } from "next/router";
 
 import { Menu } from "@components/atoms/Menu";
 import { DeletePopup } from "@components/pages/item/components/DeletePopup";
@@ -13,9 +14,10 @@ export const MenuButton = ({
 }: {
   button: () => JSX.Element;
 }) => {
+  const router = useRouter();
   const { user } = useAuth();
 
-  const { useItemQuery, useDeleteItemMutation } = useQueryContext();
+  const { useItemQuery, useDeleteItemMutation, type, id } = useQueryContext();
   const { data } = useItemQuery();
   const { mutate: mutateDelete } = useDeleteItemMutation();
 
@@ -45,7 +47,9 @@ export const MenuButton = ({
   return (
     <>
       <Menu button={<MenuButton />}>
-        <Menu.Item>수정</Menu.Item>
+        <Menu.Item onClick={() => router.push(`/build/edit/${type}/${id}`)}>
+          수정
+        </Menu.Item>
         <Menu.Item onClick={showDeletePopup} className="text-red">
           삭제
         </Menu.Item>

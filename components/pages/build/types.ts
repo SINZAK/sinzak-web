@@ -29,6 +29,10 @@ export type BuildForm = Partial<
         src: string;
       }
     | {
+        type: "delete";
+        src: string;
+      }
+    | {
         type: "preview";
         file: File;
         src: string;

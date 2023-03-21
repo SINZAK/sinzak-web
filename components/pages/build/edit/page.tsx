@@ -5,11 +5,9 @@ import { createLayout } from "@components/layout/layout";
 import { useMarketItemQuery } from "@components/pages/item/market/queries/item";
 import { useWorkItemQuery } from "@components/pages/item/work/queries/item";
 import { BackIcon } from "@lib/icons";
-import { Category } from "@lib/resources/category";
-
-import { Form } from "../components/Form";
 
 import "@egjs/react-flicking/dist/flicking.css";
+import { EditForm } from "../components/EditForm";
 
 function pick<T extends object, K extends keyof T>(
   base: T,
@@ -23,12 +21,12 @@ export default function Page() {
   const router = useRouter();
   const { type, slug } = router.query;
   const id = Number(slug) || undefined;
-  const { data: marketData, isError: isMarketError } = useMarketItemQuery(
-    type === "market" ? id : undefined
-  );
-  const { data: workData, isError: isWorkError } = useWorkItemQuery(
-    type === "work" ? id : undefined
-  );
+  const { data: marketData, isError: isMarketError } = useMarketItemQuery({
+    variables: { id: type === "market" ? id : undefined },
+  });
+  const { data: workData, isError: isWorkError } = useWorkItemQuery({
+    variables: { id: type === "work" ? id : undefined },
+  });
 
   if (isMarketError || isWorkError) router.replace("/");
 
@@ -40,7 +38,6 @@ export default function Page() {
     ? {
         ...pick(
           marketData,
-          "category",
           "title",
           "content",
           "suggest",
@@ -54,15 +51,7 @@ export default function Page() {
       }
     : workData
     ? {
-        ...pick(
-          workData,
-          "category",
-          "title",
-          "content",
-          "suggest",
-          "price",
-          "images"
-        ),
+        ...pick(workData, "title", "content", "suggest", "price", "images"),
         type: workData.employment
           ? ("workBuy" as const)
           : ("workSell" as const),
@@ -72,7 +61,6 @@ export default function Page() {
   const defaultValues = values
     ? {
         ...values,
-        category: values?.category as Category,
         images: values?.images.map((src) => ({
           type: "remote" as const,
           src,
@@ -84,9 +72,13 @@ export default function Page() {
     <div>
       <div className="container max-w-2xl max-md:pt-3">
         <div className="mb-10 max-md:hidden">
-          <p className="text-3xl font-bold">작품 등록하기</p>
+          <p className="text-3xl font-bold">
+            {type === "sell" ? "작품" : "의뢰"} 수정하기
+          </p>
         </div>
-        {defaultValues && <Form defaultValues={defaultValues} />}
+        {defaultValues && id && (
+          <EditForm id={id} defaultValues={defaultValues} />
+        )}
       </div>
     </div>
   );

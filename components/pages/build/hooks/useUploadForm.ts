@@ -21,18 +21,12 @@ export const useUploadForm = ({
   const uploadForm = useCallback(
     async (data: BuildForm) => {
       onUpload();
-      if (data.type === "sell") {
-        const {
-          category,
-          content,
-          price,
-          suggest,
-          title,
-          images,
-          vertical,
-          width,
-          height,
-        } = data;
+      const { type, category, content, price, suggest, title, images } = data;
+      const imageFiles = images
+        .filter((x) => x.type === "preview")
+        .map((x) => (x.type === "preview" ? x.file : undefined) as File);
+      if (type === "sell") {
+        const { vertical, width, height } = data;
         const res = await http.post.json("/products/build", {
           category,
           content,
@@ -44,37 +38,22 @@ export const useUploadForm = ({
           height,
         });
         const id = res.data.id;
-        if (images.length > 0)
-          await uploadImages(
-            "products",
-            id,
-            images
-              .filter((x) => x.type === "preview")
-              .map((x) => (x.type === "preview" ? x.file : undefined) as File)
-          );
+        if (imageFiles.length > 0)
+          await uploadImages("products", id, imageFiles);
         onComplete("market", id);
-        // router.push(`/market/${id}`);
       } else {
-        const { type, category, content, price, suggest, title, images } = data;
         const employment = type === "workBuy";
         const res = await http.post.json("/works/build", {
           category,
-          content,
           employment,
+          content,
           price,
           suggest,
           title,
         });
         const id = res.data.id;
-        await uploadImages(
-          "works",
-          id,
-          images
-            .filter((x) => x.type === "preview")
-            .map((x) => (x.type === "preview" ? x.file : undefined) as File)
-        );
+        if (imageFiles.length > 0) await uploadImages("works", id, imageFiles);
         onComplete("work", id);
-        // router.push(`/work/${id}`);
       }
     },
     [onComplete, onUpload, uploadImages]

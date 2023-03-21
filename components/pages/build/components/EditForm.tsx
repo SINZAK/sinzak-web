@@ -4,19 +4,25 @@ import { FormProvider, useForm } from "react-hook-form";
 
 import { Button } from "@components/atoms/Button";
 
-import { CategoryField } from "./fields/CategoryField";
 import { ContentField } from "./fields/ContentField";
 import { DimensionsField } from "./fields/DimensionsField";
 import { ImageUpload } from "./fields/ImageField";
 import { PriceField } from "./fields/PriceField";
 import { TitleField } from "./fields/TitleField";
-import { TypeField } from "./fields/TypeField";
 import { UploadPopup } from "./UploadPopup";
-import { useUploadForm } from "../hooks/useUploadForm";
+import { useEditForm } from "../hooks/useEditForm";
 import { BuildForm } from "../types";
 
-export const Form = () => {
-  const methods = useForm<BuildForm>();
+export const EditForm = ({
+  id,
+  defaultValues,
+}: {
+  id: number;
+  defaultValues?: Partial<BuildForm>;
+}) => {
+  const methods = useForm<BuildForm>({
+    defaultValues,
+  });
 
   const { handleSubmit, watch } = methods;
 
@@ -24,7 +30,8 @@ export const Form = () => {
   const router = useRouter();
   const type = watch("type");
 
-  const onSubmit = useUploadForm({
+  const onSubmit = useEditForm({
+    id,
     onUpload: () => setUploadText("게시글 업로드 중..."),
     onImageUpload: () => setUploadText("이미지 업로드 중..."),
     onComplete: (type, id) => {
@@ -44,15 +51,13 @@ export const Form = () => {
               size="large"
               className="w-full max-w-xl"
             >
-              등록하기
+              수정하기
             </Button>
           </div>
         )}
         <div className="flex flex-col space-y-7">
-          <TypeField />
           {type && (
             <>
-              <CategoryField />
               <ImageUpload />
               <TitleField />
               <PriceField />
@@ -69,7 +74,7 @@ export const Form = () => {
               size="large"
               className="w-full max-md:hidden"
             >
-              등록하기
+              수정하기
             </Button>
           </div>
         )}

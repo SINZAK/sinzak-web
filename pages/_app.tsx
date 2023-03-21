@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import NiceModal from "@ebay/nice-modal-react";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { SkeletonTheme } from "react-loading-skeleton";
 
 import { AuthProvider } from "@lib/services/auth";
@@ -43,6 +44,7 @@ export default function App({ Component, pageProps }: CustomAppProps) {
         <NiceModal.Provider>
           <AuthProvider>
             <SkeletonTheme inline baseColor="#eee" highlightColor="#ddd">
+              <ReactQueryDevtools initialIsOpen={false} />
               <div id="main" className="h-full">
                 {getLayout(<Component {...pageProps} />)}
               </div>

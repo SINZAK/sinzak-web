@@ -1,33 +1,16 @@
 import { FormEventHandler } from "react";
-import {
-  UseMutationOptions,
-  useMutation,
-  useQuery,
-} from "@tanstack/react-query";
+import { useMutation, UseMutationOptions } from "@tanstack/react-query";
 import { useAtom, useAtomValue, useSetAtom } from "jotai/react";
 import { RESET } from "jotai/vanilla/utils";
 import { useRouter } from "next/router";
 import Skeleton from "react-loading-skeleton";
 
-import { BackIcon, MenuIcon } from "@lib/icons";
+import { useMarketItemQuery } from "@components/pages/item/market/queries/item";
+import { BackIcon } from "@lib/icons";
 import { http } from "@lib/services/http";
 import { formatNumber } from "@lib/services/intl/format";
-import { MarketItemDetail } from "@types";
 
 import { postIdAtom, roomIdAtom } from "../states";
-
-const useMarketItemQuery = () => {
-  const id = useAtomValue(postIdAtom);
-  return useQuery<MarketItemDetail>(
-    ["market-item", id],
-    async () => {
-      return (await http.post.default(`/products/${id as number}`)).data;
-    },
-    {
-      enabled: typeof id === "number",
-    }
-  );
-};
 
 const useCreateChatRoomMutation = (
   config?: UseMutationOptions<
@@ -54,7 +37,12 @@ const useCreateChatRoomMutation = (
 };
 
 export const ChatRoomPreview = () => {
-  const { data } = useMarketItemQuery();
+  const id = useAtomValue(postIdAtom);
+  const { data } = useMarketItemQuery({
+    variables: {
+      id: id === RESET ? undefined : id,
+    },
+  });
   const [postId, setPostId] = useAtom(postIdAtom);
   const setRoomId = useSetAtom(roomIdAtom);
   const router = useRouter();

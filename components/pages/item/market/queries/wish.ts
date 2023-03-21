@@ -3,6 +3,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { http } from "@lib/services/http";
 import { WishMutationVariables } from "@types";
 
+import { useMarketItemQuery } from "./item";
+
 export const useWishMarketItemMutation = () => {
   const queryClient = useQueryClient();
   return useMutation<unknown, unknown, WishMutationVariables>({
@@ -12,7 +14,7 @@ export const useWishMarketItemMutation = () => {
     },
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({
-        queryKey: ["market-item", id],
+        queryKey: useMarketItemQuery.getKey({ id }),
       });
     },
   });

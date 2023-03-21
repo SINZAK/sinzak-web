@@ -1,4 +1,6 @@
 import { Context, createContext, useContext } from "react";
+import { UseQueryResult } from "@tanstack/react-query";
+import { inferData, inferVariables } from "react-query-kit";
 
 import { useDeleteMarketItemMutation } from "../market/queries/delete";
 import { useMarketItemQuery } from "../market/queries/item";
@@ -12,20 +14,26 @@ import { useSuggestPriceWorkItemMutation } from "../work/queries/suggest";
 import { useWishWorkItemMutation } from "../work/queries/wish";
 
 export type MarketQueryContextValue = {
+  id: number | undefined;
   type: "market";
   useLikeMutation: typeof useLikeMarketItemMutation;
   useDeleteItemMutation: () => ReturnType<typeof useDeleteMarketItemMutation>;
   useWishMutation: typeof useWishMarketItemMutation;
-  useItemQuery: () => ReturnType<typeof useMarketItemQuery>;
+  useItemQuery: () => UseQueryResult<
+    inferData<typeof useMarketItemQuery> | undefined
+  >;
   useSuggestPriceMutation: typeof useSuggestPriceMarketItemMutation;
 };
 
 export type WorkQueryContextValue = {
+  id: number | undefined;
   type: "work";
   useLikeMutation: typeof useLikeWorkItemMutation;
   useDeleteItemMutation: () => ReturnType<typeof useDeleteWorkItemMutation>;
   useWishMutation: typeof useWishWorkItemMutation;
-  useItemQuery: () => ReturnType<typeof useWorkItemQuery>;
+  useItemQuery: () => UseQueryResult<
+    inferData<typeof useWorkItemQuery> | undefined
+  >;
   useSuggestPriceMutation: typeof useSuggestPriceWorkItemMutation;
 };
 

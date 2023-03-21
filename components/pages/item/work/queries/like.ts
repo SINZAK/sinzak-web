@@ -3,6 +3,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { http } from "@lib/services/http";
 import { LikeMutationVariables } from "@types";
 
+import { useWorkItemQuery } from "./item";
+
 export const useLikeWorkItemMutation = () => {
   const queryClient = useQueryClient();
   return useMutation<unknown, unknown, LikeMutationVariables>({
@@ -12,7 +14,7 @@ export const useLikeWorkItemMutation = () => {
     },
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({
-        queryKey: ["work-item", id],
+        queryKey: useWorkItemQuery.getKey({ id }),
       });
     },
   });

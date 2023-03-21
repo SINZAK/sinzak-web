@@ -41,8 +41,12 @@ export default function Page() {
   return (
     <QueryProvider
       value={{
+        id,
         type: "work",
-        useItemQuery: () => useWorkItemQuery(id),
+        useItemQuery: () =>
+          useWorkItemQuery({
+            variables: { id },
+          }),
         useDeleteItemMutation: () => useDeleteWorkItemMutation(id),
         useWishMutation: useWishWorkItemMutation,
         useLikeMutation: useLikeWorkItemMutation,

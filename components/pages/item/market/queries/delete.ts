@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 
 import { http } from "@lib/services/http";
 
+import { useMarketItemQuery } from "./item";
+
 export const useDeleteMarketItemMutation = (id?: number) => {
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -17,7 +19,7 @@ export const useDeleteMarketItemMutation = (id?: number) => {
         queryKey: ["market"],
       });
       queryClient.invalidateQueries({
-        queryKey: ["market-item", id],
+        queryKey: useMarketItemQuery.getKey({ id }),
       });
       router.push("/market");
     },

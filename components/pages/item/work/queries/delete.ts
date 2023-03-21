@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 
 import { http } from "@lib/services/http";
 
+import { useWorkItemQuery } from "./item";
+
 export const useDeleteWorkItemMutation = (id?: number) => {
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -17,7 +19,7 @@ export const useDeleteWorkItemMutation = (id?: number) => {
         queryKey: ["work"],
       });
       queryClient.invalidateQueries({
-        queryKey: ["work-item", Number(router.query.slug)],
+        queryKey: useWorkItemQuery.getKey({ id }),
       });
       router.push("/work");
     },

@@ -1,15 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/router";
+import { createQuery } from "react-query-kit";
 
 import { http } from "@lib/services/http";
-import { WorkItemDetail, MarketItemDetail } from "@types";
+import { WorkItemDetail } from "@types";
 
-export const useWorkItemQuery = (id?: number) => {
-  return useQuery<WorkItemDetail>({
-    queryKey: ["/works", id],
-    queryFn: async () => {
-      return (await http.post.default(`/works/${id}`)).data;
-    },
-    enabled: !!id,
-  });
-};
+export const useWorkItemQuery = createQuery<
+  WorkItemDetail,
+  { id: number | undefined }
+>({
+  primaryKey: "/works",
+  queryFn: async ({ queryKey: [primaryKey, variables] }) => {
+    return (await http.post.default(`${primaryKey}/${variables.id}`)).data;
+  },
+  enabled: (_, { id }) => !!id,
+});

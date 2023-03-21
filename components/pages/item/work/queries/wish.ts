@@ -3,6 +3,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { http } from "@lib/services/http";
 import { WishMutationVariables } from "@types";
 
+import { useWorkItemQuery } from "./item";
+
 export const useWishWorkItemMutation = () => {
   const queryClient = useQueryClient();
   return useMutation<unknown, unknown, WishMutationVariables>({
@@ -12,7 +14,7 @@ export const useWishWorkItemMutation = () => {
     },
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({
-        queryKey: ["work-item", id],
+        queryKey: useWorkItemQuery.getKey({ id }),
       });
     },
   });
