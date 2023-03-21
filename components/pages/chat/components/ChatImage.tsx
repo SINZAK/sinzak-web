@@ -1,13 +1,13 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-export const ChatText = React.memo(
+export const ChatImage = React.memo(
   ({
-    text,
+    imageSrc,
     own,
     timestamp,
   }: {
-    text: string;
+    imageSrc: string;
     own?: boolean;
     timestamp?: Date;
   }) => {
@@ -28,16 +28,9 @@ export const ChatText = React.memo(
         >
           {timestamp?.toLocaleTimeString().slice(0, -3)}
         </div>
-        <div
-          className={twMerge(
-            "whitespace-pre-wrap break-all rounded-[1.5rem] px-4 py-2",
-            own ? "bg-red text-white" : "bg-gray-100 text-black"
-          )}
-        >
-          {text}
-        </div>
+        <img className="rounded-xl" alt={imageSrc} src={imageSrc} />
       </div>
     );
   }
 );
-ChatText.displayName = "ChatText";
+ChatImage.displayName = "ChatText";

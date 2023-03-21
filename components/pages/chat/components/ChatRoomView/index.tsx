@@ -7,8 +7,10 @@ import Skeleton from "react-loading-skeleton";
 import ReactTextareaAutosize from "react-textarea-autosize";
 
 import { Button } from "@components/atoms/Button";
+import { useImage, useSelectImage } from "@lib/hooks/useSelectImage";
 import { BackIcon, MenuIcon, PictureFilledIcon } from "@lib/icons";
 import { useAuth } from "@lib/services/auth";
+import { http } from "@lib/services/http";
 import { formatNumber } from "@lib/services/intl/format";
 import useClient from "@lib/services/stomp/client";
 import useStomp from "@lib/services/stomp/stomp";
@@ -97,9 +99,32 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
     });
   };
 
-  if (!user) return null;
+  const { selectFile } = useImage(async (image) => {
+    if (!client) return;
 
-  console.log(messageList);
+    const formData = new FormData();
+    formData.append("multipartFile", image);
+    const res = await http.post
+      .multipart<{ url: string }[]>(`/chat/rooms/${roomId}/image`, formData)
+      .catch((_) => alert("이미지 업로드에 실패했습니다."));
+    if (!res) return;
+    const imageUrl = res.data[0].url;
+
+    const body = {
+      roomId,
+      message: imageUrl,
+      sender: "test",
+      senderId: user?.userId,
+      messageType: "IMAGE",
+    };
+    console.log(body);
+    client.publish({
+      destination: "/pub/chat/message",
+      body: JSON.stringify(body),
+    });
+  });
+
+  if (!user) return null;
 
   return (
     <>
@@ -187,13 +212,21 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
           <button onClick={(e) => e} />
         </div>
         <div
-          className="flex items-center space-x-3 px-4 py-4
+          className="flex items-center px-4 py-4
             max-md:fixed max-md:inset-x-0 max-md:bottom-0 max-md:bg-white
             md:-mx-4"
         >
-          <span>
+          <input
+            id="input-file"
+            type="file"
+            multiple
+            accept="image/png, image/jpeg"
+            className="hidden"
+            onChange={selectFile}
+          />
+          <label htmlFor="input-file" className="mr-3 cursor-pointer">
             <PictureFilledIcon className="h-10 w-10 fill-gray-600" />
-          </span>
+          </label>
           <span className="flex-1 rounded-[1.5rem] bg-gray-100 py-3 ring-gray-200 focus-within:ring-1">
             <ReactTextareaAutosize
               onKeyDown={(e) => {

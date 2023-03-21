@@ -116,7 +116,7 @@ export const VirtualizedScroller = ({
   const { ref: intersectionRef, inView } = useInView();
 
   useEffect(() => {
-    if (inView) {
+    if (inView && messageListCount > 0) {
       fetchNextPage();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

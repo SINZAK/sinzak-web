@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useRouter } from "next/router";
 
 import { ProductElement } from "@components/elements/ProductElement";
@@ -6,52 +7,36 @@ import { BackIcon } from "@lib/icons";
 
 import { Filter } from "./components/Filter";
 import { FilterProvider, useFilter } from "./states/filter";
+import { MyProductElement } from "../components/MyProductElement";
 import Layout from "../Layout";
 import { useMyProfileQuery } from "../queries/useMyProfileQuery";
+
+const placeholderItems = Array.from({ length: 10 }, (_) => undefined);
 
 const PageContent = () => {
   const { data } = useMyProfileQuery();
   const { products: items } = data || {};
 
   const filter = useFilter();
+  const filteredItems = useMemo(
+    () =>
+      (filter.sale ? items?.filter((item) => !item.complete) : items) ||
+      placeholderItems,
+    [filter, items]
+  );
 
   return (
     <>
       <Filter />
-      <div className="mt-7 flex flex-wrap gap-x-3 gap-y-7 md:gap-x-7">
-        {data ? (
-          <>
-            {items?.map(({ thumbnail, ...rest }, i) => (
-              <ProductElement
-                data={{
-                  thumbnail: thumbnail || undefined,
-                  ...rest,
-                }}
-                type={"market"}
-                showPrice={false}
-                className="flex-[1_1_40%] sm:flex-[1_1_240px]"
-                key={i}
-              />
-            ))}
-            {Array.from({ length: 2 }).map((_, i) => (
-              <div className="flex-[1_1_40%] sm:flex-[1_1_240px]" key={i} />
-            ))}
-          </>
-        ) : (
-          <>
-            {Array.from({ length: 10 }).map((_, i) => (
-              <ProductElement
-                type={"market"}
-                showPrice={false}
-                className="flex-[1_1_40%] sm:flex-[1_1_240px]"
-                key={i}
-              />
-            ))}
-            {Array.from({ length: 2 }).map((_, i) => (
-              <div className="flex-[1_1_40%] sm:flex-[1_1_240px]" key={i} />
-            ))}
-          </>
-        )}
+      <div className="mt-7 grid grid-cols-1 gap-x-3 gap-y-7 sm:grid-cols-2 md:grid-cols-3 md:gap-x-7">
+        {filteredItems.map((item, i) => (
+          <MyProductElement
+            data={item}
+            type={"market"}
+            showPrice={false}
+            key={item?.id || `key-${i}`}
+          />
+        ))}
       </div>
     </>
   );

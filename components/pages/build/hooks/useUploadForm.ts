@@ -48,7 +48,9 @@ export const useUploadForm = ({
           await uploadImages(
             "products",
             id,
-            images.map((x) => x[1])
+            images
+              .filter((x) => x.type === "preview")
+              .map((x) => (x.type === "preview" ? x.file : undefined) as File)
           );
         onComplete("market", id);
         // router.push(`/market/${id}`);
@@ -67,7 +69,9 @@ export const useUploadForm = ({
         await uploadImages(
           "works",
           id,
-          images.map((x) => x[1])
+          images
+            .filter((x) => x.type === "preview")
+            .map((x) => (x.type === "preview" ? x.file : undefined) as File)
         );
         onComplete("work", id);
         // router.push(`/work/${id}`);

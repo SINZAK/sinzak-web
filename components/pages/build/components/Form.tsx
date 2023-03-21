@@ -13,11 +13,14 @@ import { UploadPopup } from "./UploadPopup";
 import { useUploadForm } from "../hooks/useUploadForm";
 import { BuildForm } from "../types";
 
-export const Form = () => {
+export const Form = ({
+  defaultValues,
+}: {
+  defaultValues?: Partial<BuildForm>;
+}) => {
+  console.log(defaultValues);
   const methods = useForm<BuildForm>({
-    defaultValues: {
-      images: [],
-    },
+    defaultValues,
   });
 
   const {
@@ -134,6 +137,7 @@ export const Form = () => {
                     }}
                     render={({ field: { onChange } }) => (
                       <SingleSelect
+                        initialValue={defaultValues?.category}
                         onChange={onChange}
                         data={[
                           "painting",

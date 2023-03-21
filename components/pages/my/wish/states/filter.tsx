@@ -4,8 +4,9 @@ import { atom, createStore } from "jotai/vanilla";
 
 import { atomWithHash } from "@lib/utils/atomWithHash";
 import removeEmptyField from "@lib/utils/removeEmptyField";
+import { ProductType } from "@types";
 export interface Filter {
-  type: "market" | "work";
+  type: ProductType;
   sale: boolean;
 }
 

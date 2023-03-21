@@ -1,6 +1,7 @@
 import { Virtualizer, VirtualItem } from "@tanstack/react-virtual";
 
 import { Message } from "../../types";
+import { ChatImage } from "../ChatImage";
 import { ChatText } from "../ChatText";
 
 export const ChatRenderer = ({
@@ -27,7 +28,7 @@ export const ChatRenderer = ({
     <>
       {virtualItems.map((virtualRow) => {
         const index = reverseIndex(virtualRow.index);
-        const { own, text, timestamp } =
+        const { own, message, messageType, timestamp } =
           formattedMessageList[index - startIndex];
 
         return (
@@ -39,7 +40,12 @@ export const ChatRenderer = ({
             ref={virtualizer.measureElement}
             className="flex w-full flex-col pt-1"
           >
-            <ChatText own={own} text={text} timestamp={timestamp} />
+            {messageType === "TEXT" && (
+              <ChatText own={own} text={message} timestamp={timestamp} />
+            )}
+            {messageType === "IMAGE" && (
+              <ChatImage own={own} imageSrc={message} timestamp={timestamp} />
+            )}
           </div>
         );
       })}
@@ -54,8 +60,9 @@ const messageFormatter = (messageList: Message[], userId: number) => {
       prevOwn: boolean | null;
     };
     data: {
-      key: number;
-      text: string;
+      key: Message["messageId"];
+      message: Message["message"];
+      messageType: Message["messageType"];
       own: boolean;
       timestamp?: Date;
     }[];
@@ -67,14 +74,16 @@ const messageFormatter = (messageList: Message[], userId: number) => {
       if (!(acc.meta.prevOwn === own) || time !== acc.meta.lastTimestamp) {
         acc.meta.lastTimestamp = time;
         acc.data.push({
-          text: cur.message,
+          message: cur.message,
+          messageType: cur.messageType,
           own,
           timestamp: new Date(time),
           key: cur.messageId,
         });
       } else {
         acc.data.push({
-          text: cur.message,
+          message: cur.message,
+          messageType: cur.messageType,
           own,
           key: cur.messageId,
         });

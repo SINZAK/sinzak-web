@@ -2,18 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 
 import { http } from "@lib/services/http";
-import { WorkItemDetail } from "@types";
+import { WorkItemDetail, MarketItemDetail } from "@types";
 
-export const useWorkItemQuery = () => {
-  const router = useRouter();
-
-  return useQuery<WorkItemDetail>(
-    ["work-item", Number(router.query.slug)],
-    async () => {
-      return (await http.post.default(`/works/${router.query.slug}`)).data;
+export const useWorkItemQuery = (id?: number) => {
+  return useQuery<WorkItemDetail>({
+    queryKey: ["/works", id],
+    queryFn: async () => {
+      return (await http.post.default(`/works/${id}`)).data;
     },
-    {
-      enabled: !!router.query.slug,
-    }
-  );
+    enabled: !!id,
+  });
 };

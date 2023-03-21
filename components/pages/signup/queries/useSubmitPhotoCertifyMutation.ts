@@ -6,11 +6,9 @@ export const useSubmitPhotoCertifyMutation = () => {
   return useMutation({
     mutationFn: async ({
       univName,
-      email,
       imageFile,
     }: {
       univName: string;
-      email: string;
       imageFile: File;
     }) => {
       const univResult = await http.post.json<{
@@ -18,7 +16,6 @@ export const useSubmitPhotoCertifyMutation = () => {
         id: number;
       }>("/certify/univ", {
         univ: univName,
-        univ_email: email,
       });
 
       const formData = new FormData();

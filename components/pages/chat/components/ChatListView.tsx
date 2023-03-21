@@ -37,7 +37,7 @@ export const ChatListView = () => {
             key={i}
             onClick={() => setRoomId(room.roomUuid)}
           >
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 overflow-hidden">
               {room.image ? (
                 <img
                   alt="사진"
@@ -47,7 +47,7 @@ export const ChatListView = () => {
               ) : (
                 <span className="inline-block h-12 w-12 rounded-xl bg-gray-200" />
               )}
-              <div className="flex flex-col justify-around">
+              <div className="flex flex-col justify-around overflow-hidden">
                 <p className="flex items-center font-medium">
                   <span>{room.roomName}</span>
                   <span className="ml-2 space-x-1 text-sm text-gray-600">
@@ -61,7 +61,7 @@ export const ChatListView = () => {
                   </span>
                 </p>
                 <p className="flex space-x-1">
-                  <span>{room.latestMessage}</span>
+                  <span className="truncate">{room.latestMessage}</span>
                 </p>
               </div>
             </div>

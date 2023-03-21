@@ -3,14 +3,14 @@ import { useRouter } from "next/router";
 
 import { http } from "@lib/services/http";
 
-export const useDeleteWorkItemMutation = () => {
+export const useDeleteWorkItemMutation = (id?: number) => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
   return useMutation({
     mutationFn: async () => {
-      return (await http.post.default(`/works/${router.query.slug}/delete`))
-        .data;
+      if (!id) throw Error();
+      return (await http.post.default(`/works/${id}/delete`)).data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({

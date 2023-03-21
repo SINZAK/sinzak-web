@@ -66,7 +66,7 @@ export const FirstStep = () => {
               }}
               render={({ field: { value, ...rest } }) => (
                 <CheckBox checked={value} {...rest} intent="primary">
-                  만 14세 이상입니다.
+                  (필수) 만 14세 이상입니다.
                 </CheckBox>
               )}
             />
@@ -84,9 +84,11 @@ export const FirstStep = () => {
                 </CheckBox>
               )}
             />
-            <span className="text-xs">
-              <ChevronRightIcon />
-            </span>
+            <a className="contents" target="_blank" href="/docs/terms.html">
+              <span className="text-xs">
+                <ChevronRightIcon />
+              </span>
+            </a>
           </p>
           <p className="flex items-center justify-between">
             <Controller
@@ -101,9 +103,11 @@ export const FirstStep = () => {
                 </CheckBox>
               )}
             />
-            <span className="text-xs">
-              <ChevronRightIcon />
-            </span>
+            <a className="contents" target="_blank" href="/docs/privacy.html">
+              <span className="text-xs">
+                <ChevronRightIcon />
+              </span>
+            </a>
           </p>
           <p className="flex items-center justify-between">
             <Controller
@@ -115,9 +119,16 @@ export const FirstStep = () => {
                 </CheckBox>
               )}
             />
-            <span className="text-xs">
-              <ChevronRightIcon />
-            </span>
+            <a
+              className="contents"
+              target="_blank"
+              href="https://sinzak.notion.site/cb0fde6cb51347719f9d100e8e5aba68"
+              rel="noreferrer"
+            >
+              <span className="text-xs">
+                <ChevronRightIcon />
+              </span>
+            </a>
           </p>
         </div>
       </div>

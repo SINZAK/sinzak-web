@@ -8,7 +8,7 @@ import { twMerge } from "tailwind-merge";
 import { Button } from "@components/atoms/Button";
 import { FifthStep } from "@components/pages/signup/forms/FifthStep";
 import { CategorySelectForm } from "@components/pages/signup/forms/ThirdStep";
-import { useSubmitImage } from "@lib/hooks/useUploadImage";
+import { useSelectImage } from "@lib/hooks/useSelectImage";
 import { getCategoryText } from "@lib/resources/category";
 
 import { useEditCategoryMutation } from "../queries/useEditCategoryMutation";
@@ -31,7 +31,7 @@ export const EditProfilePopup = NiceModal.create(() => {
 
   const { mutate } = useEditUserMutation();
   const { mutate: mutateCategory } = useEditCategoryMutation();
-  const { imageString, imageFile, selectFile } = useSubmitImage();
+  const { imageString, imageFile, selectFile } = useSelectImage();
 
   const onSubmit = useCallback(
     () =>

@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 
 import { Button } from "@components/atoms/Button";
-import { useSubmitImage } from "@lib/hooks/useUploadImage";
+import { useSelectImage } from "@lib/hooks/useSelectImage";
 import { CameraIcon } from "@lib/icons";
 
 import { useSubmitPhotoCertifyMutation } from "../../queries/useSubmitPhotoCertifyMutation";
@@ -9,7 +9,7 @@ import { useStepContext } from "../../states";
 
 export const PhotoVerify = () => {
   const [_, setStep] = useStepContext();
-  const { imageFile, imageString, selectFile } = useSubmitImage();
+  const { imageFile, imageString, selectFile } = useSelectImage();
   const { mutate, isLoading } = useSubmitPhotoCertifyMutation();
   const globalForm = useFormContext();
 
@@ -18,7 +18,6 @@ export const PhotoVerify = () => {
     mutate(
       {
         univName: globalForm.getValues("univName"),
-        email: "",
         imageFile,
       },
       {
@@ -45,7 +44,7 @@ export const PhotoVerify = () => {
             type="file"
             accept="image/png, image/jpeg"
             className="hidden"
-            onChange={selectFile}
+            onChange={isLoading ? undefined : selectFile}
           />
           <label
             htmlFor="input-file"

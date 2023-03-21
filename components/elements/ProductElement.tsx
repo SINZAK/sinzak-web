@@ -5,12 +5,12 @@ import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 
 import { formatNumber, formatRelativeTime } from "@lib/services/intl/format";
-import { ItemSimple } from "@types";
+import { ItemSimple, ProductType } from "@types";
 
 export const ProductElement = React.forwardRef<
   any,
   {
-    type: "market" | "work";
+    type: ProductType;
     showPrice?: boolean;
     className?: string;
     data?: Partial<ItemSimple>;

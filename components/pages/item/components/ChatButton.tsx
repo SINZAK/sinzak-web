@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { Button } from "@components/atoms/Button";
 
@@ -7,7 +8,8 @@ export interface MyChatButtonProps {
 }
 
 export interface ChatButtonProps {
-  id: number;
+  id: number | null;
+  disabled?: boolean;
 }
 
 export const ChatButtonPlaceholder = () => {
@@ -36,14 +38,15 @@ export const MyChatButton = ({ chatCnt }: MyChatButtonProps) => {
   );
 };
 
-export const ChatButton = ({ id }: ChatButtonProps) => {
+export const ChatButton = ({ id, disabled }: ChatButtonProps) => {
+  const router = useRouter();
   return (
     <>
       <Button
+        disabled={disabled}
         intent="primary"
         size="large"
-        as={Link}
-        href={`/chat#postId=${id}`}
+        onClick={() => router.push(`/chat#postId=${id}`)}
       >
         <img
           alt="ask"

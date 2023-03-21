@@ -1,6 +1,6 @@
 import { useFormContext, Controller } from "react-hook-form";
 
-import { CloseIcon, PlusBorderFilledIcon, PlusBorderIcon } from "@lib/icons";
+import { CloseIcon, PlusBorderIcon } from "@lib/icons";
 
 import { BuildForm } from "../types";
 
@@ -8,20 +8,24 @@ export const ImageUpload = () => {
   const { control } = useFormContext<BuildForm>();
 
   const selectFiles = (
-    value: [string, File][],
+    value: BuildForm["images"],
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (!event.target.files) return;
-    let images: [string, File][] = [];
+    let images: BuildForm["images"] = [];
 
     for (let i = 0; i < event.target.files.length; i++) {
       const file = event.target.files[i];
-      images.push([URL.createObjectURL(file), file]);
+      images.push({
+        type: "preview",
+        src: URL.createObjectURL(file),
+        file,
+      });
     }
 
     return [...value, ...images];
   };
-  const deleteImage = (value: [string, File][], i: number) => {
+  const deleteImage = (value: BuildForm["images"], i: number) => {
     return value.filter((_, j) => i !== j);
   };
 
@@ -54,7 +58,7 @@ export const ImageUpload = () => {
             </label>
           </span>
           {value
-            .map((x) => x[0])
+            ?.map((x) => x.src)
             .map((_, i) => (
               <span className="relative" key={i}>
                 <img

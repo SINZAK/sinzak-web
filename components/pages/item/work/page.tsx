@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import Skeleton from "react-loading-skeleton";
 
 import { Button } from "@components/atoms/Button";
@@ -14,6 +15,11 @@ import { useWorkItemQuery } from "./queries/item";
 import { useLikeWorkItemMutation } from "./queries/like";
 import { useSuggestPriceWorkItemMutation } from "./queries/suggest";
 import { useWishWorkItemMutation } from "./queries/wish";
+import {
+  ChatButton,
+  ChatButtonPlaceholder,
+  MyChatButton,
+} from "../components/ChatButton";
 import { ImageViewer } from "../components/Image/ImageViewer";
 import { LikeButton, LikeButtonPlaceholder } from "../components/LikeButton";
 import { DesktopMenuButton } from "../components/Menu/DesktopMenuButton";
@@ -29,12 +35,15 @@ import {
 } from "../states/QueryProvider";
 
 export default function Page() {
+  const router = useRouter();
+  const id = Number(router.query.slug) || undefined;
+
   return (
     <QueryProvider
       value={{
         type: "work",
-        useItemQuery: useWorkItemQuery,
-        useDeleteItemMutation: useDeleteWorkItemMutation,
+        useItemQuery: () => useWorkItemQuery(id),
+        useDeleteItemMutation: () => useDeleteWorkItemMutation(id),
         useWishMutation: useWishWorkItemMutation,
         useLikeMutation: useLikeWorkItemMutation,
         useSuggestPriceMutation: useSuggestPriceWorkItemMutation,
@@ -84,7 +93,7 @@ function Main() {
 
   const Actions = () => (
     <div className="mt-7 flex divide-x text-lg max-md:hidden">
-      {data ? (
+      {data?.userId ? (
         <LikeButton
           id={data.id}
           userId={data.userId}
@@ -94,7 +103,7 @@ function Main() {
       ) : (
         <LikeButtonPlaceholder />
       )}
-      {data ? (
+      {data?.userId ? (
         <WishButton
           id={data.id}
           userId={data.userId}
@@ -108,22 +117,16 @@ function Main() {
   );
 
   const Chat = () =>
-    user?.userId ? (
+    data && user?.userId ? (
       data?.userId !== user?.userId ? (
         <div className="flex flex-[0_0_12rem] flex-col space-y-3 font-bold max-md:hidden">
-          <Button intent="primary" size="large">
-            <img
-              alt="ask"
-              src="/assets/icons/ask.svg"
-              className="mr-1 brightness-0 invert"
-            />
-            <span>거래 문의하기</span>
-          </Button>
+          <ChatButton disabled={data.userId === null} id={data.id} />
           <div className="flex space-x-3">
             <SuggestPriceButton
-              render={({ onClick }) => (
+              render={(props) => (
                 <Button
-                  onClick={onClick}
+                  disabled={data.userId === null}
+                  {...props}
                   intent="primary"
                   outline
                   size="large"
@@ -131,32 +134,18 @@ function Main() {
                 />
               )}
             />
-            <DesktopMenuButton />
+            {data?.userId && <DesktopMenuButton />}
           </div>
         </div>
       ) : (
         <div className="flex h-fit space-x-3 text-lg font-bold max-md:hidden">
-          <Button as={Link} href="/chat" intent="primary">
-            <img
-              alt="ask"
-              src="/assets/icons/ask.svg"
-              className="mr-1 h-7 brightness-0 invert"
-            />
-            문의 중인 채팅방 {data?.chatCnt || 0}
-          </Button>
+          <MyChatButton chatCnt={data.chatCnt} />
           <DesktopMenuButton />
         </div>
       )
     ) : (
       <div className="flex flex-[0_0_12rem] flex-col space-y-3 font-bold max-md:hidden">
-        <Button intent="primary" size="large" as={Link} href="/auth/signin">
-          <img
-            alt="ask"
-            src="/assets/icons/ask.svg"
-            className="mr-1 brightness-0 invert"
-          />
-          <span>거래 문의하기</span>
-        </Button>
+        <ChatButtonPlaceholder />
         <Button
           intent="primary"
           outline
@@ -172,10 +161,18 @@ function Main() {
   const Profile = () => (
     <div className="flex items-center justify-between">
       <Link
-        href={data ? `/profile/${data.userId}` : "#"}
+        href={data?.userId ? `/profile/${data.userId}` : "javascript:void(0)"}
         className="flex flex-1 items-center space-x-4"
       >
-        <span className="inline-block h-12 w-12 rounded-xl bg-gray-100" />
+        {data?.author_picture ? (
+          <img
+            alt="사진"
+            src={data.author_picture}
+            className="inline-block h-12 w-12 rounded-xl bg-gray-200"
+          />
+        ) : (
+          <span className="inline-block h-12 w-12 rounded-xl bg-gray-200" />
+        )}
         <div>
           <p className="text-lg font-bold leading-tight">
             {data ? <>{data.author}</> : <Skeleton className="w-16" />}
@@ -197,7 +194,7 @@ function Main() {
           </p>
         </div>
       </Link>
-      {data && (
+      {data?.userId && (
         <FollowingButton isFollowing={data?.following} userId={data?.userId} />
       )}
     </div>
@@ -207,16 +204,16 @@ function Main() {
     <>
       <p>
         <span className="space-x-2 text-sm text-gray-800 md:text-base">
-          <span>
-            <ScrapMiniIcon className="mr-0.5 inline-block h-5 w-5 align-text-top" />
+          <span className="inline-flex items-center">
+            <ScrapMiniIcon className="mr-0.5 inline-block h-5 w-5" />
             {data?.wishCnt}
           </span>
-          <span>
-            <ViewMiniIcon className="mr-0.5 inline-block h-5 w-5 align-text-top" />
+          <span className="inline-flex items-center">
+            <ViewMiniIcon className="mr-0.5 inline-block h-5 w-5" />
             {data?.views}
           </span>
-          <span>
-            <ChatMiniIcon className="mr-0.5 inline-block h-5 w-5 align-text-top" />
+          <span className="inline-flex items-center">
+            <ChatMiniIcon className="mr-0.5 inline-block h-5 w-5" />
             {data?.chatCnt}
           </span>
         </span>

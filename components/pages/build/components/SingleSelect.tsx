@@ -7,13 +7,17 @@ import { Category, getCategoryText } from "@lib/resources/category";
 export const SingleSelect = ({
   data,
   value,
+  initialValue,
   onChange,
 }: {
   data: Category[];
   value?: Category;
+  initialValue?: Category;
   onChange?: (value: Category | null) => void;
 }) => {
-  const [selectState, setSelectState] = useState<Category | null>(null);
+  const [selectState, setSelectState] = useState<Category | null>(
+    initialValue ?? null
+  );
 
   useEffect(() => {
     if (onChange) onChange(selectState);

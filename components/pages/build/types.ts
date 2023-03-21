@@ -23,5 +23,15 @@ export type BuildForm = Partial<
     price: number;
   }
 > & {
-  images: [string, File][];
+  images: (
+    | {
+        type: "remote";
+        src: string;
+      }
+    | {
+        type: "preview";
+        file: File;
+        src: string;
+      }
+  )[];
 };

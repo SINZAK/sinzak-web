@@ -15,6 +15,8 @@ export type CustomAppProps = AppProps & {
   pageProps: Record<string, any>;
 };
 
+export type ProductType = "market" | "work";
+
 export interface UserProfile {
   profile: {
     userId: number;
@@ -50,7 +52,7 @@ export interface ItemSimple {
   content: string;
   author: string;
   price: number;
-  thumbnail: string;
+  thumbnail: string | null;
   date: string;
   suggest: boolean;
   likesCnt: number;
@@ -81,7 +83,7 @@ export interface MarketItemDetail {
   title: string;
   trading: boolean;
   univ: string;
-  userId: number;
+  userId: number | null;
   vertical: number;
   views: number;
   width: number;
@@ -91,7 +93,7 @@ export interface MarketItemDetail {
 
 export interface WorkItemDetail {
   id: number;
-  userId: number;
+  userId: number | null;
   author: string;
   author_picture: any;
   univ: string;

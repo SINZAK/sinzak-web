@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import Skeleton from "react-loading-skeleton";
 
 import { Button } from "@components/atoms/Button";
@@ -33,12 +34,15 @@ import {
 } from "../states/QueryProvider";
 
 export default function Page() {
+  const router = useRouter();
+  const id = Number(router.query.slug) || undefined;
+
   return (
     <QueryProvider
       value={{
         type: "market",
-        useItemQuery: useMarketItemQuery,
-        useDeleteItemMutation: useDeleteMarketItemMutation,
+        useItemQuery: () => useMarketItemQuery(id),
+        useDeleteItemMutation: () => useDeleteMarketItemMutation(id),
         useWishMutation: useWishMarketItemMutation,
         useLikeMutation: useLikeMarketItemMutation,
         useSuggestPriceMutation: useSuggestPriceMarketItemMutation,
@@ -88,7 +92,7 @@ function Main() {
 
   const Actions = () => (
     <div className="mt-7 flex divide-x text-lg max-md:hidden">
-      {data ? (
+      {data?.userId ? (
         <LikeButton
           id={data.id}
           userId={data.userId}
@@ -98,7 +102,7 @@ function Main() {
       ) : (
         <LikeButtonPlaceholder />
       )}
-      {data ? (
+      {data?.userId ? (
         <WishButton
           id={data.id}
           userId={data.userId}
@@ -115,11 +119,12 @@ function Main() {
     data && user?.userId ? (
       data?.userId !== user?.userId ? (
         <div className="flex flex-[0_0_12rem] flex-col space-y-3 font-bold max-md:hidden">
-          <ChatButton id={data.id} />
+          <ChatButton disabled={data.userId === null} id={data.id} />
           <div className="flex space-x-3">
             <SuggestPriceButton
               render={(props) => (
                 <Button
+                  disabled={data.userId === null}
                   {...props}
                   intent="primary"
                   outline
@@ -128,7 +133,7 @@ function Main() {
                 />
               )}
             />
-            <DesktopMenuButton />
+            {data?.userId && <DesktopMenuButton />}
           </div>
         </div>
       ) : (
@@ -155,7 +160,7 @@ function Main() {
   const Profile = () => (
     <div className="flex items-center justify-between">
       <Link
-        href={data ? `/profile/${data.userId}` : "#"}
+        href={data?.userId ? `/profile/${data.userId}` : "javascript:void(0)"}
         className="flex flex-1 items-center space-x-4"
       >
         {data?.author_picture ? (
@@ -188,7 +193,7 @@ function Main() {
           </p>
         </div>
       </Link>
-      {data && (
+      {data?.userId && (
         <FollowingButton isFollowing={data?.following} userId={data?.userId} />
       )}
     </div>
