@@ -2,11 +2,10 @@ import { MenuIcon } from "@lib/icons";
 
 import { MenuButton } from "./MenuButton";
 
-
 const Button = () => (
-  <span>
+  <button>
     <MenuIcon />
-  </span>
+  </button>
 );
 
 export const MobileMenuButton = () => {

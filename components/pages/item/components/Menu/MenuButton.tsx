@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import NiceModal from "@ebay/nice-modal-react";
 import { useRouter } from "next/router";
 
@@ -27,6 +27,7 @@ export const MenuButton = ({
         userId: data?.userId,
       });
   }, [data?.userId]);
+
   const showDeletePopup = useCallback(() => {
     NiceModal.show(DeletePopup, { onOk: () => mutateDelete() });
   }, [mutateDelete]);

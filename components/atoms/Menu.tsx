@@ -16,8 +16,10 @@ const MenuMain = ({
           {open && (
             <div className="fixed inset-0 z-30 bg-black bg-opacity-25 backdrop-blur-sm md:hidden" />
           )}
-          <div className="relative font-medium ">
-            <HMenu.Button className="relative block">{button}</HMenu.Button>
+          <div className="relative font-medium">
+            <HMenu.Button as="span" className="relative block">
+              {button}
+            </HMenu.Button>
             <HMenu.Items className="z-30 text-gray-800" onClick={close}>
               <div
                 className="z-30

@@ -1,2 +1,9 @@
+# *
 User-agent: *
-Disallow: /
+Allow: /
+
+# Host
+Host: https://sinzak.net
+
+# Sitemaps
+Sitemap: https://sinzak.net/sitemap.xml

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import NiceModal from "@ebay/nice-modal-react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { DefaultSeo } from "next-seo";
 import { SkeletonTheme } from "react-loading-skeleton";
 import { Toaster } from "sonner";
 
@@ -11,6 +12,7 @@ import { createQueryClient } from "@lib/services/queryClient";
 import { CustomAppProps } from "@types";
 import "react-loading-skeleton/dist/skeleton.css";
 import "../styles/globals.css";
+import { API } from "@lib/utils/consts";
 
 if (typeof document === "undefined") {
   React.useLayoutEffect = React.useEffect;
@@ -35,6 +37,24 @@ export default function App({ Component, pageProps }: CustomAppProps) {
     Component.getLayout || ((page: React.ReactElement) => <>{page}</>);
   return (
     <>
+      <DefaultSeo
+        title="신작 - 신세대의 작품을 만나다"
+        description=""
+        canonical={`${API.BASE_URI}`}
+        openGraph={{
+          title: "신작 - 신세대의 작품을 만나다",
+          description: "",
+          type: "website",
+          locale: "ko_KR",
+          url: `${API.BASE_URI}`,
+          siteName: "신작",
+          images: [
+            {
+              url: `${API.BASE_URI}/opengraph-image.png`,
+            },
+          ],
+        }}
+      />
       <style jsx global>{`
         html {
           font-family: ${globalFont.style.fontFamily};

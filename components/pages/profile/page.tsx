@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useCallback } from "react";
+import NiceModal from "@ebay/nice-modal-react";
 import { Listbox } from "@headlessui/react";
 import { useRouter } from "next/router";
 import Skeleton from "react-loading-skeleton";
@@ -6,12 +7,15 @@ import { twMerge } from "tailwind-merge";
 
 import { Button } from "@components/atoms/Button";
 import { CheckBox } from "@components/atoms/CheckBox";
+import { Menu } from "@components/atoms/Menu";
 import { FollowingButton } from "@components/elements/FollowingButton";
 import { ProductElement } from "@components/elements/ProductElement";
 import { createLayout } from "@components/layout/layout";
 import { AlignIcon, MenuIcon } from "@lib/icons";
+import { useAuth } from "@lib/services/auth";
 
 import { useUserProfileQuery } from "./queries/useUserProfileQuery";
+import { ReportPopup } from "../item/components/ReportPopup";
 
 const options = [
   { id: "recommend", name: "신작추천순" },
@@ -70,9 +74,17 @@ const useUserId = () => {
 
 export default function Page() {
   const userId = useUserId();
-  const { data, isLoading } = useUserProfileQuery({
+  const { user } = useAuth();
+
+  const { data } = useUserProfileQuery({
     variables: { userId },
   });
+
+  const showReportPopup = useCallback(() => {
+    NiceModal.show(ReportPopup, {
+      userId,
+    });
+  }, [userId]);
 
   return (
     <div className="container max-w-4xl">
@@ -98,15 +110,23 @@ export default function Page() {
             )}
           </div>
           <div className="flex space-x-2">
-            {data && (
-              <FollowingButton
-                isFollowing={data.profile.follow}
-                userId={userId}
-              />
+            {data && user?.userId !== userId && (
+              <>
+                <FollowingButton
+                  isFollowing={data.profile.follow}
+                  userId={userId}
+                />
+                <Menu
+                  button={
+                    <Button className="aspect-square rounded-full px-0 text-gray-800">
+                      <MenuIcon />
+                    </Button>
+                  }
+                >
+                  <Menu.Item onClick={showReportPopup}>신고하기</Menu.Item>
+                </Menu>
+              </>
             )}
-            <Button className="aspect-square rounded-full px-0 text-gray-800">
-              <MenuIcon />
-            </Button>
           </div>
         </div>
         <div></div>
