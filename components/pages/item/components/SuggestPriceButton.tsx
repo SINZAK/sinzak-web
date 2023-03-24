@@ -18,7 +18,8 @@ export const SuggestPriceButton = ({
   const { mutate } = useSuggestPriceMutation();
 
   const showSuggestPricePopup = useCallback(() => {
-    if (data?.id) NiceModal.show(SuggestPricePopup, { mutate, id: data.id });
+    if (data?.id)
+      NiceModal.show(SuggestPricePopup, { mutate, postId: data.id });
   }, [data?.id, mutate]);
 
   return <Element onClick={showSuggestPricePopup}>가격 제안하기</Element>;

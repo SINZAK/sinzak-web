@@ -22,9 +22,10 @@ export const MenuButton = ({
   const { mutate: mutateDelete } = useDeleteItemMutation();
 
   const showReportPopup = useCallback(() => {
-    NiceModal.show(ReportPopup, {
-      userId: data?.userId,
-    });
+    if (data?.userId)
+      NiceModal.show(ReportPopup, {
+        userId: data?.userId,
+      });
   }, [data?.userId]);
   const showDeletePopup = useCallback(() => {
     NiceModal.show(DeletePopup, { onOk: () => mutateDelete() });

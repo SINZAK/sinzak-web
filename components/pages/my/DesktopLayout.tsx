@@ -15,11 +15,8 @@ const DesktopLayout = ({ children }: { children?: React.ReactNode }) => {
   const { data } = useMyProfileQuery();
 
   const showEditProfilePopup = useCallback(() => {
-    NiceModal.show(EditProfilePopup, {
-      onOk: () => {},
-      initialProfile: data?.profile,
-    });
-  }, [data?.profile]);
+    NiceModal.show(EditProfilePopup);
+  }, []);
 
   const { profile } = data || {};
 

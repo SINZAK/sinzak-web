@@ -9,7 +9,7 @@ import { SuggestPriceMutationVariables } from "@types";
 export const SuggestPricePopup = NiceModal.create(
   ({
     mutate,
-    id,
+    postId: id,
   }: {
     mutate: UseMutateFunction<
       unknown,
@@ -17,7 +17,7 @@ export const SuggestPricePopup = NiceModal.create(
       SuggestPriceMutationVariables,
       unknown
     >;
-    id: number;
+    postId: number;
   }) => {
     const modal = useModal();
     const [price, setPrice] = useState<number | null>(null);
