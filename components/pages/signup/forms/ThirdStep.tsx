@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { toast } from "sonner";
 
 import { Button } from "@components/atoms/Button";
 import { Category } from "@lib/resources/category";
@@ -104,7 +105,7 @@ export const ThirdStep = () => {
           login({ accessToken, refreshToken, accessTokenExpireDate });
           setStep((step) => step + 1);
         } catch (e) {
-          alert("알 수 없는 오류가 발생했습니다.");
+          toast.error("알 수 없는 오류가 발생했습니다.");
           location.href = "/auth/signin";
         }
       }}

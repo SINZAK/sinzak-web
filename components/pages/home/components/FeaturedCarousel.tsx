@@ -11,9 +11,11 @@ import "@egjs/react-flicking/dist/flicking.css";
 export const FeaturedCarousel = ({
   data,
   title,
+  href,
 }: {
   data?: ItemSimple[];
-  title: string;
+  title?: string;
+  href?: string;
 }) => {
   const flick = useRef<Flicking>(null);
 
@@ -45,11 +47,15 @@ export const FeaturedCarousel = ({
   return (
     <div className="space-y-5 md:space-y-10">
       <div className="flex items-center justify-between">
-        <span className="text-xl font-bold md:text-2xl">{title}</span>
+        <span className="text-xl font-bold md:text-2xl">
+          {title || <>&nbsp;</>}
+        </span>
         <span className="flex items-center space-x-4 text-sm font-medium md:text-base">
-          <Link href="/featured">
-            <span className="text-gray-800">더보기</span>
-          </Link>
+          {href && (
+            <Link href={href}>
+              <span className="text-gray-800">더보기</span>
+            </Link>
+          )}
           <span className="hidden items-center space-x-3 font-bold md:flex">
             <button onClick={onClickPrev}>
               <ChevronLeftIcon className="fill-gray-800" />
@@ -67,7 +73,7 @@ export const FeaturedCarousel = ({
         bound
         align="prev"
       >
-        {Array.from({ length: 10 }).map((_, i) => (
+        {(data || Array.from({ length: 10 })).map((_, i) => (
           <ProductElement
             type="market"
             className="mr-3 w-3/5 sm:w-48 md:w-56 lg:mr-7"

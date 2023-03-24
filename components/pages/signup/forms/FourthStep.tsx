@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { Button } from "@components/atoms/Button";
@@ -69,9 +69,13 @@ const univList = [
   ["UNIST", "unist.ac.kr"],
 ];
 
-export const FourthStep = () => {
-  const globalForm = useFormContext();
-  const [_, setStep] = useStepContext();
+export const UnivSelectForm = ({
+  onSubmit,
+  onSkip,
+}: {
+  onSubmit: (univ: string) => void;
+  onSkip: () => void;
+}) => {
   const [univInput, setUnivInput] = useState("");
 
   const filteredUnivList = univInput
@@ -79,13 +83,7 @@ export const FourthStep = () => {
     : null;
 
   return (
-    <form
-      className="flex flex-1 flex-col"
-      onSubmit={() => {
-        globalForm.setValue("univName", univInput);
-        setStep((step) => step + 1);
-      }}
-    >
+    <form className="flex flex-1 flex-col" onSubmit={() => onSubmit(univInput)}>
       <div className="flex flex-1 flex-col font-medium">
         <div className="mt-4 mb-6">
           <p className="text-xl font-bold">소속 대학교를 알려주세요.</p>
@@ -126,7 +124,7 @@ export const FourthStep = () => {
         </div>
       </div>
       <div className="grid grid-cols-2 gap-x-4">
-        <Button onClick={() => setStep(5)} size="large" className="w-full">
+        <Button onClick={() => onSkip()} size="large" className="w-full">
           대학생이 아니에요
         </Button>
         <Button
@@ -140,5 +138,20 @@ export const FourthStep = () => {
         </Button>
       </div>
     </form>
+  );
+};
+
+export const FourthStep = () => {
+  const globalForm = useFormContext();
+  const [_, setStep] = useStepContext();
+
+  return (
+    <UnivSelectForm
+      onSubmit={(univInput) => {
+        globalForm.setValue("univName", univInput);
+        setStep((step) => step + 1);
+      }}
+      onSkip={() => setStep(5)}
+    />
   );
 };

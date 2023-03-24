@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 import { useMarketItemQuery } from "@components/pages/item/market/queries/item";
 import { http } from "@lib/services/http";
@@ -90,7 +91,7 @@ export const useEditForm = ({
             onComplete(data.type === "sell" ? "market" : "work", id);
           },
           onError: (e: any) =>
-            alert(e.message || "알 수 없는 오류가 발생했습니다."),
+            toast.error(e.message || "알 수 없는 오류가 발생했습니다."),
         }
       );
     },

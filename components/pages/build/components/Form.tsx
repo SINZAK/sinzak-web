@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import { Button } from "@components/atoms/Button";
 
 import { CategoryField } from "./fields/CategoryField";
 import { ContentField } from "./fields/ContentField";
 import { DimensionsField } from "./fields/DimensionsField";
-import { ImageUpload } from "./fields/ImageField";
+import { ImageField } from "./fields/ImageField";
 import { PriceField } from "./fields/PriceField";
 import { TitleField } from "./fields/TitleField";
 import { TypeField } from "./fields/TypeField";
@@ -35,7 +36,12 @@ export const Form = () => {
   return (
     <FormProvider {...methods}>
       <UploadPopup text={uploadText} isOpen={!!uploadText} />
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        onSubmit={handleSubmit(onSubmit, (e) => {
+          if (e.category) toast.error("카테고리를 선택해주세요.");
+          if (e.images) toast.error("이미지를 한 장 이상 등록해주세요.");
+        })}
+      >
         {type && (
           <div className="fixed bottom-0 left-0 z-30 flex w-full justify-center bg-white p-3 pb-7 md:hidden">
             <Button
@@ -53,7 +59,7 @@ export const Form = () => {
           {type && (
             <>
               <CategoryField />
-              <ImageUpload />
+              <ImageField />
               <TitleField />
               <PriceField />
               <ContentField />

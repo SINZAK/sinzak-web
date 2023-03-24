@@ -48,11 +48,13 @@ const DesktopLayout = ({ children }: { children?: React.ReactNode }) => {
                 </p>
                 <p className="flex space-x-1">
                   {profile ? (
-                    profile.cert_uni && (
-                      <p className="text-sm leading-snug">
-                        {profile.cert_uni} verified
-                      </p>
-                    )
+                    <p className="text-sm leading-snug">
+                      {profile.cert_uni ? (
+                        <span>{profile.univ} verified</span>
+                      ) : (
+                        <span className="text-gray-600">학교 미인증</span>
+                      )}
+                    </p>
                   ) : (
                     <Skeleton className="w-28" />
                   )}
@@ -83,7 +85,7 @@ const DesktopLayout = ({ children }: { children?: React.ReactNode }) => {
                   {data ? (
                     <>
                       <span className="mr-2 font-bold">
-                        {data.profile.followerNumber}
+                        {data.profile.followingNumber}
                       </span>
                       <span className="text-sm">팔로잉</span>
                     </>

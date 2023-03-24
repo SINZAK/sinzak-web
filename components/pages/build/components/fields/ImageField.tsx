@@ -1,11 +1,12 @@
 import produce from "immer";
 import { Controller, useFormContext } from "react-hook-form";
+import { toast } from "sonner";
 
 import { CloseIcon, PlusBorderIcon } from "@lib/icons";
 
 import { BuildForm } from "../../types";
 
-export const ImageUpload = () => {
+export const ImageField = () => {
   const { control } = useFormContext<BuildForm>();
 
   const selectFiles = (
@@ -28,8 +29,6 @@ export const ImageUpload = () => {
   };
   const deleteImage = (value: BuildForm["images"], i: number) => {
     return produce(value, (draft) => {
-      console.log(draft.length);
-      draft = draft.filter(({ type }) => type !== "delete");
       if (draft[i].type === "preview") {
         draft.splice(i, 1);
         return;
@@ -46,6 +45,7 @@ export const ImageUpload = () => {
         name="images"
         rules={{
           required: false,
+          validate: (value) => value?.length > 0,
         }}
         render={({ field: { onChange, value } }) => (
           <div className="grid grid-cols-[repeat(auto-fill,minmax(6rem,1fr))] gap-3">
@@ -68,14 +68,12 @@ export const ImageUpload = () => {
                 <span className="text-lg font-bold">업로드</span>
               </label>
             </span>
-            {value
-              ?.filter((x) => x.type !== "delete")
-              .map((x) => x.src)
-              .map((_, i) => (
+            {value?.map((image, i) =>
+              image.type === "delete" ? null : (
                 <span className="relative" key={i}>
                   <img
                     alt=""
-                    src={_}
+                    src={image.src}
                     className="flex aspect-square items-center justify-center whitespace-pre-line rounded-xl border bg-gray-100 object-cover"
                     draggable="false"
                   />
@@ -87,7 +85,8 @@ export const ImageUpload = () => {
                     <CloseIcon />
                   </button>
                 </span>
-              ))}
+              )
+            )}
           </div>
         )}
       />

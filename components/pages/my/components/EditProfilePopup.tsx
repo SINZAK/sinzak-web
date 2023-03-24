@@ -1,12 +1,15 @@
 import { useCallback, useRef, useState } from "react";
 import NiceModal, { useModal } from "@ebay/nice-modal-react";
 import { Dialog } from "@headlessui/react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import ReactTextareaAutosize from "react-textarea-autosize";
+import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 
 import { Button } from "@components/atoms/Button";
-import { FifthStep } from "@components/pages/signup/forms/FifthStep";
+import { VerifyForm } from "@components/pages/signup/forms/FifthStep";
+import { UnivSelectForm } from "@components/pages/signup/forms/FourthStep";
 import { CategorySelectForm } from "@components/pages/signup/forms/ThirdStep";
 import { useSelectImage } from "@lib/hooks/useSelectImage";
 import { getCategoryText } from "@lib/resources/category";
@@ -14,6 +17,30 @@ import { getCategoryText } from "@lib/resources/category";
 import { useEditCategoryMutation } from "../queries/useEditCategoryMutation";
 import { useEditUserMutation } from "../queries/useEditUserMutation";
 import { useMyProfileQuery } from "../queries/useMyProfileQuery";
+
+const VerifyStepForm = ({ close }: { close: () => void }) => {
+  const queryClient = useQueryClient();
+
+  const [step, setStep] = useState(0);
+  const [univName, setUnivName] = useState("");
+
+  if (step === 0)
+    return (
+      <UnivSelectForm
+        onSkip={() => close()}
+        onSubmit={(univName) => (setUnivName(univName), setStep(1))}
+      />
+    );
+  return (
+    <VerifyForm
+      onSubmit={() => {
+        queryClient.invalidateQueries(useMyProfileQuery.getKey());
+        close();
+      }}
+      univName={univName}
+    />
+  );
+};
 
 export const EditProfilePopup = NiceModal.create(() => {
   const { data } = useMyProfileQuery();
@@ -37,12 +64,20 @@ export const EditProfilePopup = NiceModal.create(() => {
   const onSubmit = useCallback(
     () =>
       handleSubmit(async ({ introduction, name }) => {
+        name = name?.trim();
         if (!name) return;
+        if (!/^[0-9A-Za-zㄱ-ㅎ가-힣_\-\.]{2,12}$/.test(name)) {
+          toast.error(
+            "닉네임은 공백없이 2자 이상 12자 이하, 기호는 - _ . 만 사용 가능합니다."
+          );
+          return;
+        }
         mutate(
           { introduction, name, imageFile },
           {
             onSuccess: () => modal.remove(),
-            onError: () => alert("알 수 없는 오류가 발생했습니다."),
+            onError: (e: any) =>
+              toast.error(e.message || "알 수 없는 오류가 발생했습니다."),
           }
         );
       })(),
@@ -62,8 +97,8 @@ export const EditProfilePopup = NiceModal.create(() => {
         ref={ref}
       >
         <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm" />
-        <Dialog.Panel className="w-full max-w-sm transform space-y-4 overflow-hidden rounded-3xl bg-white p-6 text-left align-middle shadow-xl">
-          <FifthStep />
+        <Dialog.Panel className="flex h-[640px] w-full max-w-sm transform space-y-4 overflow-hidden rounded-3xl bg-white p-6 text-left align-middle shadow-xl">
+          <VerifyStepForm close={() => setState(null)} />
         </Dialog.Panel>
       </Dialog>
     );
@@ -160,7 +195,7 @@ export const EditProfilePopup = NiceModal.create(() => {
             <p className="flex items-center py-4">
               <span className="w-16 font-bold">학교</span>
               {initialProfile.cert_uni ? (
-                <span>{initialProfile.cert_uni}</span>
+                <span>{initialProfile.univ}</span>
               ) : (
                 <span className="flex flex-1 justify-between">
                   <span>미등록</span>

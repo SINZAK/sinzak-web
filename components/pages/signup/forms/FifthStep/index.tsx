@@ -1,12 +1,20 @@
 import { useState } from "react";
+import { useFormContext } from "react-hook-form";
 
 import { Button } from "@components/atoms/Button";
 import { CheckIcon } from "@lib/icons";
 
 import { MailVerify } from "./MailVerify";
 import { PhotoVerify } from "./PhotoVerify";
+import { useStepContext } from "../../states";
 
-export const FifthStep = () => {
+export const VerifyForm = ({
+  univName,
+  onSubmit,
+}: {
+  univName: string;
+  onSubmit: () => void;
+}) => {
   const [verifyType, setVerifyType] = useState<"mail" | "photo">("mail");
 
   return (
@@ -35,10 +43,23 @@ export const FifthStep = () => {
             </Button>
           </div>
           <hr />
-          {verifyType === "mail" && <MailVerify />}
-          {verifyType === "photo" && <PhotoVerify />}
+          {verifyType === "mail" && (
+            <MailVerify onSubmit={onSubmit} univName={univName} />
+          )}
+          {verifyType === "photo" && (
+            <PhotoVerify onSubmit={onSubmit} univName={univName} />
+          )}
         </div>
       </div>
     </>
   );
+};
+
+export const FifthStep = () => {
+  const [_, setStep] = useStepContext();
+
+  const { watch } = useFormContext();
+  const univName = watch("univName");
+
+  return <VerifyForm onSubmit={() => setStep(5)} univName={univName} />;
 };

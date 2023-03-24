@@ -1,4 +1,4 @@
-import { useFormContext } from "react-hook-form";
+import { toast } from "sonner";
 
 import { Button } from "@components/atoms/Button";
 import { useSelectImage } from "@lib/hooks/useSelectImage";
@@ -7,29 +7,34 @@ import { CameraIcon } from "@lib/icons";
 import { useSubmitPhotoCertifyMutation } from "../../queries/useSubmitPhotoCertifyMutation";
 import { useStepContext } from "../../states";
 
-export const PhotoVerify = () => {
-  const [_, setStep] = useStepContext();
+export const PhotoVerify = ({
+  univName,
+  onSubmit,
+}: {
+  univName: string;
+  onSubmit: () => void;
+}) => {
   const { imageFile, imageString, selectFile } = useSelectImage();
   const { mutate, isLoading } = useSubmitPhotoCertifyMutation();
-  const globalForm = useFormContext();
 
-  const onSubmit = async () => {
+  const onFormSubmit = async () => {
     if (!imageFile) return;
     mutate(
       {
-        univName: globalForm.getValues("univName"),
+        univName,
         imageFile,
       },
       {
-        onSuccess: () => setStep(5),
-        onError: (e: any) => alert(e.message),
+        onSuccess: () => onSubmit(),
+        onError: (e: any) =>
+          toast.error(e.message || "알 수 없는 오류가 발생했습니다."),
       }
     );
-    setStep(5);
+    onSubmit();
   };
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-1 flex-col space-y-5">
+    <form onSubmit={onFormSubmit} className="flex flex-1 flex-col space-y-5">
       <div>
         <p className="text-sm text-gray-800">
           모바일 학생증 캡쳐 화면 또는 실물 학생증 사진을 업로드해주세요.
@@ -65,7 +70,7 @@ export const PhotoVerify = () => {
       </div>
       <div className="!mt-0 flex flex-1 flex-col-reverse">
         <div className="grid grid-cols-2 gap-x-4">
-          <Button onClick={() => setStep(5)} size="large" className="w-full">
+          <Button onClick={() => onSubmit()} size="large" className="w-full">
             다음에 하기
           </Button>
           <Button

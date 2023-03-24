@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useDeferredValue, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { toast } from "sonner";
 
 import { Button } from "@components/atoms/Button";
 
@@ -12,15 +13,19 @@ export const SecondStep = () => {
   const [isValid, setIsValid] = useState<null | boolean>(null);
   const [name, setName] = useState("");
   const { mutate, isLoading } = useCheckNicknameMutation();
+  const deferredName = useDeferredValue(name);
 
   const onCheck = () => {
     mutate(name, {
       onSuccess: () => setIsValid(true),
-      onError: (e: any) => alert(e.message),
+      onError: (e: any) => toast.error(e.message),
     });
   };
 
-  const disabled = !name.length || isLoading;
+  const disabled = useMemo(
+    () => !/^[0-9A-Za-zㄱ-ㅎ가-힣_\-\.]{2,12}$/.test(deferredName) || isLoading,
+    [deferredName, isLoading]
+  );
 
   return (
     <form
@@ -39,7 +44,7 @@ export const SecondStep = () => {
             이름을 입력해주세요.
           </p>
           <p className="mt-2 text-xs text-gray-800">
-            이름은 공백없이 12자 이하,
+            이름은 공백없이 2자 이상 12자 이하,
             <br />
             기호는 - _ . 만 사용 가능합니다.
           </p>
@@ -48,10 +53,11 @@ export const SecondStep = () => {
           <div>
             <p className="flex items-center space-x-4">
               <input
+                spellCheck={false}
                 value={name}
                 onChange={(e) => {
                   setIsValid(null);
-                  setName(e.currentTarget.value);
+                  setName(e.currentTarget.value.trim());
                 }}
                 className="flex-1 rounded-full bg-gray-100 px-4 py-3 placeholder:text-gray-600"
               />

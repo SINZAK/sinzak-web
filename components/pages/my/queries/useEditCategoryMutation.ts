@@ -4,6 +4,8 @@ import { createMutation } from "react-query-kit";
 
 import { http } from "@lib/services/http";
 
+import { useMyProfileQuery } from "./useMyProfileQuery";
+
 export const useEditCategoryMutation = (
   ...args: Parameters<typeof mutation>
 ) => {
@@ -18,7 +20,7 @@ export const useEditCategoryMutation = (
           return res.data;
         },
         onSuccess: () => {
-          queryClient.invalidateQueries(["/users/my-profile"]);
+          queryClient.invalidateQueries(useMyProfileQuery.getKey());
         },
       }),
     [queryClient]

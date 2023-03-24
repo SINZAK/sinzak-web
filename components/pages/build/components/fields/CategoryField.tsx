@@ -1,5 +1,5 @@
-import type from "@egjs/flicking-plugins/declaration/type";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { toast } from "sonner";
 
 import { SingleSelect } from "../SingleSelect";
 
@@ -17,6 +17,12 @@ export const CategoryField = () => {
           name="category"
           rules={{
             required: true,
+            validate: (value) => {
+              console.log(value);
+              const result = !!value;
+              if (!result) toast.error("카테고리를 선택해주세요.");
+              return result;
+            },
           }}
           render={({ field: { onChange } }) => (
             <SingleSelect
@@ -39,6 +45,12 @@ export const CategoryField = () => {
           name="category"
           rules={{
             required: true,
+            validate: (value) => {
+              console.log(value);
+              const result = !!value;
+              if (!result) toast.error("카테고리를 선택해주세요.");
+              return result;
+            },
           }}
           render={({ field: { onChange } }) => (
             <SingleSelect

@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { toast } from "sonner";
 
 import { Button } from "@components/atoms/Button";
 
@@ -7,8 +7,13 @@ import { useCheckMailCertifyMutation } from "../../queries/useCheckMailCertifyMu
 import { useSendMailCertifyMutation } from "../../queries/useSendMailCertifyMutation";
 import { useStepContext } from "../../states";
 
-export const MailVerify = () => {
-  const globalForm = useFormContext();
+export const MailVerify = ({
+  univName,
+  onSubmit,
+}: {
+  univName: string;
+  onSubmit: () => void;
+}) => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [isSent, setIsSent] = useState(false);
@@ -17,7 +22,6 @@ export const MailVerify = () => {
     useSendMailCertifyMutation();
   const { mutate: mutateCheck, isLoading: isCheckLoading } =
     useCheckMailCertifyMutation();
-  const [_, setStep] = useStepContext();
 
   const valid = useMemo(
     () => new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}").test(email),
@@ -25,7 +29,6 @@ export const MailVerify = () => {
   );
 
   const sendMailCertify = () => {
-    const univName = globalForm.getValues("univName");
     mutateSend(
       {
         univName,
@@ -33,14 +36,13 @@ export const MailVerify = () => {
       },
       {
         onSuccess: () => setIsSent(true),
-        onError: (e: any) => alert(e.message),
+        onError: (e: any) => toast.error(e.message),
       }
     );
   };
 
   const checkMailCertify: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    const univName = globalForm.getValues("univName");
     mutateCheck(
       {
         univName,
@@ -48,8 +50,8 @@ export const MailVerify = () => {
         code: parseInt(code),
       },
       {
-        onSuccess: () => setStep(5),
-        onError: (e: any) => alert(e.message),
+        onSuccess: () => onSubmit(),
+        onError: (e: any) => toast.error(e.message),
       }
     );
   };
@@ -116,7 +118,7 @@ export const MailVerify = () => {
       </div>
       <div className="flex-1" />
       <div className="grid grid-cols-2 gap-x-4">
-        <Button onClick={() => setStep(5)} size="large" className="w-full">
+        <Button onClick={() => onSubmit()} size="large" className="w-full">
           다음에 하기
         </Button>
         <Button

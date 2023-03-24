@@ -34,15 +34,20 @@ const Main = ({ router }: { router: NextRouter }) => {
       )
         throw Error();
 
-      const oauth = await http.get<{
-        access_token: string;
-        id_token?: string;
-      }>(
-        `/web/${provider}?${new URLSearchParams({
-          code,
-          redirect_uri: `${API.BASE_URI}/oauth/${provider}`,
-        })}`
-      );
+      const oauth = await http
+        .get<{
+          access_token: string;
+          id_token?: string;
+        }>(
+          `/web/${provider}?${new URLSearchParams({
+            code,
+            redirect_uri: `${API.BASE_URI}/oauth/${provider}`,
+          })}`
+        )
+        .catch((e) => {
+          alert("알 수 없는 오류가 발생했습니다. 다시 시도해주세요.");
+          throw Error(e);
+        });
       const auth = await http.post
         .json<{
           accessToken: string;
@@ -55,6 +60,7 @@ const Main = ({ router }: { router: NextRouter }) => {
           origin: provider,
         })
         .catch((e) => {
+          alert("알 수 없는 오류가 발생했습니다. 다시 시도해주세요.");
           throw Error(e);
         });
       const { accessToken, accessTokenExpireDate, refreshToken } = auth.data;

@@ -21,7 +21,7 @@ export const useSubmitPhotoCertifyMutation = () => {
       const formData = new FormData();
       formData.append("multipartFile", imageFile);
       const result = await http.post.multipart<{ success: true }>(
-        `/certify/${univResult.data.id}/image`,
+        `/certify/${univResult.data.id}/univ`,
         formData
       );
       return result.data;

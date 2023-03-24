@@ -53,28 +53,28 @@ export default function Page() {
                   src="/assets/images/google-login.png"
                   className="h-5 w-5"
                 />
-                Google로 시작하기
+                Google로 로그인
               </a>
               <a
                 href={`https://kauth.kakao.com/oauth/authorize?client_id=e5ae2058984fe7b6c47373dbfb7bf7b1&redirect_uri=${`${API.BASE_URI}/oauth/kakao`}&response_type=code`}
                 className="flex items-center gap-4 rounded-xl bg-[#FEE500] px-4 py-3"
               >
                 <img src="/assets/images/kakao-login.png" className="h-5 w-5" />
-                카카오로 시작하기
+                카카오로 로그인
               </a>
               <a
                 href={`https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=DwXMEfKZq0tmkrsn6kLk&state=STATE_STRING&redirect_uri=${`${API.BASE_URI}/oauth/naver`}`}
                 className="flex items-center gap-4 rounded-xl bg-[#03C75A] px-4 py-3 text-white"
               >
                 <img src="/assets/images/naver-login.png" className="h-5 w-5" />
-                네이버로 시작하기
+                네이버로 로그인
               </a>
               <a
                 href={`https://appleid.apple.com/auth/authorize?client_id=net.sinzak.sinzak&redirect_uri=${`${API.BASE_URI}/oauth/apple`}&response_type=code&id_token&response_mode=form_post`}
                 className="flex items-center gap-4 rounded-xl bg-black px-4 py-3 text-white"
               >
                 <img src="/assets/images/apple-login.png" className="h-5 w-5" />
-                Apple로 시작하기
+                Apple로 로그인
               </a>
               {/* <a className="rounded-xl bg-gray-100 px-6 py-3">
                 카카오로 시작하기

@@ -4,12 +4,13 @@ import { http } from "@lib/services/http";
 
 type Response = {
   roomName: string;
-  productId: number;
+  postId: number;
   productName: string;
   price: number;
   thumbnail: string;
   complete: boolean;
   suggest: boolean;
+  postType: "PRODUCT" | "WORK";
 };
 
 type Variables = { roomId: string };

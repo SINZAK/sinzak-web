@@ -4,6 +4,8 @@ import { createMutation } from "react-query-kit";
 
 import { http } from "@lib/services/http";
 
+import { useMyProfileQuery } from "./useMyProfileQuery";
+
 export const useEditUserMutation = (...args: Parameters<typeof mutation>) => {
   const queryClient = useQueryClient();
   const mutation = useMemo(
@@ -30,7 +32,7 @@ export const useEditUserMutation = (...args: Parameters<typeof mutation>) => {
           return res;
         },
         onSuccess: () => {
-          queryClient.invalidateQueries(["/users/my-profile"]);
+          queryClient.invalidateQueries(useMyProfileQuery.getKey());
         },
       }),
     [queryClient]

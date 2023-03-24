@@ -9,7 +9,6 @@ import {
 } from "../../states/search";
 import { useFilterContext } from "../states/filter";
 
-
 interface SearchInputProps {
   onSearch?: UseAtomWithResetResult<AtomWithHashFilterSearchValue>[1];
   autoFocus?: boolean;
@@ -22,6 +21,7 @@ export const SearchInput = (props: SearchInputProps) => {
   });
   return (
     <Input
+      showToast={true}
       placeholder="의뢰 통합 검색"
       value={search}
       setValue={setSearch}

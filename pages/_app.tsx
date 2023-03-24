@@ -3,12 +3,12 @@ import NiceModal from "@ebay/nice-modal-react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { SkeletonTheme } from "react-loading-skeleton";
+import { Toaster } from "sonner";
 
 import { AuthProvider } from "@lib/services/auth";
 import { globalFont } from "@lib/services/font";
 import { createQueryClient } from "@lib/services/queryClient";
 import { CustomAppProps } from "@types";
-
 import "react-loading-skeleton/dist/skeleton.css";
 import "../styles/globals.css";
 
@@ -45,6 +45,7 @@ export default function App({ Component, pageProps }: CustomAppProps) {
           <AuthProvider>
             <SkeletonTheme inline baseColor="#eee" highlightColor="#ddd">
               <ReactQueryDevtools initialIsOpen={false} />
+              <Toaster richColors position="top-center" />
               <div id="main" className="h-full">
                 {getLayout(<Component {...pageProps} />)}
               </div>

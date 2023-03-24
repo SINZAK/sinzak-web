@@ -5,6 +5,8 @@ import { createMutation } from "react-query-kit";
 import { http } from "@lib/services/http";
 import { ProductType } from "@types";
 
+import { useMyProfileQuery } from "./useMyProfileQuery";
+
 export const useChangeProductCompleteMutation = (
   ...args: Parameters<typeof mutation>
 ) => {
@@ -22,7 +24,7 @@ export const useChangeProductCompleteMutation = (
           return res.data;
         },
         onSuccess: () => {
-          queryClient.invalidateQueries(["/users/my-profile"]);
+          queryClient.invalidateQueries(useMyProfileQuery.getKey());
         },
       }),
     [queryClient]

@@ -93,7 +93,7 @@ export default function Page() {
             </p>
             {data?.profile.cert_uni && (
               <p className="text-sm leading-snug">
-                {data.profile.cert_uni} verified
+                {data.profile.univ} verified
               </p>
             )}
           </div>

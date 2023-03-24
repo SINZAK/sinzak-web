@@ -6,7 +6,7 @@ import { Button } from "@components/atoms/Button";
 
 import { ContentField } from "./fields/ContentField";
 import { DimensionsField } from "./fields/DimensionsField";
-import { ImageUpload } from "./fields/ImageField";
+import { ImageField } from "./fields/ImageField";
 import { PriceField } from "./fields/PriceField";
 import { TitleField } from "./fields/TitleField";
 import { UploadPopup } from "./UploadPopup";
@@ -58,7 +58,7 @@ export const EditForm = ({
         <div className="flex flex-col space-y-7">
           {type && (
             <>
-              <ImageUpload />
+              <ImageField />
               <TitleField />
               <PriceField />
               <ContentField />

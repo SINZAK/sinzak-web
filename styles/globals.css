@@ -35,11 +35,11 @@ input[type="number"] {
 
 ::-moz-selection {
   /* Code for Firefox */
-  @apply bg-[#ff404088];
+  @apply bg-[#ff9999];
 }
 
 ::selection {
-  @apply bg-[#ff404088];
+  @apply bg-[#ff9999];
 }
 
 img {

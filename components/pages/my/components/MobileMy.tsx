@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import NiceModal from "@ebay/nice-modal-react";
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
+import { twMerge } from "tailwind-merge";
 
 import { Button } from "@components/atoms/Button";
 
@@ -34,11 +35,13 @@ export const MobileMy = () => {
           </p>
           <p>
             {profile ? (
-              profile.cert_uni && (
-                <p className="text-sm leading-snug">
-                  {profile.cert_uni} verified
-                </p>
-              )
+              <p className="text-sm leading-snug">
+                {profile.cert_uni ? (
+                  <span>{profile.univ} verified</span>
+                ) : (
+                  <span className="text-gray-600">학교 미인증</span>
+                )}
+              </p>
             ) : (
               <Skeleton className="w-28" />
             )}
@@ -69,11 +72,21 @@ export const MobileMy = () => {
               )}
             </span>
           </p>
-          <p className="whitespace-pre-line">
+          <p
+            className={twMerge(
+              "whitespace-pre-line",
+              !data?.profile.introduction && " text-gray-600"
+            )}
+          >
             {profile?.introduction || "자기소개 미작성"}
           </p>
         </div>
-        <Button onClick={showEditProfilePopup} intent="primary" outline>
+        <Button
+          className="!mt-6"
+          onClick={showEditProfilePopup}
+          intent="primary"
+          outline
+        >
           프로필 편집
         </Button>
       </div>

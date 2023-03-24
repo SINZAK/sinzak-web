@@ -6581,6 +6581,7 @@ __metadata:
     react-textarea-autosize: ^8.4.0
     sharp: ^0.31.3
     sockjs-client: ^1.6.1
+    sonner: ^0.3.0
     tailwind-merge: ^1.9.1
     tailwindcss: ^3.2.4
     typescript: 4.9.5
@@ -6640,6 +6641,16 @@ __metadata:
     ip: ^2.0.0
     smart-buffer: ^4.2.0
   checksum: 259d9e3e8e1c9809a7f5c32238c3d4d2a36b39b83851d0f573bfde5f21c4b1288417ce1af06af1452569cd1eb0841169afd4998f0e04ba04656f6b7f0e46d748
+  languageName: node
+  linkType: hard
+
+"sonner@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "sonner@npm:0.3.0"
+  peerDependencies:
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  checksum: f2d32e72c30be9ff769f1f101567d78b21b01a0099c748bb1e93500b942fff782ee79ec7638c4792818090f3432a211c2a90d0988687da9bc96e87a66e9a4305
   languageName: node
   linkType: hard
 

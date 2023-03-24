@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import NiceModal, { useModal } from "@ebay/nice-modal-react";
 import { Dialog } from "@headlessui/react";
 import ReactTextareaAutosize from "react-textarea-autosize";

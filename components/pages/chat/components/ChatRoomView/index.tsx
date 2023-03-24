@@ -5,6 +5,7 @@ import { RESET } from "jotai/vanilla/utils";
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 import ReactTextareaAutosize from "react-textarea-autosize";
+import { toast } from "sonner";
 
 import { Button } from "@components/atoms/Button";
 import { useImage, useSelectImage } from "@lib/hooks/useSelectImage";
@@ -110,7 +111,9 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
     formData.append("multipartFile", image);
     const res = await http.post
       .multipart<{ url: string }[]>(`/chat/rooms/${roomId}/image`, formData)
-      .catch((_) => alert("이미지 업로드에 실패했습니다."));
+      .catch((_) => {
+        toast.error("이미지 업로드에 실패했습니다.");
+      });
     if (!res) return;
     const imageUrl = res.data[0].url;
 
@@ -151,10 +154,19 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
           </span>
         </div>
         <Link
-          href={data ? `/market/${data.productId}` : "#"}
+          href={
+            data
+              ? `/${data.postType === "PRODUCT" ? "market" : "work"}/${
+                  data.postId
+                }`
+              : "#"
+          }
           className="flex space-x-4 px-2 py-4"
         >
-          <span className="inline-block h-10 w-10 rounded-xl bg-gray-200" />
+          <img
+            src={data?.thumbnail}
+            className="inline-block h-10 w-10 rounded-xl bg-gray-200"
+          />
           <div className="flex flex-col justify-around">
             <p className="flex items-center">
               <span className="space-x-1 text-sm">

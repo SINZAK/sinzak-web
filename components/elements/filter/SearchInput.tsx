@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { RESET } from "jotai/vanilla/utils";
+import { toast } from "sonner";
 
 import { AtomWithHashFilterSearchValue } from "@components/pages/list/states/search";
 import { CloseIcon } from "@lib/icons";
@@ -11,6 +12,7 @@ interface SearchInputProps {
   onSearch?: UseAtomWithResetResult<AtomWithHashFilterSearchValue>[1];
   autoFocus?: boolean;
   placeholder?: string;
+  showToast?: boolean;
 }
 
 export const SearchInput = ({
@@ -19,6 +21,7 @@ export const SearchInput = ({
   onSearch: externalOnSearch,
   autoFocus,
   placeholder,
+  showToast,
 }: SearchInputProps) => {
   const [search, setSearch] = useState("");
   const [filterSearch, setFilterSearch] = [value, setValue];
@@ -38,7 +41,10 @@ export const SearchInput = ({
     <form
       className="relative max-md:h-full"
       onSubmit={(e) => (
-        e.preventDefault(), isValid && onSearch(search || RESET)
+        e.preventDefault(),
+        isValid
+          ? onSearch(search || RESET)
+          : showToast && toast("검색어를 두 글자 이상 입력해주세요.")
       )}
     >
       {(isValid || filterSearch) && (
