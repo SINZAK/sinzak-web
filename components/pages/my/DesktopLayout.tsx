@@ -6,6 +6,7 @@ import { twMerge } from "tailwind-merge";
 
 import { Button } from "@components/atoms/Button";
 import NoSsr from "@components/atoms/NoSsr";
+import { VerifiedIcon } from "@lib/icons";
 import { logout } from "@lib/services/auth";
 
 import { EditProfilePopup } from "./components/EditProfilePopup";
@@ -47,7 +48,10 @@ const DesktopLayout = ({ children }: { children?: React.ReactNode }) => {
                   {profile ? (
                     <p className="text-sm leading-snug">
                       {profile.cert_uni ? (
-                        <span>{profile.univ} verified</span>
+                        <>
+                          <VerifiedIcon />
+                          <span>{profile.univ}</span>
+                        </>
                       ) : (
                         <span className="text-gray-600">학교 미인증</span>
                       )}

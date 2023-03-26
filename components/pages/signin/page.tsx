@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { tempLogin } from "@lib/services/auth";
 import { API } from "@lib/utils/consts";
+import { isDevEnv } from "@lib/utils/env";
 import Splash from "@public/assets/login-splash-bg.jpg?inline";
 
 export default function Page() {
@@ -27,24 +28,26 @@ export default function Page() {
               SNS 계정으로 간편하게 시작하기
             </p> */}
             <div className="flex flex-col space-y-3 font-medium">
-              <form
-                onSubmit={async (e) => {
-                  e.preventDefault();
-                  const email = (e.target as any)[0].value;
-                  const res = await tempLogin(email);
-                  console.log(res);
-                  if (res) location.href = "/";
-                }}
-                className="flex flex-col space-y-3"
-              >
-                <input
-                  defaultValue="sinzakofficial@gmail.com"
-                  className="rounded-xl px-6 py-3 text-gray-800 ring-1 ring-inset ring-gray-200"
-                />
-                <button className="rounded-xl bg-gray-100 px-6 py-3">
-                  임시 로그인
-                </button>
-              </form>
+              {isDevEnv && (
+                <form
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    const email = (e.target as any)[0].value;
+                    const res = await tempLogin(email);
+                    console.log(res);
+                    if (res) location.href = "/";
+                  }}
+                  className="flex flex-col space-y-3"
+                >
+                  <input
+                    defaultValue="sinzakofficial@gmail.com"
+                    className="rounded-xl px-6 py-3 text-gray-800 ring-1 ring-inset ring-gray-200"
+                  />
+                  <button className="rounded-xl bg-gray-100 px-6 py-3">
+                    임시 로그인
+                  </button>
+                </form>
+              )}
               <a
                 href={`https://accounts.google.com/o/oauth2/v2/auth?client_id=782966145872-6shnmrvqi0q4sihr8etu9nrvh9jv43dh.apps.googleusercontent.com&redirect_uri=${`${API.BASE_URI}/oauth/google`}&response_type=code&scope=profile%20email&include_granted_scopes=true`}
                 className="flex items-center gap-4 rounded-xl px-4 py-3 ring-1 ring-inset ring-gray-100"

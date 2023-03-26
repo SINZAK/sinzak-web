@@ -63,6 +63,7 @@ export const CategoryField = () => {
                 "design",
                 "editorial",
                 "label",
+                "other",
               ]}
             />
           )}

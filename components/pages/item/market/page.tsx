@@ -5,7 +5,12 @@ import Skeleton from "react-loading-skeleton";
 import { Button } from "@components/atoms/Button";
 import { FollowingButton } from "@components/elements/FollowingButton";
 import { createLayout } from "@components/layout/layout";
-import { ChatMiniIcon, ScrapMiniIcon, ViewMiniIcon } from "@lib/icons";
+import {
+  ChatMiniIcon,
+  ScrapMiniIcon,
+  VerifiedIcon,
+  ViewMiniIcon,
+} from "@lib/icons";
 import { getCategoryText } from "@lib/resources/category";
 import { useAuth } from "@lib/services/auth";
 import { formatNumber, formatRelativeTime } from "@lib/services/intl/format";
@@ -183,9 +188,12 @@ function Main() {
           <p className="flex space-x-1 text-sm">
             {data ? (
               <>
-                {data?.univ && (
+                {data?.cert_uni && (
                   <>
-                    <span>{data.univ}</span>
+                    <span>
+                      <VerifiedIcon className="-ml-0.5" />
+                      <span>{data.univ}</span>
+                    </span>
                     <span>·</span>
                   </>
                 )}

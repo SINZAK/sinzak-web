@@ -1,3 +1,5 @@
+export { default as VerifiedIcon } from "@public/assets/icons/verified.svg";
+
 export { default as ViewMiniIcon } from "@public/assets/icons/view-mini.svg";
 export { default as ChatMiniIcon } from "@public/assets/icons/chat-mini.svg";
 export { default as ScrapMiniIcon } from "@public/assets/icons/scrap-mini.svg";

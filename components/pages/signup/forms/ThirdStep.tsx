@@ -39,14 +39,7 @@ export const CategorySelectForm = ({
           <div className="space-y-2">
             <p className="font-bold">순수예술</p>
             <MultiSelect
-              data={[
-                "painting",
-                "orient",
-                "sculpture",
-                "print",
-                "craft",
-                "other",
-              ]}
+              data={["painting", "orient", "sculpture", "print", "craft"]}
               value={firstCate}
               onChange={(value) => setFirstCate(value)}
             />

@@ -11,7 +11,7 @@ import { Menu } from "@components/atoms/Menu";
 import { FollowingButton } from "@components/elements/FollowingButton";
 import { ProductElement } from "@components/elements/ProductElement";
 import { createLayout } from "@components/layout/layout";
-import { AlignIcon, MenuIcon } from "@lib/icons";
+import { AlignIcon, MenuIcon, VerifiedIcon } from "@lib/icons";
 import { useAuth } from "@lib/services/auth";
 
 import { useUserProfileQuery } from "./queries/useUserProfileQuery";
@@ -105,7 +105,8 @@ export default function Page() {
             </p>
             {data?.profile.cert_uni && (
               <p className="text-sm leading-snug">
-                {data.profile.univ} verified
+                <VerifiedIcon />
+                {data.profile.univ}
               </p>
             )}
           </div>

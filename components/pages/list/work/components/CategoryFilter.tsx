@@ -25,6 +25,7 @@ export const CategoryFilter = (
       "design",
       "editorial",
       "label",
+      "other",
     ],
   });
 };

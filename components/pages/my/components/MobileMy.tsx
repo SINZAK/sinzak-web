@@ -5,6 +5,7 @@ import Skeleton from "react-loading-skeleton";
 import { twMerge } from "tailwind-merge";
 
 import { Button } from "@components/atoms/Button";
+import { VerifiedIcon } from "@lib/icons";
 
 import { EditProfilePopup } from "./EditProfilePopup";
 import { useMyProfileQuery } from "../queries/useMyProfileQuery";
@@ -37,7 +38,10 @@ export const MobileMy = () => {
             {profile ? (
               <p className="text-sm leading-snug">
                 {profile.cert_uni ? (
-                  <span>{profile.univ} verified</span>
+                  <>
+                    <VerifiedIcon />
+                    <span>{profile.univ}</span>
+                  </>
                 ) : (
                   <span className="text-gray-600">학교 미인증</span>
                 )}
