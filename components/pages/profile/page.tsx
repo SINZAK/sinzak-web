@@ -170,7 +170,9 @@ export default function Page() {
       </div>
       {!!data?.products.length && (
         <>
-          <div className="mb-6 mt-10 text-2xl font-bold">작품 목록</div>
+          <div className="mb-6 mt-10 text-xl font-bold md:text-2xl">
+            작품 목록
+          </div>
           <div className="grid grid-cols-2 gap-x-3 gap-y-7 sm:grid-cols-3 md:gap-x-7">
             {data?.products.map((product) => (
               <React.Fragment key={product.id}>
@@ -186,7 +188,7 @@ export default function Page() {
       )}
       {!!data?.works.length && (
         <>
-          <div className="mb-6 mt-12 text-2xl font-bold md:mt-16">
+          <div className="mb-6 mt-12 text-xl font-bold md:mt-16 md:text-2xl">
             의뢰 목록
           </div>
           <div className="grid grid-cols-2 gap-x-3 gap-y-7 sm:grid-cols-3 md:gap-x-7">

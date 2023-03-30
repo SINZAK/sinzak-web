@@ -42,10 +42,10 @@ export const ChatListView = () => {
                 <img
                   alt="사진"
                   src={room.image}
-                  className="inline-block h-12 w-12 rounded-xl bg-gray-200"
+                  className="inline-block h-12 w-12 shrink-0 rounded-xl bg-gray-200"
                 />
               ) : (
-                <span className="inline-block h-12 w-12 rounded-xl bg-gray-200" />
+                <span className="inline-block h-12 w-12 shrink-0 rounded-xl bg-gray-200" />
               )}
               <div className="flex flex-col justify-around overflow-hidden">
                 <p className="flex items-center font-medium">
@@ -65,11 +65,11 @@ export const ChatListView = () => {
                 </p>
               </div>
             </div>
-            <div className="mr-2">
+            {/* <div className="mr-2">
               <span className="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-purple text-sm font-bold text-white">
                 1
               </span>
-            </div>
+            </div> */}
           </div>
         ))
       ) : (

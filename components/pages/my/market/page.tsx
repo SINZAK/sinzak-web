@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { useRouter } from "next/router";
 
-import { ProductElement } from "@components/elements/ProductElement";
 import { createLayout } from "@components/layout/layout";
 import { BackIcon } from "@lib/icons";
 
