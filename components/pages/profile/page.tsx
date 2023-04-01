@@ -8,6 +8,7 @@ import { twMerge } from "tailwind-merge";
 import { Button } from "@components/atoms/Button";
 import { CheckBox } from "@components/atoms/CheckBox";
 import { Menu } from "@components/atoms/Menu";
+import { FollowerPopup } from "@components/elements/FollowerPopup";
 import { FollowingButton } from "@components/elements/FollowingButton";
 import { ProductElement } from "@components/elements/ProductElement";
 import { createLayout } from "@components/layout/layout";
@@ -86,6 +87,16 @@ export default function Page() {
     });
   }, [userId]);
 
+  const showFollowerPopup = useCallback(
+    (initialState: "follower" | "following") => {
+      NiceModal.show(FollowerPopup, {
+        userId,
+        initialState,
+      });
+    },
+    [userId]
+  );
+
   return (
     <div className="container max-w-4xl">
       <div className="grid grid-cols-[3rem,1fr] gap-x-4 border-b pb-4">
@@ -133,7 +144,10 @@ export default function Page() {
         <div></div>
         <div>
           <p className="my-3 space-x-6">
-            <span className="inline-flex items-center">
+            <button
+              onClick={() => showFollowerPopup("follower")}
+              className="inline-flex items-center"
+            >
               {data ? (
                 <>
                   <span className="mr-2 font-bold tabular-nums">
@@ -144,8 +158,11 @@ export default function Page() {
               ) : (
                 <Skeleton className="w-16" />
               )}
-            </span>
-            <span className="inline-flex items-center">
+            </button>
+            <button
+              onClick={() => showFollowerPopup("following")}
+              className="inline-flex items-center"
+            >
               {data ? (
                 <>
                   <span className="mr-2 font-bold tabular-nums">
@@ -156,7 +173,7 @@ export default function Page() {
               ) : (
                 <Skeleton className="w-16" />
               )}
-            </span>
+            </button>
           </p>
           <p
             className={twMerge(

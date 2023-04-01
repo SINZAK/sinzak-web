@@ -5,6 +5,7 @@ import Skeleton from "react-loading-skeleton";
 import { twMerge } from "tailwind-merge";
 
 import { Button } from "@components/atoms/Button";
+import { FollowerPopup } from "@components/elements/FollowerPopup";
 import { VerifiedIcon } from "@lib/icons";
 
 import { EditProfilePopup } from "./EditProfilePopup";
@@ -17,6 +18,18 @@ export const MobileMy = () => {
   const showEditProfilePopup = useCallback(() => {
     NiceModal.show(EditProfilePopup);
   }, []);
+
+  const userId = data?.profile.userId;
+  const showFollowerPopup = useCallback(
+    (initialState: "follower" | "following") => {
+      if (userId)
+        NiceModal.show(FollowerPopup, {
+          userId,
+          initialState,
+        });
+    },
+    [userId]
+  );
 
   return (
     <div className="container flex flex-col md:hidden">
@@ -31,15 +44,23 @@ export const MobileMy = () => {
           <Skeleton className="block h-16 w-16 rounded-xl" />
         )}
         <div className="text-center">
-          <p className="mb-1 text-xl font-bold leading-tight">
-            {profile ? <>{profile.name}</> : <Skeleton className="w-12" />}
+          <p className="mb-1 text-lg font-bold leading-tight">
+            {profile ? (
+              <>
+                <span className="align-middle">{profile.name}</span>
+                {profile.cert_celeb && (
+                  <VerifiedIcon className="ml-0.5 text-[0.9em]" />
+                )}
+              </>
+            ) : (
+              <Skeleton className="w-12" />
+            )}
           </p>
           <p>
             {profile ? (
               <p className="text-sm leading-snug">
                 {profile.cert_uni ? (
                   <>
-                    <VerifiedIcon />
                     <span>{profile.univ}</span>
                   </>
                 ) : (
@@ -51,7 +72,10 @@ export const MobileMy = () => {
             )}
           </p>
           <p className="my-3 space-x-6">
-            <span className="inline-flex items-center text-lg">
+            <button
+              onClick={() => showFollowerPopup("follower")}
+              className="inline-flex items-center text-lg"
+            >
               {profile ? (
                 <>
                   <span className="mr-2 font-bold">
@@ -62,8 +86,11 @@ export const MobileMy = () => {
               ) : (
                 <Skeleton className="w-16" />
               )}
-            </span>
-            <span className="inline-flex items-center text-lg">
+            </button>
+            <button
+              onClick={() => showFollowerPopup("following")}
+              className="inline-flex items-center text-lg"
+            >
               {data ? (
                 <>
                   <span className="mr-2 font-bold">
@@ -74,7 +101,7 @@ export const MobileMy = () => {
               ) : (
                 <Skeleton className="w-16" />
               )}
-            </span>
+            </button>
           </p>
           <p
             className={twMerge(

@@ -31,7 +31,7 @@ export const ChatListView = () => {
         data?.map((room, i) => (
           <div
             className={twMerge(
-              "flex items-center justify-between py-4 max-md:bleed md:-mx-4 md:px-4",
+              "flex cursor-pointer items-center justify-between py-4 max-md:bleed md:-mx-4 md:px-4",
               room.roomUuid === roomId && "bg-gray-100"
             )}
             key={i}

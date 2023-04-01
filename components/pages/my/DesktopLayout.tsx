@@ -6,6 +6,7 @@ import { twMerge } from "tailwind-merge";
 
 import { Button } from "@components/atoms/Button";
 import NoSsr from "@components/atoms/NoSsr";
+import { FollowerPopup } from "@components/elements/FollowerPopup";
 import { VerifiedIcon } from "@lib/icons";
 import { logout } from "@lib/services/auth";
 
@@ -18,6 +19,18 @@ const DesktopLayout = ({ children }: { children?: React.ReactNode }) => {
   const showEditProfilePopup = useCallback(() => {
     NiceModal.show(EditProfilePopup);
   }, []);
+
+  const userId = data?.profile.userId;
+  const showFollowerPopup = useCallback(
+    (initialState: "follower" | "following") => {
+      if (userId)
+        NiceModal.show(FollowerPopup, {
+          userId,
+          initialState,
+        });
+    },
+    [userId]
+  );
 
   const { profile } = data || {};
 
@@ -39,7 +52,12 @@ const DesktopLayout = ({ children }: { children?: React.ReactNode }) => {
               <div>
                 <p className="text-xl font-bold leading-tight">
                   {profile ? (
-                    <>{profile.name}</>
+                    <>
+                      <span className="align-middle">{profile.name}</span>
+                      {profile.cert_celeb && (
+                        <VerifiedIcon className="ml-0.5 text-[0.9em]" />
+                      )}
+                    </>
                   ) : (
                     <Skeleton className="w-12" />
                   )}
@@ -48,10 +66,7 @@ const DesktopLayout = ({ children }: { children?: React.ReactNode }) => {
                   {profile ? (
                     <p className="text-sm leading-snug">
                       {profile.cert_uni ? (
-                        <>
-                          <VerifiedIcon />
-                          <span>{profile.univ}</span>
-                        </>
+                        <span>{profile.univ}</span>
                       ) : (
                         <span className="text-gray-600">학교 미인증</span>
                       )}
@@ -70,7 +85,10 @@ const DesktopLayout = ({ children }: { children?: React.ReactNode }) => {
             <span className="inline-block h-14 w-14" />
             <div>
               <p className="my-3 space-x-6">
-                <span className="inline-flex items-center">
+                <button
+                  onClick={() => showFollowerPopup("follower")}
+                  className="inline-flex items-center"
+                >
                   {data ? (
                     <>
                       <span className="mr-2 font-bold">
@@ -81,8 +99,11 @@ const DesktopLayout = ({ children }: { children?: React.ReactNode }) => {
                   ) : (
                     <Skeleton className="w-16" />
                   )}
-                </span>
-                <span className="inline-flex items-center">
+                </button>
+                <button
+                  onClick={() => showFollowerPopup("following")}
+                  className="inline-flex items-center"
+                >
                   {data ? (
                     <>
                       <span className="mr-2 font-bold">
@@ -93,7 +114,7 @@ const DesktopLayout = ({ children }: { children?: React.ReactNode }) => {
                   ) : (
                     <Skeleton className="w-16" />
                   )}
-                </span>
+                </button>
               </p>
               <p
                 className={twMerge(

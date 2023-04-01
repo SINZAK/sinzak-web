@@ -1,5 +1,5 @@
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
-import { InfiniteData, useQueryClient } from "@tanstack/react-query";
+import { InfiniteData, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSetAtom } from "jotai/react";
 import { RESET } from "jotai/vanilla/utils";
 import Link from "next/link";
@@ -8,6 +8,7 @@ import ReactTextareaAutosize from "react-textarea-autosize";
 import { toast } from "sonner";
 
 import { Button } from "@components/atoms/Button";
+import { Menu } from "@components/atoms/Menu";
 import useBreakpoint from "@lib/hooks/useBreakpoint";
 import { useImage, useSelectImage } from "@lib/hooks/useSelectImage";
 import { BackIcon, MenuIcon, PictureFilledIcon } from "@lib/icons";
@@ -119,6 +120,22 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
     });
   };
 
+  const onLeave = () => {
+    if (!client) return;
+    const body = {
+      roomId,
+      message: "테스트님이 나가셨습니다.",
+      sender: "test",
+      senderId: user?.userId,
+      messageType: "LEAVE",
+    };
+    console.log(body);
+    client.publish({
+      destination: "/pub/chat/message",
+      body: JSON.stringify(body),
+    });
+  };
+
   const { selectFile } = useImage(async (image) => {
     if (!client) return;
 
@@ -154,16 +171,20 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
         ref={ref}
         className="flex flex-col max-md:container max-md:absolute max-md:-mb-24 md:h-full md:px-4"
       >
-        <div className="relative flex h-12 shrink-0 items-center justify-between bg-white max-md:sticky max-md:top-0">
+        <div className="relative z-10 flex h-12 shrink-0 items-center justify-between bg-white max-md:sticky max-md:top-0">
           <span className="absolute inset-y-0 left-1/2 grid -translate-x-1/2 place-items-center font-bold">
             {data?.roomName}
           </span>
           <button onClick={() => setRoomId(RESET)}>
             <BackIcon />
           </button>
-          <span>
-            <MenuIcon />
-          </span>
+          <button>
+            <Menu button={<MenuIcon />}>
+              <Menu.Item onClick={onLeave} className="text-red">
+                나가기
+              </Menu.Item>
+            </Menu>
+          </button>
         </div>
         <Link
           href={

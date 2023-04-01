@@ -21,6 +21,7 @@ export interface MyProfile {
     imageUrl: string;
     univ: string | null;
     cert_uni: boolean;
+    cert_celeb: boolean;
     isFollow: boolean;
     categoryLike: string;
   };

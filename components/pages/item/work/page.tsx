@@ -184,17 +184,23 @@ function Main() {
         )}
         <div>
           <p className="text-lg font-bold leading-tight">
-            {data ? <>{data.author}</> : <Skeleton className="w-16" />}
+            {data ? (
+              <>
+                <span className="align-middle">{data.author}</span>
+                {data.cert_celeb && (
+                  <VerifiedIcon className="ml-0.5 text-[0.9em]" />
+                )}
+              </>
+            ) : (
+              <Skeleton className="w-16" />
+            )}
           </p>
           <p className="flex space-x-1 text-sm">
             {data ? (
               <>
                 {data?.univ && (
                   <>
-                    <span>
-                      <VerifiedIcon className="-ml-0.5" />
-                      <span>{data.univ}</span>
-                    </span>
+                    <span>{data.univ}</span>
                     <span>·</span>
                   </>
                 )}
