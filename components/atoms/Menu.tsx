@@ -10,7 +10,7 @@ const MenuMain = ({
   children?: React.ReactNode;
 }) => {
   return (
-    <HMenu>
+    <HMenu as="div">
       {({ open, close }) => (
         <>
           {open && (

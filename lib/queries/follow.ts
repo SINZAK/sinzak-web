@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { useMarketItemQuery } from "@components/pages/item/market/queries/item";
 import { useWorkItemQuery } from "@components/pages/item/work/queries/item";
+import { useUserProfileQuery } from "@components/pages/profile/queries/useUserProfileQuery";
 import { http } from "@lib/services/http";
 import { MarketItemDetail, UserProfile, WorkItemDetail } from "@types";
 
@@ -31,10 +32,9 @@ export const useFollowMutation = () => {
           (state.data as MarketItemDetail)?.userId === userId,
       });
       queryClient.invalidateQueries({
-        queryKey: ["user-profile"],
-        type: "active",
-        predicate: ({ state }) =>
-          (state.data as UserProfile)?.profile.userId === userId,
+        queryKey: useUserProfileQuery.getKey({
+          userId,
+        }),
       });
       queryClient.invalidateQueries({
         queryKey: [useWorkItemQuery.getPrimaryKey()],

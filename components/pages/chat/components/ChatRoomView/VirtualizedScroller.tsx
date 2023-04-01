@@ -15,8 +15,6 @@ import { ChatRenderer } from "./ChatRenderer";
 import { useChatQuery } from "../../queries/chat";
 import { Message } from "../../types";
 
-const itemSize = 120;
-
 export const VirtualizedScroller = ({
   messageList,
   userId,
@@ -34,6 +32,7 @@ export const VirtualizedScroller = ({
   programmaticScroll: MutableRefObject<boolean>;
   fetchNextPage: ReturnType<typeof useChatQuery>["fetchNextPage"];
 }) => {
+  const itemSize = 44;
   const messageListCount = messageList.length;
   const reverseIndex = useCallback(
     (index: number) => messageListCount - 1 - index,
@@ -45,6 +44,8 @@ export const VirtualizedScroller = ({
   );
 
   if (
+    // this fix is dumb
+    messageListCount > 20 &&
     virtualizerRef.current &&
     messageListCount !== virtualizerRef.current.options.count
   ) {
@@ -62,8 +63,6 @@ export const VirtualizedScroller = ({
       (index: number) => messageList[reverseIndex(index)].messageId,
       [messageList, reverseIndex]
     ),
-    overscan: 4,
-    scrollMargin: 64,
   });
 
   useLayoutEffect(() => {

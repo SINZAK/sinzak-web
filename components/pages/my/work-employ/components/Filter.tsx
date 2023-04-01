@@ -10,7 +10,7 @@ export const Filter = () => {
   const [filterSale, setFilterSale] = useAtom(filterSaleAtom, { store });
 
   return (
-    <span className="flex h-6 flex-1 items-center justify-between max-md:px-0.5">
+    <span className="flex h-6 flex-1 items-center justify-between max-md:mt-3 max-md:px-0.5">
       <span className="flex-1" />
       <span className="inline-flex items-center font-medium text-gray-800">
         <CheckBox checked={filterSale} onChange={(_) => setFilterSale(!!_)}>

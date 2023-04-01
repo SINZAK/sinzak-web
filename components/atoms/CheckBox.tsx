@@ -42,7 +42,11 @@ export const CheckBox = React.forwardRef<
                     : ""
                 )}
               >
-                <CheckIcon className="fill-white" height="100%" width="1.3em" />
+                <CheckIcon
+                  className="fill-white align-[0px]"
+                  height="100%"
+                  width="1.3em"
+                />
               </span>
             </button>
           )}

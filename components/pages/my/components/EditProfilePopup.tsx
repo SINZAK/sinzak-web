@@ -129,14 +129,12 @@ export const PartnerForm = ({
           </div>
           {isValid && (
             <div>
-              <p className="flex items-center space-x-4">
-                <input
-                  value={link}
-                  onChange={(e) => setLink(e.currentTarget.value)}
-                  placeholder="링크를 입력하세요"
-                  className="flex-1 rounded-full bg-gray-100 px-4 py-3 placeholder:text-gray-600"
-                />
-              </p>
+              <input
+                value={link}
+                onChange={(e) => setLink(e.currentTarget.value)}
+                placeholder="링크를 입력하세요"
+                className="w-full rounded-full bg-gray-100 px-4 py-3 placeholder:text-gray-600"
+              />
             </div>
           )}
         </div>

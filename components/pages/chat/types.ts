@@ -4,7 +4,7 @@ export type Message = {
   sendAt: string;
   senderId: number;
   senderName: string | null;
-  messageType: "TEXT" | "IMAGE";
+  messageType: "TEXT" | "IMAGE" | "LEAVE";
 };
 
 export type MessageResponse = {

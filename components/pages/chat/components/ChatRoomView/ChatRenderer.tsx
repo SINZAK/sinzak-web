@@ -46,6 +46,13 @@ export const ChatRenderer = ({
             {messageType === "IMAGE" && (
               <ChatImage own={own} imageSrc={message} timestamp={timestamp} />
             )}
+            {messageType === "LEAVE" && (
+              <div className="grid place-items-center">
+                <span className="inline-block rounded-full bg-gray-100 py-1 px-3 text-sm font-medium">
+                  {message}
+                </span>
+              </div>
+            )}
           </div>
         );
       })}

@@ -1,5 +1,5 @@
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
-import { InfiniteData, useQueryClient } from "@tanstack/react-query";
+import { InfiniteData, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSetAtom } from "jotai/react";
 import { RESET } from "jotai/vanilla/utils";
 import Link from "next/link";
@@ -8,6 +8,8 @@ import ReactTextareaAutosize from "react-textarea-autosize";
 import { toast } from "sonner";
 
 import { Button } from "@components/atoms/Button";
+import { Menu } from "@components/atoms/Menu";
+import useBreakpoint from "@lib/hooks/useBreakpoint";
 import { useImage, useSelectImage } from "@lib/hooks/useSelectImage";
 import { BackIcon, MenuIcon, PictureFilledIcon } from "@lib/icons";
 import { useAuth } from "@lib/services/auth";
@@ -22,14 +24,14 @@ import { useRoomInfoQuery } from "../../queries/roomInfo";
 import { roomIdAtom } from "../../states";
 import { MessageResponse } from "../../types";
 
-const test = Array.from({ length: 30 }, (_, i) => ({
-  messageId: i,
-  message: "asdf ".repeat(Math.ceil(Math.random() * 10)),
-  sendAt: new Date().toISOString(),
-  senderId: Math.round(Math.random()) ? 357 : 1,
-  senderName: "test",
-  messageType: null,
-}));
+// const test = Array.from({ length: 30 }, (_, i) => ({
+//   messageId: i,
+//   message: "asdf ".repeat(Math.ceil(Math.random() * 10)),
+//   sendAt: new Date().toISOString(),
+//   senderId: Math.round(Math.random()) ? 357 : 1,
+//   senderName: "test",
+//   messageType: null,
+// }));
 
 export const ChatRoomView = ({ roomId }: { roomId: string }) => {
   const client = useClient();
@@ -40,6 +42,8 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
   const [autoScroll, setAutoScroll] = useState(true);
   const programmaticScroll = useRef(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const { breakpoint } = useBreakpoint();
+  const ref = useRef<HTMLDivElement>(null);
 
   const queryClient = useQueryClient();
   const { data } = useRoomInfoQuery({
@@ -47,6 +51,18 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
       roomId,
     },
   });
+
+  useLayoutEffect(() => {
+    if (breakpoint !== "narrow" || !ref.current) return;
+    const listener = () => {
+      if (ref.current) ref.current.style.height = window.innerHeight + "px";
+    };
+    listener();
+    window.addEventListener("resize", listener);
+    return () => {
+      window.removeEventListener("resize", listener);
+    };
+  }, [breakpoint]);
 
   useLayoutEffect(() => {
     setAutoScroll(true);
@@ -104,6 +120,22 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
     });
   };
 
+  const onLeave = () => {
+    if (!client) return;
+    const body = {
+      roomId,
+      message: "테스트님이 나가셨습니다.",
+      sender: "test",
+      senderId: user?.userId,
+      messageType: "LEAVE",
+    };
+    console.log(body);
+    client.publish({
+      destination: "/pub/chat/message",
+      body: JSON.stringify(body),
+    });
+  };
+
   const { selectFile } = useImage(async (image) => {
     if (!client) return;
 
@@ -136,22 +168,23 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
   return (
     <>
       <div
-        className={
-          "flex h-[100dvh] flex-col max-md:container max-md:absolute max-md:-mb-24 max-md:pb-20 md:h-full md:px-4" +
-          " " +
-          "h-full"
-        }
+        ref={ref}
+        className="flex flex-col max-md:container max-md:absolute max-md:-mb-24 md:h-full md:px-4"
       >
-        <div className="relative flex h-12 flex-shrink-0 items-center justify-between bg-white max-md:sticky max-md:top-0">
+        <div className="relative z-10 flex h-12 shrink-0 items-center justify-between bg-white max-md:sticky max-md:top-0">
           <span className="absolute inset-y-0 left-1/2 grid -translate-x-1/2 place-items-center font-bold">
             {data?.roomName}
           </span>
           <button onClick={() => setRoomId(RESET)}>
             <BackIcon />
           </button>
-          <span>
-            <MenuIcon />
-          </span>
+          <button>
+            <Menu button={<MenuIcon />}>
+              <Menu.Item onClick={onLeave} className="text-red">
+                나가기
+              </Menu.Item>
+            </Menu>
+          </button>
         </div>
         <Link
           href={
@@ -161,9 +194,10 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
                 }`
               : "#"
           }
-          className="flex space-x-4 px-2 py-4"
+          className="flex shrink-0 space-x-4 px-2 py-4"
         >
           <img
+            alt="썸네일"
             src={data?.thumbnail}
             className="inline-block h-10 w-10 rounded-xl bg-gray-200"
           />
@@ -200,7 +234,7 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
             </p>
           </div>
         </Link>
-        <div className="relative min-h-0 flex-[1_1_auto] max-md:bleed md:-mx-4">
+        <div className="relative min-h-0 flex-1 max-md:bleed md:-mx-4">
           {!!messageList?.length && (
             <VirtualizedScroller
               autoScroll={autoScroll}
@@ -227,11 +261,7 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
           )}
           <button onClick={(e) => e} />
         </div>
-        <div
-          className="flex items-center px-4 py-4
-            max-md:fixed max-md:inset-x-0 max-md:bottom-0 max-md:bg-white
-            md:-mx-4"
-        >
+        <div className="-mx-4 flex items-center bg-white px-4 py-4">
           <input
             id="input-file"
             type="file"
