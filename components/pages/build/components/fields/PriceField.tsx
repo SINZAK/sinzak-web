@@ -1,4 +1,5 @@
 import { useFormContext, Controller, useWatch } from "react-hook-form";
+import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 
 import { CheckBox } from "@components/atoms/CheckBox";
@@ -21,6 +22,11 @@ export const PriceField = () => {
               required: true,
               shouldUnregister: true,
               valueAsNumber: true,
+              validate: (value) => {
+                const result = value <= 1_000_000_000 && value >= 0;
+                if (!result) toast.error("가격을 범위 내로 입력해 주세요.");
+                return result;
+              },
             })}
             placeholder={type === "sell" ? "작품 가격" : "제시 의뢰비"}
             type="number"

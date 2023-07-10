@@ -1,4 +1,5 @@
-import { useFormContext, useWatch } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
+import { toast } from "sonner";
 
 export const DimensionsField = () => {
   const { register } = useFormContext();
@@ -11,6 +12,13 @@ export const DimensionsField = () => {
         <input
           {...register("width", {
             valueAsNumber: true,
+            validate: (value) => {
+              if (isNaN(value)) return true;
+              const result = value <= 1_000_000_000 && value >= 0;
+              if (!result)
+                toast.error("작품 사이즈를 범위 내로 입력해 주세요.");
+              return result;
+            },
           })}
           type="number"
           className="flex-1 rounded-xl bg-gray-100 px-4 py-3 placeholder:text-gray-600"
@@ -22,6 +30,13 @@ export const DimensionsField = () => {
         <input
           {...register("vertical", {
             valueAsNumber: true,
+            validate: (value) => {
+              if (isNaN(value)) return true;
+              const result = value <= 1_000_000_000 && value >= 0;
+              if (!result)
+                toast.error("작품 사이즈를 범위 내로 입력해 주세요.");
+              return result;
+            },
           })}
           type="number"
           className="flex-1 rounded-xl bg-gray-100 px-4 py-3 placeholder:text-gray-600"
@@ -33,6 +48,13 @@ export const DimensionsField = () => {
         <input
           {...register("height", {
             valueAsNumber: true,
+            validate: (value) => {
+              if (isNaN(value)) return true;
+              const result = value <= 1_000_000_000 && value >= 0;
+              if (!result)
+                toast.error("작품 사이즈를 범위 내로 입력해 주세요.");
+              return result;
+            },
           })}
           type="number"
           className="flex-1 rounded-xl bg-gray-100 px-4 py-3 placeholder:text-gray-600"
