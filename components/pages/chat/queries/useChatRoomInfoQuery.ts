@@ -15,7 +15,7 @@ type Response = {
 
 type Variables = { roomId: string };
 
-export const useRoomInfoQuery = createQuery<Response, Variables>({
+export const useChatRoomInfoQuery = createQuery<Response, Variables>({
   primaryKey: "/chat/rooms/",
   queryFn: async ({ queryKey: [primaryKey, { roomId }] }) => {
     return (await http.post.default(`${primaryKey}${roomId}`)).data;

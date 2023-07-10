@@ -5,7 +5,7 @@ import { RESET } from "jotai/vanilla/utils";
 import { useRouter } from "next/router";
 import Skeleton from "react-loading-skeleton";
 
-import { useMarketItemQuery } from "@components/pages/item/market/queries/item";
+import { useMarketItemQuery } from "@components/pages/item/market/queries/useMarketItemQuery";
 import { BackIcon } from "@lib/icons";
 import { http } from "@lib/services/http";
 import { formatNumber } from "@lib/services/intl/format";

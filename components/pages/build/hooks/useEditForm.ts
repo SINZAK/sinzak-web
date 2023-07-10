@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { useMarketItemQuery } from "@components/pages/item/market/queries/item";
+import { useMarketItemQuery } from "@components/pages/item/market/queries/useMarketItemQuery";
 import { http } from "@lib/services/http";
 
 import { useUploadImages } from "./useUploadImages";

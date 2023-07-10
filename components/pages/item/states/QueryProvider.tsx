@@ -2,16 +2,16 @@ import { Context, createContext, useContext } from "react";
 import { UseQueryResult } from "@tanstack/react-query";
 import { inferData, inferVariables } from "react-query-kit";
 
-import { useDeleteMarketItemMutation } from "../market/queries/delete";
-import { useMarketItemQuery } from "../market/queries/item";
-import { useLikeMarketItemMutation } from "../market/queries/like";
-import { useSuggestPriceMarketItemMutation } from "../market/queries/suggest";
-import { useWishMarketItemMutation } from "../market/queries/wish";
-import { useDeleteWorkItemMutation } from "../work/queries/delete";
-import { useWorkItemQuery } from "../work/queries/item";
-import { useLikeWorkItemMutation } from "../work/queries/like";
-import { useSuggestPriceWorkItemMutation } from "../work/queries/suggest";
-import { useWishWorkItemMutation } from "../work/queries/wish";
+import { useDeleteMarketItemMutation } from "../market/queries/useDeleteMarketItemMutation";
+import { useLikeMarketItemMutation } from "../market/queries/useLikeMarketItemMutation";
+import { useMarketItemQuery } from "../market/queries/useMarketItemQuery";
+import { useSuggestPriceMarketItemMutation } from "../market/queries/useSuggestPriceMarketItemMutation";
+import { useWishMarketItemMutation } from "../market/queries/useWishMarketItemMutation";
+import { useDeleteWorkItemMutation } from "../work/queries/useDeleteWorkItemMutation";
+import { useLikeWorkItemMutation } from "../work/queries/useLikeWorkItemMutation";
+import { useSuggestPriceWorkItemMutation } from "../work/queries/useSuggestPriceWorkItemMutation";
+import { useWishWorkItemMutation } from "../work/queries/useWishWorkItemMutation";
+import { useWorkItemQuery } from "../work/queries/useWorkItemQuery";
 
 export type MarketQueryContextValue = {
   id: number | undefined;

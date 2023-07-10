@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import { http } from "@lib/services/http";
 
-import { useWorkItemQuery } from "./item";
+import { useWorkItemQuery } from "./useWorkItemQuery";
 
 export const useDeleteWorkItemMutation = (id?: number) => {
   const queryClient = useQueryClient();

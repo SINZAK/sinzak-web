@@ -19,8 +19,8 @@ import useClient from "@lib/services/stomp/client";
 import useStomp from "@lib/services/stomp/stomp";
 
 import { VirtualizedScroller } from "./VirtualizedScroller";
-import { useChatQuery } from "../../queries/chat";
-import { useRoomInfoQuery } from "../../queries/roomInfo";
+import { useChatQuery } from "../../queries/useChatQuery";
+import { useChatRoomInfoQuery } from "../../queries/useChatRoomInfoQuery";
 import { roomIdAtom } from "../../states";
 import { MessageResponse } from "../../types";
 
@@ -46,7 +46,7 @@ export const ChatRoomView = ({ roomId }: { roomId: string }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const queryClient = useQueryClient();
-  const { data } = useRoomInfoQuery({
+  const { data } = useChatRoomInfoQuery({
     variables: {
       roomId,
     },

@@ -1,29 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
 import { useAtom } from "jotai/react";
 import { twMerge } from "tailwind-merge";
 
-import { http } from "@lib/services/http";
 import { formatRelativeTime } from "@lib/services/intl/format";
 
+import { useChatRoomsQuery } from "../queries/useChatRoomsQuery";
 import { roomIdAtom } from "../states";
 
 export const ChatListView = () => {
   const [roomId, setRoomId] = useAtom(roomIdAtom);
-  const { data } = useQuery<
-    {
-      image: string;
-      latestMessage: string;
-      latestMessageTime: string;
-      roomUuid: string;
-      roomName: string;
-      univ: string;
-    }[]
-  >({
-    queryKey: ["/chat/rooms"],
-    queryFn: async () => {
-      return (await http.post.default("/chat/rooms")).data;
-    },
-  });
+  const { data } = useChatRoomsQuery();
 
   return (
     <div className="flex flex-col max-md:container max-md:flex-1 md:h-full">
