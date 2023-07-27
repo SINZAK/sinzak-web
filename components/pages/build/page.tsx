@@ -12,7 +12,7 @@ export default function Page() {
     <div>
       <div className="container max-w-2xl max-md:pt-3">
         <div className="mb-10 max-md:hidden">
-          <p className="text-3xl font-bold">작품 등록하기</p>
+          <p className="text-3xl font-bold">작품/의뢰 등록하기</p>
         </div>
         <Form />
       </div>

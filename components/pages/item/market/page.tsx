@@ -15,11 +15,11 @@ import { getCategoryText } from "@lib/resources/category";
 import { useAuth } from "@lib/services/auth";
 import { formatNumber, formatRelativeTime } from "@lib/services/intl/format";
 
-import { useDeleteMarketItemMutation } from "./queries/delete";
-import { useMarketItemQuery } from "./queries/item";
-import { useLikeMarketItemMutation } from "./queries/like";
-import { useSuggestPriceMarketItemMutation } from "./queries/suggest";
-import { useWishMarketItemMutation } from "./queries/wish";
+import { useDeleteMarketItemMutation } from "./queries/useDeleteMarketItemMutation";
+import { useLikeMarketItemMutation } from "./queries/useLikeMarketItemMutation";
+import { useMarketItemQuery } from "./queries/useMarketItemQuery";
+import { useSuggestPriceMarketItemMutation } from "./queries/useSuggestPriceMarketItemMutation";
+import { useWishMarketItemMutation } from "./queries/useWishMarketItemMutation";
 import {
   ChatButton,
   ChatButtonPlaceholder,

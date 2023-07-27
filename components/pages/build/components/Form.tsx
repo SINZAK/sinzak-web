@@ -31,6 +31,17 @@ export const Form = () => {
     onComplete: (type, id) => {
       router.push(`/${type}/${id}`);
     },
+    onError: async (e: any) => {
+      setUploadText("");
+      if (e instanceof Response) {
+        const json = await e.json();
+        if ("message" in json) {
+          toast.error(json.message);
+          return;
+        }
+      }
+      toast.error("알 수 없는 오류가 발생했습니다.");
+    },
   });
 
   return (

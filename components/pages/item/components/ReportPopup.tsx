@@ -4,7 +4,7 @@ import { Dialog } from "@headlessui/react";
 import ReactTextareaAutosize from "react-textarea-autosize";
 
 import { Button } from "@components/atoms/Button";
-import { useReportUserMutation } from "@lib/queries/reportUser";
+import { useReportUserMutation } from "@lib/queries/useReportUserMutation";
 
 export const ReportPopup = NiceModal.create(
   ({ userId }: { userId: number }) => {

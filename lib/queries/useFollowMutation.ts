@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { useMarketItemQuery } from "@components/pages/item/market/queries/item";
-import { useWorkItemQuery } from "@components/pages/item/work/queries/item";
+import { useMarketItemQuery } from "@components/pages/item/market/queries/useMarketItemQuery";
+import { useWorkItemQuery } from "@components/pages/item/work/queries/useWorkItemQuery";
 import { useUserProfileQuery } from "@components/pages/profile/queries/useUserProfileQuery";
 import { http } from "@lib/services/http";
 import { MarketItemDetail, UserProfile, WorkItemDetail } from "@types";

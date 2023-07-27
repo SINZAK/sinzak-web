@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { Button } from "@components/atoms/Button";
-import { useFollowMutation } from "@lib/queries/follow";
+import { useFollowMutation } from "@lib/queries/useFollowMutation";
 import { useAuth } from "@lib/services/auth";
 
 export const FollowingButton = ({

@@ -18,7 +18,6 @@ export const CategoryField = () => {
           rules={{
             required: true,
             validate: (value) => {
-              console.log(value);
               const result = !!value;
               if (!result) toast.error("카테고리를 선택해주세요.");
               return result;

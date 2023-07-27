@@ -3,7 +3,7 @@ import { useInView } from "react-intersection-observer";
 
 import { ProductElement } from "@components/elements/ProductElement";
 
-import { useProductQuery } from "../queries/product";
+import { useProductQuery } from "../queries/useProductQuery";
 import { useFilter } from "../states/filter";
 
 export const ListView = () => {

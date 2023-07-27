@@ -74,7 +74,7 @@ export const ImageField = () => {
                   <img
                     alt=""
                     src={image.src}
-                    className="flex aspect-square items-center justify-center whitespace-pre-line rounded-xl border bg-gray-100 object-cover"
+                    className="flex aspect-square min-h-full min-w-full items-center justify-center whitespace-pre-line rounded-xl border bg-gray-100 object-cover"
                     draggable="false"
                   />
                   <button

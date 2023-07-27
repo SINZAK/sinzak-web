@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 
 import { createLayout } from "@components/layout/layout";
-import { useMarketItemQuery } from "@components/pages/item/market/queries/item";
-import { useWorkItemQuery } from "@components/pages/item/work/queries/item";
+import { useMarketItemQuery } from "@components/pages/item/market/queries/useMarketItemQuery";
+import { useWorkItemQuery } from "@components/pages/item/work/queries/useWorkItemQuery";
 import { BackIcon } from "@lib/icons";
 
 import "@egjs/react-flicking/dist/flicking.css";

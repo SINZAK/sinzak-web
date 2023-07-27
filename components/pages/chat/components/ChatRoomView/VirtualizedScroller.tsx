@@ -12,7 +12,7 @@ import { Virtualizer, useVirtualizer } from "@tanstack/react-virtual";
 import { useInView } from "react-intersection-observer";
 
 import { ChatRenderer } from "./ChatRenderer";
-import { useChatQuery } from "../../queries/chat";
+import { useChatQuery } from "../../queries/useChatQuery";
 import { Message } from "../../types";
 
 export const VirtualizedScroller = ({
