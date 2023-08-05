@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import NiceModal from "@ebay/nice-modal-react";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Script from "next/script";
 import { DefaultSeo } from "next-seo";
 import { SkeletonTheme } from "react-loading-skeleton";
 import { Toaster } from "sonner";
@@ -9,10 +9,11 @@ import { Toaster } from "sonner";
 import { AuthProvider } from "@lib/services/auth";
 import { globalFont } from "@lib/services/font";
 import { createQueryClient } from "@lib/services/queryClient";
+import { API } from "@lib/utils/consts";
+import { isDevEnv } from "@lib/utils/env";
 import { CustomAppProps } from "@types";
 import "react-loading-skeleton/dist/skeleton.css";
 import "../styles/globals.css";
-import { API } from "@lib/utils/consts";
 
 if (typeof document === "undefined") {
   React.useLayoutEffect = React.useEffect;
@@ -107,6 +108,21 @@ export default function App({ Component, pageProps }: CustomAppProps) {
           </AuthProvider>
         </NiceModal.Provider>
       </QueryClientProvider>
+      {!isDevEnv && (
+        <>
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+            strategy="afterInteractive"
+          />
+          <Script
+            id="google-analytics"
+            strategy="lazyOnload"
+            dangerouslySetInnerHTML={{
+              __html: `window.dataLayer = window.dataLayer || []; function gtag(){window.dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');`,
+            }}
+          />
+        </>
+      )}
     </>
   );
 }
