@@ -1,5 +1,5 @@
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
-import { InfiniteData, useQuery, useQueryClient } from "@tanstack/react-query";
+import { InfiniteData, useQueryClient } from "@tanstack/react-query";
 import { useSetAtom } from "jotai/react";
 import { RESET } from "jotai/vanilla/utils";
 import Link from "next/link";
@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { Button } from "@components/atoms/Button";
 import { Menu } from "@components/atoms/Menu";
 import useBreakpoint from "@lib/hooks/useBreakpoint";
-import { useImage, useSelectImage } from "@lib/hooks/useSelectImage";
+import { useImage } from "@lib/hooks/useSelectImage";
 import { BackIcon, MenuIcon, PictureFilledIcon } from "@lib/icons";
 import { useAuth } from "@lib/services/auth";
 import { http } from "@lib/services/http";
@@ -23,15 +23,6 @@ import { useChatQuery } from "../../queries/useChatQuery";
 import { useChatRoomInfoQuery } from "../../queries/useChatRoomInfoQuery";
 import { roomIdAtom } from "../../states";
 import { MessageResponse } from "../../types";
-
-// const test = Array.from({ length: 30 }, (_, i) => ({
-//   messageId: i,
-//   message: "asdf ".repeat(Math.ceil(Math.random() * 10)),
-//   sendAt: new Date().toISOString(),
-//   senderId: Math.round(Math.random()) ? 357 : 1,
-//   senderName: "test",
-//   messageType: null,
-// }));
 
 export const ChatRoomView = ({ roomId }: { roomId: string }) => {
   const client = useClient();

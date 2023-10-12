@@ -11,12 +11,12 @@ import { useEffectOnce } from "@lib/hooks/useEffectOnce";
 import jwtManager from "./inMemoryJwtManager";
 import { http } from "../http";
 
-type User = null | {
+export type User = null | {
   email: string;
   userId: number;
 };
 
-type Auth = {
+export type Auth = {
   user: User;
   isLoading: boolean;
   renew: () => void;

@@ -1,12 +1,12 @@
+import { useState } from "react";
 import { Fade, Pagination } from "@egjs/flicking-plugins";
 import Flicking, { ViewportSlot } from "@egjs/react-flicking";
 import Image from "next/image";
 
+import { FullImageViewer } from "@components/elements/FullImageViewer";
 import { MarketItemDetail } from "@types";
 
 import "@egjs/react-flicking/dist/flicking.css";
-import { FullImageViewer } from "@components/elements/FullImageViewer";
-import { useState } from "react";
 
 const plugins = [new Fade(), new Pagination({ type: "bullet" })];
 
